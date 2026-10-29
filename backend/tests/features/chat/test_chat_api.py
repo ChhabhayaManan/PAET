@@ -124,7 +124,7 @@ def test_a_message_streams_tool_events_then_the_reply(api):
 
     api.script = [RuntimeError("provider fell over")]
     failed = api.client.post(f"{CHAT}/threads/{thread['id']}/messages", json={"content": "and?"})
-    assert frames(failed.text) == [("error", {"message": FAILED})]
+    assert frames(failed.text) == [("error", {"message": FAILED, "code": ""})]
 
 
 def test_strangers_threads_and_bad_input_never_reach_the_agent(api):

@@ -16,9 +16,11 @@ from pydantic import BaseModel
 
 from app.core.config import settings
 from app.core.database import SessionLocal
-from app.core.exceptions import LLMUnavailable
+from app.core.exceptions import LLMUnavailable, ModelKeyError
 from app.core.llm import _is_rate_limited, _nvidia, structured
 from app.core.llm_call import LLMCall
+from app.core.llm_choice import Choice, current_choice, server_choice
+from app.core.llm_providers import build_client, classify
 
 logger = logging.getLogger(__name__)
 
@@ -161,11 +163,13 @@ class Gateway:
     def __init__(self, *, clock: Callable[[], float] = time.monotonic,
                  sleep: Callable[[float], None] = time.sleep,
                  session_factory: Callable[[], Any] | None = None,
-                 model_factory: Callable[..., Any] | None = None):
+                 model_factory: Callable[..., Any] | None = None,
+                 choice_factory: Callable[..., Any] | None = None):
         self.clock = clock
         self.sleep = sleep
         self.session_factory = session_factory
         self.model_factory = model_factory or _default_factory
+        self.choice_factory = choice_factory or build_client
         self._buckets: dict[int, Any] = {}
         self._redis_down = False
         self._turn = itertools.count()
@@ -237,6 +241,9 @@ class Gateway:
     def run(self, purpose: str, call: Call, *, user_id: int | None = None,
             template: str | None = None, model_factory=None) -> GatewayResult:
         spec = PURPOSES[purpose]
+        choice = current_choice() or server_choice()
+        if choice is not None:
+            return self._run_choice(spec, call, user_id, choice)
         factory = model_factory or self.model_factory
         primary = spec.model
         start = self.clock()
@@ -298,6 +305,34 @@ class Gateway:
             raise LLMUnavailable(f"LLM gateway exhausted for {purpose}: {reason}")
         return GatewayResult(value=template, status="template", model="", key_slot=None,
                              latency_ms=elapsed_ms, queued_ms=int(queued * 1000), tokens=0)
+
+    def _run_choice(self, spec: Purpose, call: Call, user_id: int | None,
+                    choice: Choice) -> GatewayResult:
+        """No rotation, fallback or template: a failing student key must be seen."""
+        key_source = "own" if choice.source == "own" else "paet"
+        began = self.clock()
+        try:
+            chat = self.choice_factory(choice, temperature=spec.temperature,
+                                       max_tokens=spec.max_tokens, timeout=spec.deadline)
+            value, raw = call(chat)
+        except AssertionError:
+            raise
+        except Exception as exc:
+            error = exc if isinstance(exc, ModelKeyError) else classify(exc, choice)
+            self._log(purpose=spec.name, status="error", model=choice.model,
+                      provider=choice.provider, key_source=key_source, key_slot=None,
+                      latency_ms=int((self.clock() - began) * 1000), queued_ms=0,
+                      user_id=user_id, error=f"{error.code}: {error.provider_message}")
+            if choice.source == "own":
+                raise error from exc
+            raise LLMUnavailable(f"LLM gateway failed for {spec.name}: {error.detail}") from exc
+        tokens_in, tokens_out = _usage(raw)
+        latency_ms = int((self.clock() - began) * 1000)
+        self._log(purpose=spec.name, status="ok", model=choice.model, provider=choice.provider,
+                  key_source=key_source, key_slot=None, latency_ms=latency_ms, queued_ms=0,
+                  tokens_in=tokens_in, tokens_out=tokens_out, user_id=user_id)
+        return GatewayResult(value=value, status="ok", model=choice.model, key_slot=None,
+                             latency_ms=latency_ms, queued_ms=0, tokens=tokens_in + tokens_out)
 
     def _log(self, **fields: Any) -> None:
         try:

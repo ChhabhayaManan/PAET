@@ -7,7 +7,7 @@ from html import escape
 from pydantic import BaseModel
 
 from app.core import llm_gateway
-from app.core.exceptions import LLMUnavailable
+from app.core.exceptions import LLMUnavailable, ModelKeyError
 from app.features.onboarding.logic.graders.sandbox import is_blank
 from app.features.onboarding.logic.types import Grade
 from app.features.onboarding.models import DiagnosticItem, DiagnosticResponse
@@ -81,6 +81,8 @@ def grade_batch(user_id: int, pairs: list[tuple[DiagnosticResponse, DiagnosticIt
                                       schema=TheoryVerdicts, user_id=user_id).value
     except LLMUnavailable:
         return grades, False
+    except ModelKeyError:
+        raise
     except Exception:
         logger.exception("theory judge failed for user %s", user_id)
         return grades, True

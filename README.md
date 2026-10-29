@@ -221,6 +221,23 @@ Settings are read from `backend/.env` (see `backend/app/core/config.py` for all 
 | `GAMIFICATION_MODE` | `live` (default: shown on Home and toasted after each graded answer), `silent` (recorded, shown only on request) or `off` |
 | `GMAIL_*` or `SMTP_*` | Sending login codes by email |
 | `DEV_LOGIN_EMAIL` | One-click development login (needs `DEBUG=True`) |
+| `DEPLOY_MODE` | `web` (default) or `local`; see below |
+| `LLM_COOKIE_SECRET` | Seals students' model keys (defaults to `SECRET_KEY`) |
+| `DEFAULT_LLM_*` | Point the default model at another provider |
+
+### Choosing your model
+
+The **Model** card at the bottom of the sidebar opens the Model window. A student can keep
+PAET's default model, use their own key (NVIDIA, OpenAI, Anthropic, Gemini, Groq,
+OpenRouter), or, with `DEPLOY_MODE=local`, a model on their own machine (Ollama, LM Studio,
+any OpenAI-compatible server).
+
+- The key is kept only in the student's browser, in an encrypted cookie that page scripts
+  cannot read. The server decrypts it for each request and never stores or logs it.
+- If the student's key fails, PAET stops and says why (rejected key, rate limit, out of
+  credit, request too long, unknown model, provider unreachable).
+- Work that runs after the student has left uses the default model.
+- Every model call is logged with its provider and model in `llm_calls`.
 
 ### Notes
 

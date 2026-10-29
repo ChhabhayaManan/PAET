@@ -49,6 +49,22 @@ class LLMUnavailable(AitaError):
     status_code = 503
 
 
+class ModelKeyError(AitaError):
+    """The student's own key or model failed. Never an LLMUnavailable, so no caller
+    degrades it into a template: the student must see why."""
+
+    status_code = 424
+
+    def __init__(self, code: str, detail: str, provider_message: str = ""):
+        super().__init__(detail)
+        self.code = code
+        self.provider_message = provider_message
+
+
+class ModelChoiceRejected(AitaError):
+    status_code = 422
+
+
 class LanguageNotExecutable(AitaError):
     status_code = 422
 
@@ -67,3 +83,8 @@ def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(AitaError)
     def handle(_: Request, exc: AitaError) -> JSONResponse:
         return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+    @app.exception_handler(ModelKeyError)
+    def handle_model_key(_: Request, exc: ModelKeyError) -> JSONResponse:
+        return JSONResponse(status_code=exc.status_code, content={
+            "detail": exc.detail, "code": exc.code, "provider_message": exc.provider_message})

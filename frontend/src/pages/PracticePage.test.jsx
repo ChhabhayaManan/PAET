@@ -13,6 +13,7 @@ vi.mock('../hooks/useAuth', () => ({
 vi.mock('../utils/api', () => ({
   getErrorMessage: (_err, fallback) => fallback,
   feedbackAPI: { unreadCount: () => Promise.resolve({ data: { unread: 0 } }) },
+  modelAPI: { get: () => new Promise(() => {}) },
   profileAPI: { getMastery: () => Promise.resolve({ data: { topics: [] } }) },
   practiceSessionAPI: {
     current: () => Promise.resolve({ data: { ...session } }),

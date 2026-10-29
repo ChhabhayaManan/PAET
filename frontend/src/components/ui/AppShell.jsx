@@ -8,6 +8,8 @@ import { useAuth } from '../../hooks/useAuth'
 import { feedbackAPI } from '../../utils/api'
 import { languageLabel } from '../learning/labels'
 import LogoMark, { Wordmark } from './LogoMark'
+import ModelCard, { useModelSettings } from '../model/ModelCard'
+import ModelWindow from '../model/ModelWindow'
 
 const NAV = [
   { to: '/dashboard', label: 'Home', icon: LayoutGrid },
@@ -23,7 +25,7 @@ function Logo() {
   return (
     <div className="flex items-center gap-2.5 px-2">
       <LogoMark />
-      <Wordmark />
+      <Wordmark tagline />
     </div>
   )
 }
@@ -36,7 +38,7 @@ function NavItems({ unread }) {
           <NavLink
             to={to}
             className={({ isActive }) =>
-              `group flex h-11 items-center gap-3 rounded-full px-3.5 text-sm font-medium transition-colors duration-200 ${
+              `group flex h-11 items-center gap-3 rounded-md px-3.5 text-sm font-medium transition-colors duration-200 ${
                 isActive ? 'bg-ink text-canvas' : 'text-ink-muted hover:bg-white/[0.06] hover:text-ink'
               }`}
           >
@@ -68,7 +70,7 @@ function UserBlock({ user, onLogout }) {
   return (
     <div className="rounded-[18px] border border-line bg-tile p-3">
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-pop-aqua font-mono text-sm font-semibold text-canvas" aria-hidden="true">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink font-mono text-sm font-semibold text-canvas" aria-hidden="true">
           {initials}
         </span>
         <div className="min-w-0 flex-1">
@@ -92,14 +94,17 @@ function UserBlock({ user, onLogout }) {
   )
 }
 
-function SidebarBody({ user, unread, onLogout }) {
+function SidebarBody({ user, unread, onLogout, model, onOpenModel }) {
   return (
     <div className="flex h-full flex-col gap-8">
       <Logo />
       <nav aria-label="Main" className="flex-1">
         <NavItems unread={unread} />
       </nav>
-      <UserBlock user={user} onLogout={onLogout} />
+      <div className="flex flex-col gap-3">
+        <ModelCard settings={model} onOpen={onOpenModel} />
+        <UserBlock user={user} onLogout={onLogout} />
+      </div>
     </div>
   )
 }
@@ -111,6 +116,8 @@ export default function AppShell({ title, topBar, navLocked = false, children })
   const location = useLocation()
   const [unread, setUnread] = useState(0)
   const [drawer, setDrawer] = useState(false)
+  const model = useModelSettings()
+  const openModel = () => { setDrawer(false); model.setOpen(true) }
 
   useEffect(() => {
     const load = () => feedbackAPI.unreadCount()
@@ -148,13 +155,13 @@ export default function AppShell({ title, topBar, navLocked = false, children })
 
       {!navLocked && (
         <aside className="sticky top-0 hidden h-[100dvh] border-r border-line px-4 py-6 lg:block">
-          <SidebarBody user={user} unread={unread} onLogout={handleLogout} />
+          <SidebarBody user={user} unread={unread} onLogout={handleLogout} model={model.settings} onOpenModel={openModel} />
         </aside>
       )}
 
       <header className={`sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-line bg-canvas/90 px-4 backdrop-blur-md ${navLocked ? '' : 'lg:hidden'}`}>
         <LogoMark className="h-7 w-7" />
-        <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight text-ink">{title || 'aiTA'}</span>
+        <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight text-ink">{title || 'PAET'}</span>
         {!navLocked && (
           <button
             type="button"
@@ -182,7 +189,7 @@ export default function AppShell({ title, topBar, navLocked = false, children })
             >
               <X size={18} />
             </button>
-            <SidebarBody user={user} unread={unread} onLogout={handleLogout} />
+            <SidebarBody user={user} unread={unread} onLogout={handleLogout} model={model.settings} onOpenModel={openModel} />
           </div>
         </div>
       )}
@@ -191,6 +198,10 @@ export default function AppShell({ title, topBar, navLocked = false, children })
         {topBar && <div className="sticky top-16 z-20 mb-5 lg:top-4">{topBar}</div>}
         {children}
       </main>
+
+      {model.open && model.settings && (
+        <ModelWindow settings={model.settings} onClose={() => model.setOpen(false)} onChange={model.setSettings} />
+      )}
     </div>
   )
 }

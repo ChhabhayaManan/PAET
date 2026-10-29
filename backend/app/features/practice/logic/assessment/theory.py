@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core import llm_gateway
-from app.core.exceptions import AitaError, LLMUnavailable
+from app.core.exceptions import AitaError, LLMUnavailable, ModelKeyError
 from app.features.learner_model.agent.graph import ingest
 from app.features.learner_model.service import EventInput
 from app.features.onboarding.logic.graders.theory import score_from_points
@@ -67,6 +67,8 @@ def _judge(user_id: int, question: TheoryQuestion, answer: str) -> TheoryVerdict
                                      schema=TheoryVerdict, user_id=user_id).value
     except LLMUnavailable:
         verdict = None
+    except ModelKeyError:
+        raise
     except Exception:
         logger.exception("theory judge failed for user %s", user_id)
         verdict = None

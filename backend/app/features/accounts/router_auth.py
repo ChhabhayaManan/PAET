@@ -10,10 +10,11 @@
 #   GET  /dev-login        whether the one-click dev login is switched on
 #   POST /dev-login        sign in as DEV_LOGIN_EMAIL with no password (DEBUG only)
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.llm_choice import clear_cookie
 from app.core.dependencies import get_current_active_user
 from app.features.accounts.schemas import (
     RegisterRequest, LoginRequest, TokenResponse,
@@ -122,10 +123,12 @@ def refresh_token(data: RefreshTokenRequest, db: Session = Depends(get_db)):
     summary="Logout current session",
 )
 def logout(
+    response: Response,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db),
 ):
     AuthService.logout(db, current_user.id, jti="")
+    clear_cookie(response)
     return MessageResponse(message="Successfully logged out.")
 
 

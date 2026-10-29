@@ -1,0 +1,31 @@
+from pydantic import BaseModel, Field
+
+
+class ChoiceIn(BaseModel):
+    provider: str = Field(max_length=30)
+    model: str = Field(default="", max_length=200)
+    api_key: str = Field(default="", max_length=500, repr=False)
+    base_url: str = Field(default="", max_length=300)
+
+
+class ProviderOut(BaseModel):
+    id: str
+    label: str
+    base_url: str
+    needs_key: bool
+    local_only: bool
+
+
+class ModelSettingsOut(BaseModel):
+    source: str
+    provider: str
+    provider_label: str
+    model: str
+    key_hint: str
+    deploy_mode: str
+    providers: list[ProviderOut]
+
+
+class CheckOut(BaseModel):
+    ok: bool
+    models: list[str]

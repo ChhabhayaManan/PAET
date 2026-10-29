@@ -2,15 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { chatAPI, getErrorMessage } from '../utils/api'
 import { createSSEParser } from '../utils/sse'
+import { notifyModelError } from '../components/model/notifyModelError'
 
 const FIRST_CHECK_MS = 800
 const RECOVER_EVERY_MS = 2500
 const RECOVER_TRIES = 24
 const RECENT_MS = 3 * 60 * 1000
 
-const BUSY_NOTICE = 'aiTA is still answering your previous message in this chat. Your new message was not sent — try again once the reply arrives.'
+const BUSY_NOTICE = 'PAET is still answering your previous message in this chat. Your new message was not sent — try again once the reply arrives.'
 const LOST_NOTICE = 'The reply is taking longer than usual. Reopen this chat in a minute to see it.'
-const OFFLINE_NOTICE = "Couldn't reach aiTA. Check your connection and try again."
+const OFFLINE_NOTICE = "Couldn't reach PAET. Check your connection and try again."
 const FAILED_REPLY = 'Sorry — something went wrong. Please try again.'
 const RETRYABLE = new Set(['busy', 'error'])
 
@@ -42,9 +43,9 @@ async function describeFailure(res) {
   if (res.status === 404) return 'This chat could not be found. Start a new chat.'
   try {
     const body = await res.json()
-    return getErrorMessage({ response: { data: body } }, `aiTA couldn't take that message (error ${res.status}).`)
+    return getErrorMessage({ response: { data: body } }, `PAET couldn't take that message (error ${res.status}).`)
   } catch {
-    return `aiTA couldn't take that message (error ${res.status}). Try again.`
+    return `PAET couldn't take that message (error ${res.status}). Try again.`
   }
 }
 
@@ -211,6 +212,7 @@ export default function useChatStream({ startFresh = false } = {}) {
     if (!res.ok) return withdraw(await describeFailure(res))
 
     let ended = null
+    let modelFailed = false
     const push = createSSEParser((event, data) => {
       if (!current()) return
       if (event === 'tool_start') {
@@ -224,6 +226,8 @@ export default function useChatStream({ startFresh = false } = {}) {
         setMessages(list => list.map(m => (m.live ? stored(data) : m)))
       } else if (event === 'error') {
         ended = 'error'
+        modelFailed = Boolean(data.code)
+        if (modelFailed) notifyModelError({ detail: data.message })
         setMessages(list => list.map(m => (m.live ? {
           ...m, live: false, content: data.message || FAILED_REPLY, moderation_flag: 'error',
           tool_calls: m.tools.filter(t => !t.running),
@@ -252,7 +256,8 @@ export default function useChatStream({ startFresh = false } = {}) {
     }
     if (ended === 'error') {
       done()
-      recover(id, gen, { tries: 3 })
+      // Retrying a rejected key only repeats the error.
+      if (!modelFailed) recover(id, gen, { tries: 3 })
       return { ok: false }
     }
     patchLive(m => ({ ...m, status: 'reconnecting' }))

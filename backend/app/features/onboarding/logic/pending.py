@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
+from app.core.llm_choice import paet_default
 from app.features.accounts.models import SkillLevel, User
 from app.features.learner_model.service import apply_theory_adjustment
 from app.features.onboarding.logic import profile_card, seeding
@@ -155,8 +156,9 @@ async def run_sweep_loop(stop: asyncio.Event, interval_s: float = SWEEP_INTERVAL
 
 
 def retry_with_backoff(user_id: int, delays: tuple[float, ...] = RETRY_DELAYS) -> None:
+    """Runs after the response, when nobody would see a key error: always PAET default."""
     try:
-        with SessionLocal() as db:
+        with paet_default(), SessionLocal() as db:
             for delay in delays:
                 time.sleep(delay)
                 grade_pending_for_user(db, user_id)

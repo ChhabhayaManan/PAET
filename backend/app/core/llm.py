@@ -67,6 +67,11 @@ def get_codegen_model(temperature: float = 0.0) -> ChatOpenAI:
 
 
 def structured(model, schema: type[BaseModel]):
+    # Some OpenAI-compatible endpoints (Anthropic's) ignore response_format; tool calls
+    # are the one structured channel every provider honours.
+    base_url = getattr(model, "openai_api_base", None)
+    if base_url and base_url != NVIDIA_BASE_URL:
+        return model.with_structured_output(schema, include_raw=True, method="function_calling")
     return model.with_structured_output(schema, include_raw=True)
 
 

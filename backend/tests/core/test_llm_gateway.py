@@ -10,8 +10,9 @@ from sqlalchemy.pool import StaticPool
 from app.core import llm_gateway
 from app.core.config import settings
 from app.core.database import Base
-from app.core.exceptions import LLMUnavailable
+from app.core.exceptions import LLMUnavailable, ModelKeyError
 from app.core.llm_call import LLMCall
+from app.core.llm_choice import Choice, use_choice
 from app.core.llm_gateway import Gateway, TokenBucket, gateway_chat_model, invoke
 
 RATE_LIMITED = Exception("Error code: 429 - rate limit exceeded")
@@ -85,7 +86,7 @@ def env(monkeypatch):
         pass
 
     e = Env()
-    e.clock, e.factory, e.gateway = clock, factory, gateway
+    e.clock, e.factory, e.gateway, e.sessions = clock, factory, gateway, sessions
 
     def rows():
         with sessions() as db:
@@ -256,3 +257,46 @@ def test_bound_chat_model_routes_tool_calls_through_the_gateway(env):
     assert env.factory.built[0].tools == [tool]
     assert env.gateway._buckets[0].tokens == 34
     assert env.rows() == [("chat", "ok", 0, "primary")]
+
+
+STUDENT = Choice("openai", "gpt-4.1-mini", "https://api.openai.com/v1", "sk-student-secret-1234")
+
+
+def _logged(env):
+    with env.sessions() as db:
+        return [(r.status, r.provider, r.key_source, r.model, r.key_slot, r.error or "")
+                for r in db.query(LLMCall).order_by(LLMCall.id)]
+
+
+def test_student_choice_uses_their_client_and_logs_provider_without_key(env):
+    built = []
+    env.gateway.choice_factory = lambda choice, **kw: built.append(choice) or FakeChat(reply())
+
+    with use_choice(STUDENT):
+        result = invoke("hint", "p")
+
+    assert result.model == "gpt-4.1-mini"
+    assert built == [STUDENT] and env.factory.calls == []
+    assert _logged(env) == [("ok", "openai", "own", "gpt-4.1-mini", None, "")]
+
+
+def test_student_key_failure_stops_without_fallback_or_template(env, monkeypatch):
+    monkeypatch.setattr(settings, "NVIDIA_FALLBACK_MODEL", "fallback")
+    failure = Exception("Error code: 429 - Rate limit reached for sk-student-secret-1234")
+    failure.status_code = 429
+    env.gateway.choice_factory = lambda choice, **kw: FakeChat(failure)
+
+    with use_choice(STUDENT), pytest.raises(ModelKeyError) as caught:
+        invoke("hint", "p", template="canned hint")
+
+    assert caught.value.code == "rate_limited"
+    assert env.factory.calls == []
+    [row] = _logged(env)
+    assert row[:3] == ("error", "openai", "own")
+    assert "sk-student-secret-1234" not in row[5]
+
+
+def test_no_choice_keeps_the_paet_path_and_logs_it(env):
+    invoke("hint", "p")
+
+    assert _logged(env) == [("ok", "nvidia", "paet", "primary", 0, "")]

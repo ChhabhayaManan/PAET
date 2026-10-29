@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notifyModelError } from '../components/model/notifyModelError'
 
 // ─── Helper: safely extract a string from any API error ──────────────────────
 export function getErrorMessage(err, fallback = 'Something went wrong.') {
@@ -18,6 +19,7 @@ const api = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
   timeout: 60000,   // 60s — gives Render free tier time to wake up
+  withCredentials: true,   // the model-choice cookie
 })
 
 // An evaluation compiles code, runs it in the sandbox and calls an LLM, which
@@ -56,6 +58,10 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
+
+    if (error.response?.status === 424 && error.response.data?.code && !originalRequest?.inlineModelError) {
+      notifyModelError(error.response.data)
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
@@ -158,6 +164,7 @@ async function postStream(path, body, signal) {
       },
       body: JSON.stringify(body),
       signal,
+      credentials: 'include',
     })
   }
   let res = await send()
@@ -203,6 +210,14 @@ export const practiceSessionAPI = {
   finish:   (id)        => api.post(`/practice-sessions/${id}/finish`),
   // Writes the short feedback with the LLM the first time
   feedback: (id, retry) => api.post(`/practice-sessions/${id}/feedback`, { retry }, { timeout: EVAL_TIMEOUT }),
+}
+
+// The key goes to the server only to be checked and sealed into an HttpOnly cookie.
+export const modelAPI = {
+  get:    ()     => api.get('/model-settings'),
+  test:   (body) => api.post('/model-settings/test', body, { timeout: EVAL_TIMEOUT, inlineModelError: true }),
+  save:   (body) => api.put('/model-settings', body, { timeout: EVAL_TIMEOUT, inlineModelError: true }),
+  remove: ()     => api.delete('/model-settings'),
 }
 
 export const topicPracticeAPI = {

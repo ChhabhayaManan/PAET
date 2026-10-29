@@ -7,12 +7,14 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.exceptions import register_exception_handlers
+from app.core.llm_choice import LLMChoiceMiddleware
 from app.features.grading import models as code_eval_models  # noqa: F401
 from app.features.problems import models as problem_models  # noqa: F401
 from app.features.accounts import router_auth, router_users, router_profile
 from app.features.chat import router as chat
 from app.features.feedback import router as feedback
 from app.features.gamification import router as gamification
+from app.features.model_settings import router as model_settings
 from app.features.grading import router as code_eval
 from app.features.onboarding import router as onboarding
 from app.features.practice import router_assessment, router_sessions, router_topic_practice
@@ -58,10 +60,12 @@ Use `/auth/login` to get a Bearer token, then click **Authorize**.
 
 register_exception_handlers(app)
 
+app.add_middleware(LLMChoiceMiddleware)
+# Credentials so the model-choice cookie travels; that rules out a "*" origin.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],          # open during deployment — tighten after it works
-    allow_credentials=False,      # must be False when allow_origins=["*"]
+    allow_origins=settings.allowed_origins_list,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -78,6 +82,7 @@ app.include_router(gamification.router, prefix="/api/v1")
 app.include_router(onboarding.router, prefix="/api/v1")
 app.include_router(router_sessions.router, prefix="/api/v1")
 app.include_router(router_topic_practice.router, prefix="/api/v1")
+app.include_router(model_settings.router, prefix="/api/v1")
 
 
 @app.get("/", tags=["Health"])

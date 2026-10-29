@@ -55,6 +55,15 @@ class Settings(BaseSettings):
     NVIDIA_FALLBACK_MODEL: str = "nvidia/nemotron-3.5-lightning-30b-a3b"
     NVIDIA_RPM: int = 35
     LLM_QUEUE_DEADLINE_S: float = 20
+
+    # ── Model selector ────────────────────────────────────────────────────
+    # web: 30-day key cookie, cloud providers only. local: 1-year cookie, local models too.
+    DEPLOY_MODE: str = "web"
+    LLM_COOKIE_SECRET: str = Field(default="", repr=False)
+    DEFAULT_LLM_PROVIDER: str = ""
+    DEFAULT_LLM_MODEL: str = ""
+    DEFAULT_LLM_API_KEY: str = Field(default="", repr=False)
+    DEFAULT_LLM_BASE_URL: str = ""
     REDIS_URL: str = Field(default="", repr=False)
 
     # ── Code execution ────────────────────────────────────────────────────

@@ -11,7 +11,9 @@ from typing import Literal
 from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field, ValidationError
 
-from app.core.exceptions import AitaError, ExecutorUnavailable, LLMUnavailable, ProblemNotFound
+from app.core.exceptions import (
+    AitaError, ExecutorUnavailable, LLMUnavailable, ModelKeyError, ProblemNotFound,
+)
 from app.core.topics import TOPICS
 from app.features.chat.logic.rag.search import search
 from app.features.grading.agent.graph import evaluate_submission
@@ -161,6 +163,9 @@ def _traced(ctx: ToolContext, name: str, schema: type[BaseModel], body):
             except _Refusal as exc:
                 payload = {"error": exc.error, "message": exc.message}
                 summary, ok = exc.error.replace("_", " "), False
+            except ModelKeyError:
+                _rollback(ctx.db)
+                raise
             except Exception as exc:
                 _rollback(ctx.db)
                 logger.exception("chat tool %s failed", name)

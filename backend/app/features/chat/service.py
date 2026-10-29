@@ -2,6 +2,7 @@
 runs on a worker thread with its own DB session and pushes events into a queue, so the
 reply is persisted even when the client stops listening half way."""
 
+import contextvars
 import logging
 import queue
 import re
@@ -17,7 +18,7 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import settings
-from app.core.exceptions import LLMUnavailable, ThreadNotFound, TurnInProgress
+from app.core.exceptions import LLMUnavailable, ModelKeyError, ThreadNotFound, TurnInProgress
 from app.core.llm_gateway import gateway_chat_model
 from app.features.chat.agent import context as chat_context
 from app.features.chat.agent.agent import build_agent
@@ -88,6 +89,7 @@ class Final:
 class Error:
     event: ClassVar[str] = "error"
     message: str
+    code: str = ""
 
 
 Event = ToolStart | ToolEnd | Token | Final | Error
@@ -182,7 +184,9 @@ class Turn(Iterator[Event]):
     def __init__(self, job: "_Job"):
         self._events: queue.Queue = queue.Queue()
         self._finished = False
-        self._worker = threading.Thread(target=job.run, args=(self._events.put,),
+        # The copied context carries the request's model choice into the worker.
+        self._worker = threading.Thread(target=contextvars.copy_context().run,
+                                        args=(job.run, self._events.put),
                                         name=f"chat-turn-{job.thread_id}")
         self._worker.start()
 
@@ -220,6 +224,9 @@ class _Job:
         try:
             db = self.session_factory()
             terminal, memory = self._answer(db, emit, started)
+        except ModelKeyError as exc:
+            logger.warning("student model failed in thread %s: %s", self.thread_id, exc.code)
+            terminal = self._failed(db, started, exc.detail, exc.code)
         except Exception:
             logger.exception("chat turn failed in thread %s", self.thread_id)
             terminal = self._failed(db, started)
@@ -352,15 +359,16 @@ class _Job:
         return Final(message_id=message_id, content=text, citations=citations or [],
                      tool_calls=calls, moderation_flag=flag)
 
-    def _failed(self, db: Session | None, started: float) -> Error:
+    def _failed(self, db: Session | None, started: float, message: str = FAILED,
+                code: str = "") -> Error:
         if db is not None:
             _rollback(db)
             try:
-                self._save(db, FAILED, started, flag=FAILED_FLAG)
+                self._save(db, message, started, flag=FAILED_FLAG)
             except Exception:
                 logger.exception("could not save the failure reply in thread %s", self.thread_id)
                 _rollback(db)
-        return Error(FAILED)
+        return Error(message, code)
 
     def _remember(self, db: Session, previous: str | None, upto: int, target: int,
                   transcript: str) -> None:
