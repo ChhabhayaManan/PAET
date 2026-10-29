@@ -239,14 +239,14 @@ export default function LoginPage() {
 
   const title = mode === 'forgot'
     ? fpStep === 1 ? 'Reset your password' : fpStep === 2 ? 'Check your email' : 'Set a new password'
-    : step === 1 ? 'Log in to aiTA' : 'Check your email'
+    : step === 1 ? 'Log in to PAET' : 'Check your email'
 
   const subtitle = mode === 'forgot'
     ? fpStep === 1 ? "Enter your email and we'll send you a 6-digit code." : fpStep === 2 ? 'Type the code from the email.' : 'Almost there.'
     : step === 1 ? 'Pick up your practice where you left off.' : 'Type the 6-digit code we just sent you.'
 
   const footer = mode === 'login' && step === 1 && (
-    <>New to aiTA? <Link to="/register" className="font-medium text-ink underline decoration-ink-faint underline-offset-4 hover:decoration-ink">Create an account</Link></>
+    <>New to PAET? <Link to="/register" className="font-medium text-ink underline decoration-ink-faint underline-offset-4 hover:decoration-ink">Create an account</Link></>
   )
 
   return (

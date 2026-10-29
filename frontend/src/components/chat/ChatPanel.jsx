@@ -81,7 +81,7 @@ export default function ChatPanel({ initialPrompt = '', problemContext = '', def
   useEffect(() => {
     const last = chat.messages[chat.messages.length - 1]
     if (wasStreaming.current && !chat.streaming && last?.role === 'assistant' && !last.live) {
-      setAnnouncement(`aiTA replied: ${(last.content || '').slice(0, 200)}`)
+      setAnnouncement(`PAET replied: ${(last.content || '').slice(0, 200)}`)
     }
     wasStreaming.current = chat.streaming
   }, [chat.streaming, chat.messages])
@@ -188,13 +188,13 @@ export default function ChatPanel({ initialPrompt = '', problemContext = '', def
   const firstName = user?.full_name?.split(' ')[0] || user?.username
 
   return (
-    <section className={`tile flex min-h-0 flex-col overflow-hidden ${className}`} aria-label="Chat with aiTA">
+    <section className={`tile theme-paper flex min-h-0 flex-col overflow-hidden ${className}`} aria-label="Chat with PAET">
       <div className="sr-only" aria-live="polite">{announcement}</div>
       <header className="relative flex shrink-0 items-center gap-3 border-b border-line px-4 py-3.5">
         <LogoMark className="h-9 w-9" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h2 className="text-[15px] font-semibold leading-tight tracking-tight text-ink">Ask aiTA</h2>
+            <h2 className="text-[15px] font-semibold leading-tight tracking-tight text-ink">Ask PAET</h2>
             {chat.streaming && (
               <span className="flex items-center gap-1.5 text-[11px] text-pop-mint">
                 <span className="h-1.5 w-1.5 rounded-full bg-pop-mint motion-safe:animate-breathe" /> answering
@@ -267,8 +267,8 @@ export default function ChatPanel({ initialPrompt = '', problemContext = '', def
             value={draft}
             onChange={e => setDraft(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder={chat.streaming ? 'aiTA is answering…' : 'Ask about a concept, your code, or your progress…'}
-            aria-label="Message aiTA"
+            placeholder={chat.streaming ? 'PAET is answering…' : 'Ask about a concept, your code, or your progress…'}
+            aria-label="Message PAET"
             className="block max-h-[200px] w-full resize-none bg-transparent px-3.5 pb-1 pt-3 text-sm leading-relaxed text-ink placeholder:text-ink-faint focus:outline-none"
           />
           <div className="flex items-center gap-2 px-2.5 pb-2.5 pt-1">

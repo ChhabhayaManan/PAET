@@ -26,10 +26,10 @@ const OPTION_STYLE = {
 }
 
 const KEY_STYLE = {
-  idle: 'bg-tile-3 text-ink-muted shadow-[0_3px_0_#0e0e11]',
-  chosen: 'bg-ink text-canvas shadow-[0_3px_0_#8e8e99]',
-  right: 'bg-pop-mint text-canvas shadow-[0_3px_0_#4c9a5d]',
-  wrong: 'bg-pop-coral text-canvas shadow-[0_3px_0_#a3584c]',
+  idle: 'bg-tile-3 text-ink-muted shadow-[0_3px_0_theme(colors.shadow)]',
+  chosen: 'bg-ink text-canvas shadow-[0_3px_0_theme(colors.key.ink)]',
+  right: 'bg-pop-mint text-canvas shadow-[0_3px_0_theme(colors.key.mint)]',
+  wrong: 'bg-pop-coral text-canvas shadow-[0_3px_0_theme(colors.key.coral)]',
   dim: 'bg-tile-3 text-ink-faint',
 }
 

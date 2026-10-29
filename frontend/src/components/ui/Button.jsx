@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react'
 
 const VARIANTS = {
   primary:   'bg-ink text-canvas hover:bg-white disabled:bg-tile-3 disabled:text-ink-faint',
-  accent:    'bg-brand-500 text-white hover:bg-brand-400 disabled:bg-tile-3 disabled:text-ink-faint',
+  accent:    'bg-brand-500 text-canvas hover:bg-brand-400 disabled:bg-tile-3 disabled:text-ink-faint',
   secondary: 'border border-line-strong bg-tile-2 text-ink hover:bg-tile-3 disabled:text-ink-faint',
   ghost:     'text-ink-muted hover:bg-white/[0.06] hover:text-ink disabled:text-ink-faint',
   danger:    'bg-pop-coral text-canvas hover:brightness-110 disabled:bg-tile-3 disabled:text-ink-faint',
@@ -26,7 +26,7 @@ const Button = forwardRef(function Button(
       type={type}
       disabled={disabled || busy}
       aria-busy={busy || undefined}
-      className={`inline-flex shrink-0 items-center justify-center rounded-full font-medium transition-[transform,background-color,color,filter] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.97] disabled:cursor-not-allowed disabled:active:scale-100 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex shrink-0 items-center justify-center rounded-md font-medium transition-[transform,background-color,color,filter] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.97] disabled:cursor-not-allowed disabled:active:scale-100 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...rest}
     >
       {busy ? <Loader2 size={16} className="animate-spin" /> : Icon && <Icon size={16} strokeWidth={2} />}

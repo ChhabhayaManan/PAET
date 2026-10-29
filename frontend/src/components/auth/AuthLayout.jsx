@@ -1,6 +1,5 @@
 import { CircleCheck, Lightbulb, Play } from 'lucide-react'
 import LogoMark, { Wordmark } from '../ui/LogoMark'
-import { Keycaps } from '../dashboard/HeroTile'
 
 const POINTS = [
   { icon: Play, tone: 'bg-pop-mint text-canvas', text: 'Your code runs against real tests, so grading is never a guess.' },
@@ -28,7 +27,6 @@ export default function AuthLayout({ title, subtitle, children, footer }) {
               </li>
             ))}
           </ul>
-          <div className="mt-10 h-48 w-72"><Keycaps /></div>
         </div>
 
         <div className="w-full motion-safe:animate-rise">

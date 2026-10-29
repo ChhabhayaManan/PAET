@@ -347,7 +347,7 @@ export default function CodeHelpPage() {
     { value: 'problem', label: 'Problem', icon: BookOpen },
     { value: 'hints', label: 'Hints', icon: Lightbulb, badge: problem?.hints?.length || null },
     hasSolution && { value: 'solution', label: 'Solution', icon: solutionOpen ? Eye : Lock },
-    { value: 'chat', label: 'Ask aiTA', icon: MessageSquareText },
+    { value: 'chat', label: 'Ask PAET', icon: MessageSquareText },
   ].filter(Boolean)
 
   const left = (
@@ -396,7 +396,7 @@ export default function CodeHelpPage() {
               ))}
             </ol>
           ) : (
-            <EmptyState icon={Lightbulb} title="No hints for this problem" body="Try the Ask aiTA tab. It can give you a hint without the answer." />
+            <EmptyState icon={Lightbulb} title="No hints for this problem" body="Try the Ask PAET tab. It can give you a hint without the answer." />
           )
         )}
 
@@ -417,7 +417,7 @@ export default function CodeHelpPage() {
                 </div>
               )}
               {solution && !solution.code && (
-                <EmptyState icon={BookOpen} title="No model answer for this problem" body="Ask aiTA to walk you through the approach instead." />
+                <EmptyState icon={BookOpen} title="No model answer for this problem" body="Ask PAET to walk you through the approach instead." />
               )}
               {!solution && !solutionLoading && (
                 <Button size="sm" variant="secondary" icon={RotateCcw} onClick={() => loadSolution(gaveUp)}>Load the solution</Button>

@@ -6,6 +6,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import ErrorBoundary from './components/ui/ErrorBoundary'
 import Backdrop from './components/ui/Backdrop'
 import LogoMark from './components/ui/LogoMark'
+import { palette } from './styles/palette'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
@@ -40,16 +41,16 @@ export default function App() {
           position="top-center"
           toastOptions={{
             style: {
-              background: '#1b1b1f',
-              color: '#f5f5f7',
-              border: '1px solid #36363d',
-              fontFamily: '"Geist", system-ui, sans-serif',
+              background: palette.tile[2],
+              color: palette.ink.DEFAULT,
+              border: `1px solid ${palette.line.strong}`,
+              fontFamily: '"Space Grotesk", system-ui, sans-serif',
               fontSize: '14px',
               borderRadius: '9999px',
               padding: '8px 14px',
             },
-            success: { iconTheme: { primary: '#8fe3a0', secondary: '#0a0a0c' } },
-            error:   { iconTheme: { primary: '#f58a7a', secondary: '#0a0a0c' } },
+            success: { iconTheme: { primary: palette.pop.mint, secondary: palette.canvas } },
+            error:   { iconTheme: { primary: palette.pop.coral, secondary: palette.canvas } },
           }}
         />
         <ErrorBoundary>

@@ -25,7 +25,7 @@ const NOTICES = {
 
 const LIVE_LABELS = {
   thinking: 'Thinking',
-  waiting: 'aiTA is still working on your last message',
+  waiting: 'PAET is still working on your last message',
   reconnecting: 'Connection dropped — fetching the saved reply',
 }
 
@@ -170,19 +170,19 @@ function ProblemContext({ text }) {
   const [open, setOpen] = useState(false)
   const title = text.split('\n')[0].replace(/\s*\(problem_id \d+\)$/, '')
   return (
-    <div className="mb-2 overflow-hidden rounded-lg border border-teal-400/20 bg-teal-500/[0.07]">
+    <div className="mb-2 overflow-hidden rounded-lg border border-brand-400/20 bg-brand-500/[0.07]">
       <button
         type="button"
         onClick={() => setOpen(v => !v)}
         aria-expanded={open}
-        className="flex w-full items-center gap-1.5 px-2.5 py-1.5 text-left text-[11px] text-teal-200/90"
+        className="flex w-full items-center gap-1.5 px-2.5 py-1.5 text-left text-[11px] text-brand-200/90"
       >
         <FileText size={12} className="shrink-0" />
         <span className="truncate">Problem attached · {title}</span>
         <ChevronDown size={12} className={`ml-auto shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="max-h-48 overflow-y-auto whitespace-pre-wrap border-t border-teal-400/15 px-2.5 py-2 text-[11px] leading-relaxed text-ink-subtle">
+        <div className="max-h-48 overflow-y-auto whitespace-pre-wrap border-t border-brand-400/15 px-2.5 py-2 text-[11px] leading-relaxed text-ink-subtle">
           {text}
         </div>
       )}

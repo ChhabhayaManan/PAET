@@ -1,4 +1,5 @@
 import { CheckCircle2, Code2, GitBranch, Zap } from 'lucide-react'
+import { palette } from '../../styles/palette'
 
 const DIMENSIONS = [
   { key: 'correctness', label: 'Correctness', icon: CheckCircle2, bar: 'bg-pop-mint', text: 'text-pop-mint', desc: 'Test cases actually passed', weight: '55%' },
@@ -17,10 +18,10 @@ const UNVERIFIED_SHORT = {
 }
 
 function band(score) {
-  if (score >= 80) return { word: 'Excellent', color: '#8fe3a0' }
-  if (score >= 60) return { word: 'Good', color: '#7de3e8' }
-  if (score >= 40) return { word: 'Needs work', color: '#f6d66f' }
-  return { word: 'Keep going', color: '#f58a7a' }
+  if (score >= 80) return { word: 'Excellent', color: palette.pop.mint }
+  if (score >= 60) return { word: 'Good', color: palette.pop.aqua }
+  if (score >= 40) return { word: 'Needs work', color: palette.pop.sun }
+  return { word: 'Keep going', color: palette.pop.coral }
 }
 
 function Gauge({ score }) {

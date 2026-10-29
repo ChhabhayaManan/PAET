@@ -13,18 +13,30 @@
   h1,h2,h3,h4,h5,h6 { @apply font-display; }
   code, pre, kbd, samp, .font-mono { font-variant-ligatures: none; }
   :focus-visible {
-    outline: 2px solid theme('colors.brand.400');
+    outline: 2px solid rgb(var(--c-brand-400));
     outline-offset: 2px;
   }
 }
 
 @layer components {
   .tile {
-    @apply rounded-tile border border-line bg-tile;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+    @apply relative rounded-tile border border-line bg-tile;
+    box-shadow: inset 0 1px 0 rgb(var(--c-chalk) / 0.04), 0 12px 28px -18px rgb(0 0 0 / 0.75);
   }
   .eyebrow {
     @apply font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-subtle;
+  }
+  /* A tile's leading label sits in a notch cut into its top border. */
+  .tile:not(.overflow-hidden) > .eyebrow:first-child,
+  .tile:not(.overflow-hidden) > :first-child > .eyebrow:first-child,
+  .tile:not(.overflow-hidden) > :first-child > :first-child > .eyebrow:first-child {
+    @apply absolute -top-2 left-4 m-0 bg-canvas px-2 leading-4;
+  }
+  .tile .justify-between > .eyebrow:first-child + :last-child { margin-left: auto; }
+  .theme-paper {
+    @apply text-ink;
+    color-scheme: light;
+    box-shadow: 0 20px 44px -12px rgb(0 0 0 / 0.6);
   }
 }
 
@@ -38,7 +50,7 @@
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2c2c33; border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb { background: rgb(var(--c-line-strong)); border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }

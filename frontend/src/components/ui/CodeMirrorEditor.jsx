@@ -6,40 +6,43 @@ import { HighlightStyle, indentUnit, syntaxHighlighting } from '@codemirror/lang
 import { tags as t } from '@lezer/highlight'
 import { cpp } from '@codemirror/lang-cpp'
 import { python } from '@codemirror/lang-python'
+import { palette } from '../../styles/palette'
+
+const { code, ink, pop } = palette
 
 const theme = EditorView.theme({
   '&': {
-    color: '#e4e4ea',
-    backgroundColor: '#0e0e11',
+    color: code.text,
+    backgroundColor: code.bg,
     fontSize: '13.5px',
   },
   '&.cm-focused': { outline: 'none' },
-  '.cm-scroller': { fontFamily: '"JetBrains Mono", ui-monospace, monospace', lineHeight: '1.65', fontVariantLigatures: 'none' },
-  '.cm-content': { caretColor: '#f5f5f7', padding: '14px 0' },
+  '.cm-scroller': { fontFamily: '"IBM Plex Mono", ui-monospace, monospace', lineHeight: '1.65', fontVariantLigatures: 'none' },
+  '.cm-content': { caretColor: ink.DEFAULT, padding: '14px 0' },
   '.cm-line': { padding: '0 16px 0 10px' },
-  '.cm-cursor, .cm-dropCursor': { borderLeftColor: '#f5f5f7', borderLeftWidth: '2px' },
+  '.cm-cursor, .cm-dropCursor': { borderLeftColor: ink.DEFAULT, borderLeftWidth: '2px' },
   '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
-    backgroundColor: 'rgba(86,186,255,0.24)',
+    backgroundColor: 'rgba(95,201,192,0.24)',
   },
   '.cm-activeLine': { backgroundColor: 'rgba(255,255,255,0.03)' },
-  '.cm-gutters': { backgroundColor: '#0e0e11', color: '#4a4a52', border: 'none', paddingLeft: '6px' },
-  '.cm-activeLineGutter': { backgroundColor: 'transparent', color: '#c8c8d0' },
+  '.cm-gutters': { backgroundColor: code.bg, color: code.gutter, border: 'none', paddingLeft: '6px' },
+  '.cm-activeLineGutter': { backgroundColor: 'transparent', color: ink.muted },
   '.cm-lineNumbers .cm-gutterElement': { padding: '0 8px 0 6px', minWidth: '28px' },
-  '.cm-matchingBracket, .cm-nonmatchingBracket': { backgroundColor: 'rgba(143,227,160,0.16)', outline: 'none' },
-  '.cm-placeholder': { color: '#5d5d66' },
+  '.cm-matchingBracket, .cm-nonmatchingBracket': { backgroundColor: 'rgba(124,199,154,0.16)', outline: 'none' },
+  '.cm-placeholder': { color: ink.faint },
 }, { dark: true })
 
 const highlight = HighlightStyle.define([
-  { tag: [t.keyword, t.controlKeyword, t.modifier, t.operatorKeyword], color: '#f27aa2' },
-  { tag: [t.processingInstruction, t.meta], color: '#f27aa2' },
-  { tag: [t.string, t.special(t.string), t.character], color: '#8fe3a0' },
-  { tag: [t.number, t.bool, t.null, t.atom], color: '#f6d66f' },
-  { tag: [t.comment, t.lineComment, t.blockComment], color: '#6b6b75', fontStyle: 'italic' },
-  { tag: [t.function(t.variableName), t.function(t.propertyName), t.macroName], color: '#7de3e8' },
-  { tag: [t.typeName, t.className, t.standard(t.typeName)], color: '#7de3e8' },
-  { tag: [t.definition(t.variableName)], color: '#f5f5f7' },
-  { tag: [t.operator, t.punctuation, t.bracket], color: '#a8a8b3' },
-  { tag: t.escape, color: '#f6d66f' },
+  { tag: [t.keyword, t.controlKeyword, t.modifier, t.operatorKeyword], color: pop.pink },
+  { tag: [t.processingInstruction, t.meta], color: pop.pink },
+  { tag: [t.string, t.special(t.string), t.character], color: pop.mint },
+  { tag: [t.number, t.bool, t.null, t.atom], color: pop.sun },
+  { tag: [t.comment, t.lineComment, t.blockComment], color: code.comment, fontStyle: 'italic' },
+  { tag: [t.function(t.variableName), t.function(t.propertyName), t.macroName], color: pop.aqua },
+  { tag: [t.typeName, t.className, t.standard(t.typeName)], color: pop.aqua },
+  { tag: [t.definition(t.variableName)], color: ink.DEFAULT },
+  { tag: [t.operator, t.punctuation, t.bracket], color: ink.muted },
+  { tag: t.escape, color: pop.sun },
 ])
 
 const LANG = { c: cpp, cpp, python }

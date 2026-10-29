@@ -1,3 +1,5 @@
+import { palette } from '../../styles/palette'
+
 export const TOPIC_LABELS = {
   basics_io: 'Basics & I/O',
   conditionals: 'Conditionals',
@@ -30,9 +32,9 @@ export const MISCONCEPTION_LABELS = {
 
 export const BAND_STYLE = {
   unseen:     { label: 'Not yet practised', bar: 'bg-white/10',  text: 'text-ink-subtle', soft: 'bg-white/[0.05] border-white/10',      hex: 'rgba(255,255,255,0.12)' },
-  weak:       { label: 'Weak',              bar: 'bg-pop-coral', text: 'text-pop-coral',  soft: 'bg-pop-coral/10 border-pop-coral/25', hex: '#f58a7a' },
-  developing: { label: 'Developing',        bar: 'bg-pop-sun',   text: 'text-pop-sun',    soft: 'bg-pop-sun/10 border-pop-sun/25',     hex: '#f6d66f' },
-  mastered:   { label: 'Mastered',          bar: 'bg-pop-mint',  text: 'text-pop-mint',   soft: 'bg-pop-mint/10 border-pop-mint/25',   hex: '#8fe3a0' },
+  weak:       { label: 'Needs work',        bar: 'bg-pop-coral', text: 'text-pop-coral',  soft: 'bg-pop-coral/10 border-pop-coral/25', hex: palette.pop.coral },
+  developing: { label: 'Developing',        bar: 'bg-pop-sun',   text: 'text-pop-sun',    soft: 'bg-pop-sun/10 border-pop-sun/25',     hex: palette.pop.sun },
+  mastered:   { label: 'Mastered',          bar: 'bg-pop-mint',  text: 'text-pop-mint',   soft: 'bg-pop-mint/10 border-pop-mint/25',   hex: palette.pop.mint },
 }
 
 export const LANGUAGE_LABELS = { c: 'C', cpp: 'C++', python: 'Python' }

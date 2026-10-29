@@ -1,4 +1,5 @@
 import { BAND_STYLE } from '../learning/labels'
+import { palette } from '../../styles/palette'
 
 const INNER = 38
 const MAX_LEN = 50
@@ -17,7 +18,7 @@ export default function TopicRing({ topics }) {
       <div className="relative mx-auto mt-6 aspect-square w-full max-w-[220px]">
         <svg viewBox="0 0 200 200" className="h-full w-full" role="img" aria-label={`${practised.length} of ${topics.length} topics practised: ${summary}`}>
           <g className="origin-center [transform-box:fill-box] motion-safe:animate-spin-slow">
-            <circle cx="100" cy="100" r="96" fill="none" stroke="#f27aa2" strokeOpacity="0.55" strokeWidth="1.5" strokeDasharray="5 6" />
+            <circle cx="100" cy="100" r="96" fill="none" stroke={palette.pop.sun} strokeOpacity="0.55" strokeWidth="1.5" strokeDasharray="5 6" />
           </g>
           {topics.map((t, i) => {
             const seen = t.evidence_count > 0

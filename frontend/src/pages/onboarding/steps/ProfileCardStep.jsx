@@ -125,7 +125,7 @@ export default function ProfileCardStep({ initial, onConflict }) {
   return (
     <div className="space-y-6">
       <div className="relative overflow-hidden rounded-[22px] border border-pop-mint/25 bg-pop-mint/[0.06] p-6 text-center sm:p-8">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-pop-mint text-canvas shadow-[0_6px_0_#4c9a5d]" aria-hidden="true">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-pop-mint text-canvas shadow-[0_6px_0_theme(colors.key.mint)]" aria-hidden="true">
           <Award size={26} />
         </span>
         <p className="eyebrow mt-5">Your starting title</p>

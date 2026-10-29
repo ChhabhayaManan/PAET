@@ -121,7 +121,7 @@ export default function DashboardPage() {
 
         <aside
           className={`${chatOpen ? 'fixed inset-0 z-40 flex bg-canvas p-2 sm:p-4' : 'hidden'} xl:sticky xl:inset-auto xl:top-8 xl:z-auto xl:flex xl:h-[calc(100dvh-4rem)] xl:bg-transparent xl:p-0`}
-          aria-label="Ask aiTA"
+          aria-label="Ask PAET"
         >
           <ChatPanel initialPrompt={ask} className="h-full w-full" onClose={() => setChatOpen(false)} />
         </aside>
@@ -133,7 +133,7 @@ export default function DashboardPage() {
           onClick={() => setChatOpen(true)}
           className="fixed bottom-5 right-5 z-30 flex h-12 items-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-canvas shadow-[0_12px_30px_-8px_rgba(0,0,0,0.7)] transition-transform active:scale-[0.97] xl:hidden"
         >
-          <MessageSquareText size={18} /> Ask aiTA
+          <MessageSquareText size={18} /> Ask PAET
         </button>
       )}
     </AppShell>

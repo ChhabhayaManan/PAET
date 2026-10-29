@@ -195,7 +195,7 @@ export default function ProfilePage() {
     <AppShell title="Profile">
       <div className="mx-auto flex max-w-3xl flex-col gap-5">
         <header className="tile flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-7">
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-pop-aqua font-mono text-xl font-semibold text-canvas shadow-[0_5px_0_#3b9a9f]" aria-hidden="true">
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-ink font-mono text-xl font-semibold text-canvas shadow-[0_5px_0_theme(colors.key.ink)]" aria-hidden="true">
             {initials}
           </span>
           <div className="min-w-0 flex-1">
@@ -318,7 +318,7 @@ export default function ProfilePage() {
           <Panel title="Privacy" description="You decide whether your activity helps research.">
             <div className="flex items-start justify-between gap-4 rounded-[20px] border border-line bg-tile-2 p-5">
               <div className="flex-1">
-                <p id="consent-label" className="text-[15px] font-medium text-ink">Allow your anonymised activity to be used for research and to improve aiTA</p>
+                <p id="consent-label" className="text-[15px] font-medium text-ink">Allow your anonymised activity to be used for research and to improve PAET</p>
                 <p id="consent-desc" className="mt-1.5 text-xs leading-relaxed text-ink-subtle">
                   This covers things like your scores, how many hints you used and how your topic levels changed, with your name removed. You can turn it off at any time.
                 </p>

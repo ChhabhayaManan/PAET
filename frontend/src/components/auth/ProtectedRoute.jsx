@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
     return (
       <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-4" role="status">
         <LogoMark className="h-11 w-11 motion-safe:animate-pulse" />
-        <p className="text-sm text-ink-subtle">Loading aiTA…</p>
+        <p className="text-sm text-ink-subtle">Loading PAET…</p>
       </div>
     )
   }

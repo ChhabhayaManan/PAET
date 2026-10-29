@@ -4,9 +4,9 @@ import { LANGUAGES } from '../../../components/onboarding/options'
 import { StepTitle, StepNav, useSaveStep } from '../../../components/onboarding/StepControls'
 
 const KEY = {
-  c:      { glyph: 'C',   face: 'bg-pop-aqua', depth: 'shadow-[0_6px_0_#3b9a9f]' },
-  cpp:    { glyph: 'C++', face: 'bg-pop-pink', depth: 'shadow-[0_6px_0_#a9466b]' },
-  python: { glyph: 'Py',  face: 'bg-pop-sun',  depth: 'shadow-[0_6px_0_#b39331]' },
+  c:      { glyph: 'C',   face: 'bg-pop-aqua', depth: 'shadow-[0_6px_0_theme(colors.key.aqua)]' },
+  cpp:    { glyph: 'C++', face: 'bg-pop-pink', depth: 'shadow-[0_6px_0_theme(colors.key.pink)]' },
+  python: { glyph: 'Py',  face: 'bg-pop-sun',  depth: 'shadow-[0_6px_0_theme(colors.key.sun)]' },
 }
 
 export default function LanguageStep({ initial, onSaved, onBack, onConflict }) {

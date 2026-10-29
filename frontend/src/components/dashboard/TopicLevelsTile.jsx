@@ -20,20 +20,30 @@ function TopicRow({ topic, current }) {
   const seen = topic.evidence_count > 0
   const band = seen ? topic.band : 'unseen'
   const style = BAND_STYLE[band] || BAND_STYLE.unseen
+  const note = !topic.unlocked ? 'Opens when earlier topics reach 40%'
+    : seen ? `${topic.evidence_count} ${topic.evidence_count === 1 ? 'answer' : 'answers'}` : 'Not yet practised'
   return (
-    <li className={`py-3.5 ${topic.unlocked ? '' : 'opacity-50'}`}>
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="flex min-w-0 items-center gap-1.5 truncate text-sm font-medium text-ink">
-          {!topic.unlocked && <Lock size={12} className="shrink-0 text-ink-subtle" aria-label="Locked" />}
-          {topic.label}
-          {current && <span className="rounded-full bg-ink px-2 py-px text-[10px] font-semibold text-canvas">This question</span>}
-        </span>
-        <span className={`flex shrink-0 items-center gap-2 text-xs ${style.text}`}>
-          {topic.unlocked ? style.label : 'Locked'}
-          {seen && <span className="font-mono text-ink">{Math.round(topic.mastery * 100)}%</span>}
-        </span>
+    <li className={`grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-4 gap-y-2 sm:grid-cols-[minmax(0,150px)_1fr_auto_auto] rounded-lg px-2.5 py-2 ${current ? 'bg-pop-sun/10' : ''} ${topic.unlocked ? '' : 'opacity-50'}`}>
+      <div className="min-w-0">
+        <p className="flex min-w-0 items-center gap-1.5 text-sm font-semibold text-ink">
+          <span className="truncate">{topic.label}</span>
+          {current && <span className="shrink-0 rounded-full bg-ink px-2 py-px text-[10px] font-semibold text-canvas">This question</span>}
+        </p>
+        <p className="mt-0.5 truncate text-[11.5px] text-ink-subtle">{note}</p>
       </div>
-      <LevelBar value={seen ? topic.mastery : 0} band={band} className="mt-2.5" />
+      <LevelBar value={seen ? topic.mastery : 0} band={band} className="order-last col-span-3 sm:order-none sm:col-span-1" />
+      <span className="min-w-[3ch] text-right text-lg font-bold tabular-nums text-ink">
+        {seen ? `${Math.round(topic.mastery * 100)}%` : ''}
+      </span>
+      {!topic.unlocked ? (
+        <span className="flex items-center gap-1 rounded-full border border-line-strong px-2.5 py-0.5 text-xs font-semibold text-ink-subtle">
+          <Lock size={11} aria-hidden="true" /> Locked
+        </span>
+      ) : seen ? (
+        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold text-canvas ${style.bar}`}>{style.label}</span>
+      ) : (
+        <span className="rounded-full border border-line-strong px-2.5 py-0.5 text-xs font-semibold text-ink-subtle">New</span>
+      )}
     </li>
   )
 }
@@ -52,7 +62,7 @@ export default function TopicLevelsTile({ topics, highlight }) {
           <p className="eyebrow">Topic levels</p>
           <h2 className="mt-2 text-xl font-semibold tracking-tight text-ink">Where you stand</h2>
         </div>
-        <span className="rounded-full border border-line-strong px-3 py-1 font-mono text-xs text-ink-muted">
+        <span className="rounded-full bg-ink px-3 py-1 font-mono text-xs font-medium text-canvas">
           {practised} of {topics.length} practised
         </span>
       </div>
