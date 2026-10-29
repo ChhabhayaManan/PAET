@@ -11,8 +11,8 @@ from app.core import llm_gateway
 from app.core.config import settings
 from app.core.database import Base
 from app.core.exceptions import LLMUnavailable
+from app.core.llm_call import LLMCall
 from app.core.llm_gateway import Gateway, TokenBucket, gateway_chat_model, invoke
-from app.models.llm_call import LLMCall
 
 RATE_LIMITED = Exception("Error code: 429 - rate limit exceeded")
 

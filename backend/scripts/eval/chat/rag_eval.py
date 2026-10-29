@@ -23,10 +23,10 @@ from unittest.mock import patch
 
 from langchain_core.embeddings import Embeddings
 
-from app.agents.chat import tools as chat_tools
 from app.core.database import SessionLocal
 from app.core.llm_gateway import gateway_chat_model
-from app.services.rag import embedder
+from app.features.chat.agent import tools as chat_tools
+from app.features.chat.logic.rag import embedder
 from scripts.eval.chat import harness
 from scripts.eval.chat.results import Results, parser, pending
 from scripts.eval.chat.scoring import RAG_METRICS, load_rag, rag_summary

@@ -11,8 +11,8 @@ import math
 import random
 from dataclasses import dataclass, field
 
-from app.services.gamification.rules import Ev, evaluate, is_solved
-from app.services.profiling.mastery import (
+from app.features.gamification.logic.rules import Ev, evaluate, is_solved
+from app.features.learner_model.logic.mastery import (
     MASTERED_FROM,
     PRIOR,
     WEAK_BELOW,

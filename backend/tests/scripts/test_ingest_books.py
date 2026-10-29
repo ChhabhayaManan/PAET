@@ -5,8 +5,8 @@ import pytest
 from sqlalchemy.engine import make_url
 
 import app.core.database as database
-from app.services.rag.sources import SourceSpec
-from scripts.ingest_books import run
+from app.features.chat.logic.rag.sources import SourceSpec
+from scripts.seed.ingest_books import run
 
 FIXTURE = (pathlib.Path(__file__).resolve().parents[1] / "fixtures" / "book_page.html").read_bytes()
 

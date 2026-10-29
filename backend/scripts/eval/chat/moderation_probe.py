@@ -6,7 +6,7 @@ programming, Hinglish, frustrated and off-topic messages that must get through.
 Runs moderation.check only: no DB, no LLM, free. Every run starts over, so the numbers
 always reflect the current term list."""
 
-from app.services import moderation
+from app.features.chat.logic import moderation
 from scripts.eval.chat.results import Results, parser, pending
 from scripts.eval.chat.scoring import load_moderation, moderation_summary
 

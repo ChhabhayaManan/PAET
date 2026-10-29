@@ -6,11 +6,11 @@ from dataclasses import dataclass, field
 
 from sqlalchemy.orm import Session
 
-from app.agents.chat.service import BUSY_FLAG, FAILED_FLAG, Error, Final, ToolStart, run_turn
-from app.models.chat import ChatThread
-from app.models.user import User
-from app.schemas.user import RegisterRequest
-from app.services.auth_service import AuthService
+from app.features.accounts.models import User
+from app.features.accounts.schemas import RegisterRequest
+from app.features.accounts.service import AuthService
+from app.features.chat.models import ChatThread
+from app.features.chat.service import BUSY_FLAG, FAILED_FLAG, Error, Final, ToolStart, run_turn
 from scripts._local_db import require_local_db
 
 TURN_WAIT_S = 600

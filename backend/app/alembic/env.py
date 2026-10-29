@@ -3,14 +3,12 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.core.config import settings
-from app.core.database import Base
-
 # Importing every model module is what lets autogenerate see the full schema.
 # Dropping one silently produces a migration that deletes its table.
-from app.models import (  # noqa: F401
-    code_eval, feedback, learning, problem, user,
-)
+# app/features/__init__.py imports every feature's models.py.
+import app.features  # noqa: F401
+from app.core.config import settings
+from app.core.database import Base
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)

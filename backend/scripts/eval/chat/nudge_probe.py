@@ -19,11 +19,11 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-from app.agents.chat.tools import CHAT_LANGUAGES
-from app.agents.code_eval.multi_test import display_statement
 from app.core.database import SessionLocal
-from app.services.execution.judge import judge
-from app.services.execution.run_code import run_code
+from app.features.chat.agent.tools import CHAT_LANGUAGES
+from app.features.grading.agent.multi_test import display_statement
+from app.features.grading.logic.execution.judge import judge
+from app.features.grading.logic.execution.run_code import run_code
 from scripts.eval.chat import harness
 from scripts.eval.chat.results import Results, parser, pending
 from scripts.eval.chat.scoring import (

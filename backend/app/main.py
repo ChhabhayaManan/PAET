@@ -7,11 +7,18 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.exceptions import register_exception_handlers
-from app.models import code_eval as code_eval_models, problem as problem_models  # noqa: F401
-from app.api import auth, users, problems, code_eval, feedback, profile, assessment, chat, gamification
-from app.api import onboarding, practice_sessions, topic_practice
-from app.services.onboarding import pending
-from app.services.rag import embedder
+from app.features.grading import models as code_eval_models  # noqa: F401
+from app.features.problems import models as problem_models  # noqa: F401
+from app.features.accounts import router_auth, router_users, router_profile
+from app.features.chat import router as chat
+from app.features.feedback import router as feedback
+from app.features.gamification import router as gamification
+from app.features.grading import router as code_eval
+from app.features.onboarding import router as onboarding
+from app.features.practice import router_assessment, router_sessions, router_topic_practice
+from app.features.problems import router as problems
+from app.features.onboarding.logic import pending
+from app.features.chat.logic.rag import embedder
 
 
 @asynccontextmanager
@@ -59,18 +66,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/api/v1")
-app.include_router(users.router, prefix="/api/v1")
+app.include_router(router_auth.router, prefix="/api/v1")
+app.include_router(router_users.router, prefix="/api/v1")
 app.include_router(problems.router, prefix="/api/v1")
 app.include_router(code_eval.router,prefix="/api/v1")
 app.include_router(feedback.router, prefix="/api/v1")
-app.include_router(profile.router, prefix="/api/v1")
-app.include_router(assessment.router, prefix="/api/v1")
+app.include_router(router_profile.router, prefix="/api/v1")
+app.include_router(router_assessment.router, prefix="/api/v1")
 app.include_router(chat.router, prefix="/api/v1")
 app.include_router(gamification.router, prefix="/api/v1")
 app.include_router(onboarding.router, prefix="/api/v1")
-app.include_router(practice_sessions.router, prefix="/api/v1")
-app.include_router(topic_practice.router, prefix="/api/v1")
+app.include_router(router_sessions.router, prefix="/api/v1")
+app.include_router(router_topic_practice.router, prefix="/api/v1")
 
 
 @app.get("/", tags=["Health"])

@@ -8,7 +8,7 @@ database. block_rate is recall on leaks; false_block_rate is over the real hints
 whose judge call failed are counted as unavailable and left out of both rates."""
 
 from app.core.exceptions import LLMUnavailable
-from app.services.hints.guardrail import states_fix
+from app.features.hints.logic.guardrail import states_fix
 from scripts._local_db import require_local_db
 from scripts.eval.chat.results import Results, parser, pending
 from scripts.eval.chat.scoring import load_jsonl, moderation_summary

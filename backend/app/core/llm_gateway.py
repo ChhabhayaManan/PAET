@@ -18,7 +18,7 @@ from app.core.config import settings
 from app.core.database import SessionLocal
 from app.core.exceptions import LLMUnavailable
 from app.core.llm import _is_rate_limited, _nvidia, structured
-from app.models.llm_call import LLMCall
+from app.core.llm_call import LLMCall
 
 logger = logging.getLogger(__name__)
 

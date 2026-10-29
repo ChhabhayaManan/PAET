@@ -3,25 +3,25 @@ from types import SimpleNamespace
 import pytest
 from sqlalchemy.orm import sessionmaker
 
-from app.agents.code_eval.nodes.explain import explain
-from app.agents.code_eval.schemas import Explanation, GeneratedTests
-from app.agents.code_eval.state import EvalState
-from app.agents.feedback.nodes.synthesise import synthesise
-from app.agents.feedback.schemas import FeedbackNarrative
-from app.agents.feedback.state import FeedbackState
 from app.core import llm_gateway
 from app.core.config import settings
 from app.core.exceptions import LLMUnavailable
 from app.core.llm_gateway import Gateway, GatewayResult
-from app.models.code_eval import Language
-from app.services.assessment.generation import _ask
-from app.services.assessment.theory import GraderBusy, TheoryVerdict, _judge
-from app.services.hints.prompts import TEMPLATES
-from app.services.hints.service import FailingCase, _ladder_hint
-from app.services.problems.generation import _draft
-from app.services.problems.schemas import ProblemDraft
-from app.services.problems.solution import PortedSolution, _default_porter
-from app.services.test_generation.generate_tests import _default_generator
+from app.features.feedback.agent.nodes.synthesise import synthesise
+from app.features.feedback.agent.schemas import FeedbackNarrative
+from app.features.feedback.agent.state import FeedbackState
+from app.features.grading.agent.nodes.explain import explain
+from app.features.grading.agent.schemas import Explanation, GeneratedTests
+from app.features.grading.agent.state import EvalState
+from app.features.grading.models import Language
+from app.features.hints.logic.prompts import TEMPLATES
+from app.features.hints.service import FailingCase, _ladder_hint
+from app.features.practice.logic.assessment.generation import _ask
+from app.features.practice.logic.assessment.theory import GraderBusy, TheoryVerdict, _judge
+from app.features.problems.logic.generation import _draft
+from app.features.problems.logic.schemas import ProblemDraft
+from app.features.problems.logic.solution import PortedSolution, _default_porter
+from app.features.problems.logic.test_generation.generate_tests import _default_generator
 
 
 def _explain(db):

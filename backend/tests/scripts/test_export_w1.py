@@ -4,14 +4,14 @@ from pathlib import Path
 import pytest
 
 from app.core.topics import TOPICS
-from app.models.onboarding import (
+from app.features.accounts.models import User
+from app.features.onboarding.models import (
     DiagnosticItem,
     DiagnosticResponse,
     LanguageCheck,
     OnboardingRecord,
 )
-from app.models.user import User
-from scripts import export_w1
+from scripts.eval import export_w1
 
 START = datetime(2026, 10, 17, 10, 0, tzinfo=timezone.utc)
 
@@ -98,7 +98,7 @@ def test_one_row_per_record_with_drop_off_and_calibration(session):
 
 
 def test_cli_refuses_a_path_inside_the_repo():
-    inside = Path(export_w1.__file__).resolve().parents[2] / "w1.csv"
+    inside = Path(export_w1.__file__).resolve().parents[3] / "w1.csv"
     with pytest.raises(SystemExit, match="outside the repo"):
         export_w1.main([str(inside)])
     assert not inside.exists()

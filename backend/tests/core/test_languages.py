@@ -1,7 +1,7 @@
 import pytest
 
 from app.core.languages import EXECUTABLE_LANGUAGES, SPECS, spec_for
-from app.models.code_eval import Language
+from app.features.grading.models import Language
 
 
 def test_every_language_has_a_spec():

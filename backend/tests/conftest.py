@@ -2,11 +2,9 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+import app.features  # noqa: F401  -- registers every table on Base.metadata
 from app.core.database import Base
-from app.models import (  # noqa: F401  -- registers every table on Base.metadata
-    code_eval, feedback, gamification, problem, user,
-)
-from app.services.execution.base import (
+from app.features.grading.logic.execution.base import (
     ExecLimits, ExecResult, ExecStatus, ExecutionProvider,
 )
 
@@ -39,7 +37,7 @@ def hints_clear_the_fix_check():
     """The fix check is an LLM judge; hint tests that are not about it see every hint
     cleared. Its own tests call the real function, imported before this patch."""
     with pytest.MonkeyPatch.context() as patch:
-        patch.setattr("app.services.hints.guardrail.states_fix", lambda *a, **k: False)
+        patch.setattr("app.features.hints.logic.guardrail.states_fix", lambda *a, **k: False)
         yield
 
 
@@ -52,7 +50,7 @@ def no_embedder_model():
 
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr("app.core.config.settings.SKIP_EMBED_WARMUP", True)
-        patch.setattr("app.services.rag.embedder._load_model", explode)
+        patch.setattr("app.features.chat.logic.rag.embedder._load_model", explode)
         yield
 
 

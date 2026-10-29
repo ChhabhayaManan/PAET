@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from app.models.code_eval import Language
+from app.features.grading.models import Language
 
 
 @dataclass(frozen=True)

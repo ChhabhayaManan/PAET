@@ -141,11 +141,11 @@ docker compose exec backend sh -c "cd /app/app && PYTHONPATH=/app alembic upgrad
 ### 3. Load the content
 
 ```bash
-docker compose exec backend python -m scripts.ingest_problems
-docker compose exec backend python -m scripts.seed_practice
-docker compose exec backend python -m scripts.seed_theory
-docker compose exec backend python -m scripts.seed_diagnostic
-docker compose exec backend python -m scripts.ingest_books
+docker compose exec backend python -m scripts.seed.ingest_problems
+docker compose exec backend python -m scripts.seed.seed_practice
+docker compose exec backend python -m scripts.seed.seed_theory
+docker compose exec backend python -m scripts.seed.seed_diagnostic
+docker compose exec backend python -m scripts.seed.ingest_books
 ```
 
 Every script is safe to rerun.
@@ -185,14 +185,23 @@ cd frontend && npm run lint && npm test && npm run build
 ```
 backend/
   app/
-    agents/       LangGraph agents: assessment, code evaluation, profiling, feedback, chat
-    services/     grading, hints and guardrail, onboarding, topic practice, gamification, RAG
-    api/          one FastAPI router per area, all under /api/v1
+    core/         config, database, auth helpers, LLM gateway, topics, languages
+    features/     one folder per feature, each with its own README.md:
+      accounts/       login, users, profile
+      onboarding/     first-run diagnostic and language re-check
+      practice/       next-item policy (agent), MCQ/debug/theory, sessions, topic practice
+      problems/       coding problem bank, generation, test cases, solutions
+      grading/        code evaluation (agent) and the sandbox client
+      hints/          hint ladder and guardrail
+      learner_model/  profiling (agent), mastery, learning data, personalisation
+      feedback/       feedback reports (agent)
+      chat/           chat tutor (agent), RAG over the course books, moderation
+      gamification/   points, badges and streaks
     data/         content banks and topic explanations
     alembic/      database migrations
   executor/       the code sandbox
-  scripts/        seeding and maintenance
-  tests/
+  scripts/        seed/, generate/, eval/, tools/
+  tests/          core/, features/ (mirrors app/features), executor/, scripts/
 frontend/src/
   pages/          one file per route
   components/     UI per feature

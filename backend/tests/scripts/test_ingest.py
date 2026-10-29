@@ -1,11 +1,11 @@
 import json
 import pathlib
 
-from app.agents.code_eval.schemas import GeneratedCase, GeneratedTests
 from app.core.config import settings
-from app.models.problem import Problem
-from app.services.execution.base import ExecResult, ExecStatus
-from scripts.ingest_problems import DATA, ingest
+from app.features.grading.agent.schemas import GeneratedCase, GeneratedTests
+from app.features.grading.logic.execution.base import ExecResult, ExecStatus
+from app.features.problems.models import Problem
+from scripts.seed.ingest_problems import DATA, ingest
 from tests.conftest import FakeExecutionProvider
 
 ROWS = [
