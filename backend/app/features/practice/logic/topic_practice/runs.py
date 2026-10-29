@@ -2,7 +2,6 @@
 student chose. A run is a practice session with a plan of item types; which item fills
 each slot is decided when the slot is reached, unseen items first."""
 
-import pathlib
 import random
 from dataclasses import dataclass
 from datetime import datetime
@@ -10,6 +9,7 @@ from functools import lru_cache
 
 from sqlalchemy.orm import Session
 
+from app.core import content
 from app.core.exceptions import AitaError, SessionNotFound
 from app.core.topics import TOPIC_LABELS, TOPICS
 from app.features.learner_model.logic.mastery import PRIOR
@@ -37,7 +37,6 @@ from app.features.practice.models import (
 )
 from app.features.problems.models import Problem
 
-EXPLANATIONS = pathlib.Path(__file__).resolve().parents[4] / "data" / "explanations"
 PER_TYPE = 3
 NON_CODING = ("theory", "mcq", "debug")
 FALLBACKS = {"theory": ("theory", "mcq", "debug"), "mcq": ("mcq", "theory", "debug"),
@@ -76,8 +75,12 @@ def _topic(topic: str) -> str:
 
 @lru_cache(maxsize=64)
 def _read(language: str, topic: str) -> str | None:
-    path = EXPLANATIONS / language / f"{topic}.md"
-    return path.read_text("utf-8") if path.exists() else None
+    if not content.topic_path(topic, "explanation").exists():
+        return None
+    for item in content.items(topic, "explanation"):
+        if item["language"] == language:
+            return content.text([f"# {item['title']}", *item["markdown"]])
+    return None
 
 
 def explanation(db: Session, user_id: int, topic: str) -> Explanation:

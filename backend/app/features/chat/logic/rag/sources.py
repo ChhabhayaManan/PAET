@@ -8,9 +8,10 @@ from typing import Literal
 from bs4 import BeautifulSoup, NavigableString, Tag
 from bs4.element import PreformattedString
 
+from app.core.config import settings
 from app.features.chat.logic.rag.chunker import Block, Section
 
-GUIDES = pathlib.Path(__file__).resolve().parents[4] / "data" / "guides"
+GUIDES = settings.CONTENT_DIR / "guides"
 DEFAULT_SECTION = "Introduction"
 
 TEXT_TAGS = {"p", "li", "dt", "dd", "blockquote", "figcaption", "caption", "td", "th"}

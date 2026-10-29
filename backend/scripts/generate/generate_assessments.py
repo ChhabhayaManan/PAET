@@ -2,18 +2,16 @@
 
     docker compose exec backend python -m scripts.generate.generate_assessments
 
-Writes app/data/assessments.json. Raw model replies are cached in
-app/data/assessments_raw.json; pass --refresh to pay for new drafts, or
+Writes content/legacy/assessments.json. Raw model replies are cached in
+content/_drafts/assessments_raw.json; pass --refresh to pay for new drafts, or
 --refresh-key mcq:loops to redraft one topic."""
 
 import argparse
 import json
-import pathlib
 
+from app.core import content
 from app.core.database import SessionLocal
 from app.features.practice.logic.assessment.generation import RawCache, generate
-
-DATA = pathlib.Path(__file__).resolve().parents[2] / "app" / "data"
 
 
 def main() -> None:
@@ -23,14 +21,15 @@ def main() -> None:
                         help="redraft one cached reply, e.g. mcq:loops")
     args = parser.parse_args()
 
-    cache = RawCache(DATA / "assessments_raw.json", refresh=args.refresh)
+    cache = RawCache(content.root() / "_drafts" / "assessments_raw.json", refresh=args.refresh)
     for key in args.refresh_key:
         cache.data.pop(key, None)
     with SessionLocal() as db:
         result = generate(db, cache)
 
     log = result.pop("log")
-    (DATA / "assessments.json").write_text(json.dumps(result, indent=2), "utf-8")
+    (content.root() / "legacy" / "assessments.json").write_text(json.dumps(result, indent=2),
+                                                                 "utf-8")
     print(f"mcqs={len(result['mcqs'])} diagnostic={len(result['diagnostic'])} "
           f"debug={len(result['debug'])}")
     for reason, count in sorted(log.items()):

@@ -6,7 +6,9 @@ import json
 import tempfile
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent / "data"
+from app.core.config import settings
+
+DATA = settings.CONTENT_DIR / "eval" / "chat"
 
 
 def default_out(name: str) -> Path:

@@ -1,8 +1,9 @@
 import re
 from dataclasses import dataclass
-from pathlib import Path
 
-_TERMS_PATH = Path(__file__).resolve().parents[3] / "data" / "moderation_terms.txt"
+from app.core.config import settings
+
+_TERMS_PATH = settings.CONTENT_DIR / "moderation" / "terms.txt"
 _CATEGORY_ORDER = ("self_harm", "slur", "sexual", "abuse")
 _LEET = str.maketrans({"@": "a", "4": "a", "1": "i", "!": "i", "0": "o", "3": "e", "$": "s", "5": "s"})
 _CODE = re.compile(r"```.*?(?:```|$)|`[^`\n]*`", re.DOTALL)

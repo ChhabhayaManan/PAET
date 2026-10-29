@@ -1,18 +1,18 @@
 import argparse
 import json
-import pathlib
 import time
 
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from app.core import content
 from app.core.exceptions import LLMUnavailable
 from app.features.problems.logic.test_generation.curated_tests import curated_tests
 from app.features.problems.logic.test_generation.generate_tests import generate_tests
 from app.features.problems.models import Difficulty, ProblemSource
 from app.features.problems.service import get_or_create_problem, has_test_cases
 
-DATA = pathlib.Path(__file__).resolve().parents[2] / "app" / "data" / "problems.json"
+DATA = content.root() / "imported" / "problems.json"
 
 
 class IngestReport(BaseModel):

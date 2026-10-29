@@ -25,7 +25,7 @@ router.py
 service.py           run_turn(): one chat turn, streamed events, saved messages
 agent/agent.py       the agent; middleware.py, prompts.py, context.py around it
 agent/tools.py       the four tools
-logic/moderation.py  term-list moderation (data/moderation_terms.txt)
+logic/moderation.py  term-list moderation (content/moderation/terms.txt)
 logic/rag/           sources, chunker, embedder, search
 models.py            ChatThread, ChatMessage, BookChunk
 schemas.py

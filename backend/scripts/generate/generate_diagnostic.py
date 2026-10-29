@@ -3,22 +3,20 @@
     docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend \\
         python -m scripts.generate.generate_diagnostic
 
-Writes app/data/diagnostic.json. Raw model replies are cached in
-app/data/diagnostic_raw.json; pass --refresh to pay for new drafts, --refresh-key
+Writes content/topics/<topic>/diagnostic.json. Raw model replies are cached in
+content/_drafts/diagnostic_raw.json; pass --refresh to pay for new drafts, --refresh-key
 draft:loops to redraft one topic (its port is redone too, since concept keys follow the
 draft), or --refresh-key port:loops to redo only that topic's C/C++ port."""
 
 import argparse
-import json
-import pathlib
 from collections import Counter
 
+from app.core import content
+from app.features.onboarding.logic import content as bank_file
 from app.features.onboarding.logic.authoring.build import generate
 from app.features.onboarding.logic.authoring.parse import CODE_KINDS, TOPICS
 from app.features.onboarding.logic.bank import LANGUAGES, SHARED
 from app.features.practice.logic.assessment.generation import RawCache
-
-DATA = pathlib.Path(__file__).resolve().parents[2] / "app" / "data"
 
 
 def gaps(items: list[dict]) -> list[str]:
@@ -42,7 +40,7 @@ def main() -> None:
                         help="redraft one cached reply, e.g. draft:loops or port:loops")
     args = parser.parse_args()
 
-    cache = RawCache(DATA / "diagnostic_raw.json", refresh=args.refresh)
+    cache = RawCache(content.root() / "_drafts" / "diagnostic_raw.json", refresh=args.refresh)
     for key in args.refresh_key:
         cache.data.pop(key, None)
         if key.startswith("draft:"):
@@ -50,7 +48,7 @@ def main() -> None:
     result = generate(cache)
 
     items = result["items"]
-    (DATA / "diagnostic.json").write_text(json.dumps({"items": items}, indent=2), "utf-8")
+    bank_file.save(items)
     print(f"items={len(items)}")
     for (kind, language), count in sorted(Counter((i["kind"], i["language"]) for i in items).items()):
         print(f"  {count:3d}  {kind} {language}")

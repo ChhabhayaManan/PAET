@@ -148,7 +148,7 @@ docker compose exec backend python -m scripts.seed.seed_diagnostic
 docker compose exec backend python -m scripts.seed.ingest_books
 ```
 
-Every script is safe to rerun.
+Every script is safe to rerun. They read `backend/content/` (`CONTENT_DIR` to point elsewhere).
 
 ### 4. Open it
 
@@ -197,8 +197,8 @@ backend/
       feedback/       feedback reports (agent)
       chat/           chat tutor (agent), RAG over the course books, moderation
       gamification/   points, badges and streaks
-    data/         content banks and topic explanations
     alembic/      database migrations
+  content/        question banks and lessons as JSON, one folder per topic (see content/README.md)
   executor/       the code sandbox
   scripts/        seed/, generate/, eval/, tools/
   tests/          core/, features/ (mirrors app/features), executor/, scripts/

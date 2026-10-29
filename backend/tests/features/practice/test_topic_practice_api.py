@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from app.core import content
 from app.core.database import Base, get_db
 from app.core.dependencies import get_current_active_user
 from app.features.accounts.models import User
@@ -14,9 +15,9 @@ from app.features.practice.models import McqQuestion
 @pytest.fixture
 def client(monkeypatch, tmp_path):
     monkeypatch.setattr("app.core.config.settings.GAMIFICATION_MODE", "silent")
-    (tmp_path / "c").mkdir()
-    (tmp_path / "c" / "loops.md").write_text("# Loops\n\nA loop repeats.", "utf-8")
-    monkeypatch.setattr(runs, "EXPLANATIONS", tmp_path)
+    monkeypatch.setattr("app.core.config.settings.CONTENT_DIR", tmp_path)
+    content.write("loops", "explanation", [{"id": "explanation-c-loops", "language": "c",
+                                           "title": "Loops", "markdown": ["", "A loop repeats."]}])
     monkeypatch.setattr(runs, "generate_coding", lambda *a: (None, None))
     runs._read.cache_clear()
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False},

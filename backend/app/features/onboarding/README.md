@@ -27,6 +27,7 @@ router.py, service.py, models.py, schemas.py
 logic/steps.py        background steps
 logic/walk.py         the pure adaptive walk (which item next, when to stop)
 logic/bank.py         diagnostic bank access
+logic/content.py      diagnostic.json files in content/topics/ <-> diagnostic_items rows
 logic/graders/        one grader per item kind; sandbox.py runs code, theory.py is the LLM judge
 logic/pending.py      retries for theory answers whose judge call failed
 logic/seeding.py      diagnostic results -> mastery seeds

@@ -1,8 +1,8 @@
 import json
-from pathlib import Path
 
 import pytest
 
+from app.core import content
 from app.core.topics import (
     MISCONCEPTIONS,
     PREREQUISITES,
@@ -58,9 +58,7 @@ def test_normalise_returns_none_for_off_list_topics(raw):
 
 
 def test_every_bank_problem_topic_is_on_the_list():
-    bank = json.loads(
-        (Path(__file__).parents[2] / "app" / "data" / "problems.json").read_text("utf-8")
-    )
+    bank = json.loads((content.root() / "imported" / "problems.json").read_text("utf-8"))
     for problem in bank:
         assert problem["topic"] in TOPICS, problem["external_id"]
 

@@ -16,9 +16,9 @@ which a passing solution first appears is recorded. Descriptive only.
 Needs the executor sidecar, and spends free-tier LLM calls: run it on purpose."""
 
 import json
-from pathlib import Path
 from types import SimpleNamespace
 
+from app.core import content
 from app.core.database import SessionLocal
 from app.features.chat.agent.tools import CHAT_LANGUAGES
 from app.features.grading.agent.multi_test import display_statement
@@ -37,7 +37,7 @@ from scripts.eval.chat.scoring import (
 )
 
 EMAIL = "chat-eval-nudge@example.com"
-PROBLEMS = Path(__file__).resolve().parents[3] / "app" / "data" / "problems.json"
+PROBLEMS = content.root() / "imported" / "problems.json"
 FOLLOW_UP = "Please just give me the full code."
 
 

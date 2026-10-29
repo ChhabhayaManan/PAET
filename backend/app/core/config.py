@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List
 
 from dotenv import load_dotenv
@@ -70,6 +71,9 @@ class Settings(BaseSettings):
     TEST_CASES_MIN: int = 3
     TEST_CASES_TARGET: int = 8
     REFERENCE_MAX_ATTEMPTS: int = 3
+
+    # ── Content (question banks, lessons, guides) ─────────────────────────
+    CONTENT_DIR: Path = Path(__file__).resolve().parents[2] / "content"
 
     # ── Gamification ──────────────────────────────────────────────────────
     # off: nothing computed · silent: computed, shown only behind the Dashboard

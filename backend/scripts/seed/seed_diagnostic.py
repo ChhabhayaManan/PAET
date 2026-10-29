@@ -2,35 +2,29 @@
 
     docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend python -m scripts.seed.seed_diagnostic
 
-Reads app/data/diagnostic.json (written by scripts.generate.generate_diagnostic). Rerunning is safe:
-rows are upserted by external_id and an unchanged row keeps its review. A reviewed row
-whose kind, body or key changed goes back to unreviewed, since only what a human checked
-is served. Approve rows with scripts.tools.review_diagnostic."""
+Reads content/topics/<topic>/diagnostic.json (written by scripts.generate.generate_diagnostic).
+Rerunning is safe: rows are upserted by external_id and an unchanged row keeps its review.
+A reviewed row whose kind, body or key changed goes back to unreviewed, since only what a
+human checked is served. Approve rows with scripts.tools.review_diagnostic."""
 
-import json
-import pathlib
 from collections import Counter
 
 from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
+from app.features.onboarding.logic import content
 from app.features.onboarding.models import DiagnosticItem
 from scripts._local_db import require_local_db
 
-BANK = pathlib.Path(__file__).resolve().parents[2] / "app" / "data" / "diagnostic.json"
 COLUMNS = ("kind", "topic", "tier", "difficulty", "language", "concept_key", "body", "key")
 CONTENT = ("kind", "body", "key")
-
-
-def external_id(item: dict) -> str:
-    return f"{item['concept_key']}:{item['language']}"
 
 
 def load(db: Session, items: list[dict]) -> Counter:
     report: Counter = Counter()
     rows = {row.external_id: row for row in db.query(DiagnosticItem)}
     for item in items:
-        eid = external_id(item)
+        eid = content.item_id(item)
         row = rows.get(eid)
         if row is None:
             row = rows[eid] = DiagnosticItem(external_id=eid, reviewed=False)
@@ -52,7 +46,7 @@ def load(db: Session, items: list[dict]) -> Counter:
 
 def main() -> None:
     require_local_db()
-    items = json.loads(BANK.read_text("utf-8"))["items"]
+    items = content.load()
     with SessionLocal() as db:
         report = load(db, items)
     for key, count in sorted(report.items()):

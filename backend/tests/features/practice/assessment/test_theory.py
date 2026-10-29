@@ -4,31 +4,27 @@ from app.core import llm_gateway
 from app.core.exceptions import LLMUnavailable
 from app.core.llm_gateway import GatewayResult
 from app.features.learner_model.models import LearningEvent, TopicMastery
-from app.features.practice.logic.assessment.parsing import parse_theory
+from app.features.practice.logic.assessment.content import theory_row
 from app.features.practice.logic.assessment.seeding import seed_theory
 from app.features.practice.logic.assessment.theory import GraderBusy, TheoryVerdict, grade_theory
 from app.features.practice.models import TheoryAttempt, TheoryQuestion
 
-BANK = """
-=== THEORY ===
-LANGUAGE: c
-DIFFICULTY: medium
-QUESTION:
-Why pass a pointer to a function instead of the value?
-MODEL ANSWER:
-The function gets the address, so it can change the caller's variable, and a large
-struct is not copied.
-KEY POINTS:
-- the function receives the variable's address
-- it can change the caller's variable through it
-- nothing large is copied
-=== END ===
-"""
+ITEM = {
+    "id": "theory-c-functions-1",
+    "language": "c",
+    "difficulty": "medium",
+    "question": "Why pass a pointer to a function instead of the value?",
+    "model_answer": "The function gets the address, so it can change the caller's variable, "
+                    "and a large struct is not copied.",
+    "key_points": ["the function receives the variable's address",
+                   "it can change the caller's variable through it",
+                   "nothing large is copied"],
+}
 
 
 @pytest.fixture
 def question(session, user):
-    items = parse_theory(BANK, "functions")
+    items = [theory_row(ITEM, "functions")]
     assert seed_theory(session, items) == {"theory created": 1}
     return session.query(TheoryQuestion).one()
 
@@ -45,7 +41,7 @@ def judge_says(monkeypatch, *points, feedback="ok"):
     return calls
 
 
-def test_bank_parses_into_one_reviewed_item(question):
+def test_bank_item_seeds_as_one_reviewed_question(question):
     assert question.external_id == "theory-c-functions-1"
     assert len(question.key_points) == 3 and question.reviewed
 
@@ -69,7 +65,8 @@ def test_score_comes_from_key_points_and_only_the_first_answer_counts(
 def test_reseeding_never_rewrites_an_answered_question(session, user, question, monkeypatch):
     judge_says(monkeypatch, True, True, True)
     grade_theory(session, user.id, question.id, "an answer")
-    moved = parse_theory(BANK.replace("Why pass a pointer", "Why return a pointer"), "functions")
+    moved = [theory_row({**ITEM, "question": "Why return a pointer from a function?"},
+                        "functions")]
     assert seed_theory(session, moved) == {"theory refused: id holds an answered question": 1}
     session.refresh(question)
     assert question.question.startswith("Why pass a pointer")

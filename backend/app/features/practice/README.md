@@ -31,6 +31,7 @@ agent/graph.py              Assessment Agent: next_item()
 logic/assessment/policy.py  the next-item policy
 logic/assessment/grading.py MCQ and debug grading
 logic/assessment/theory.py  LLM judge for theory answers
+logic/assessment/content.py the practice and theory banks from content/topics/<topic>/
 logic/assessment/           generation, parsing, verify, seeding, sanitize (bank authoring)
 logic/practice_session/     session facts and the short session feedback
 logic/topic_practice/       topic runs

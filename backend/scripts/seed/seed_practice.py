@@ -2,13 +2,12 @@
 
     docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend python -m scripts.seed.seed_practice
 
-Reads app/data/practice/<topic>.md (see parse_authored for the format). Every code item is
+Reads problems.json, mcq.json and debug.json in content/topics/<topic>/. Every code item is
 proven by execution first, and each rejection is printed with its reason. --check only
 verifies; --topic limits the run to one file. Rerunning is safe (upsert by external_id).
 Debug challenges need their problem seeded first (scripts.seed.ingest_problems)."""
 
 import argparse
-import pathlib
 from collections import Counter
 
 from app.core.database import SessionLocal
@@ -16,15 +15,13 @@ from app.core.topics import TOPICS
 from app.features.grading.agent.multi_test import display_statement, merge_cases
 from app.features.grading.logic.execution.run_code import run_code
 from app.features.grading.models import Language
-from app.features.practice.logic.assessment.parsing import parse_authored
+from app.features.practice.logic.assessment.content import load_practice
 from app.features.practice.logic.assessment.seeding import seed
 from app.features.practice.logic.assessment.verify import Check, verify_debug, verify_mcq
 from app.features.problems.logic.test_generation.curated_tests import CuratedCase, curated_tests
 from app.features.problems.models import Difficulty, Problem, ProblemSource
 from app.features.problems.service import get_or_create_problem, has_test_cases
 from scripts._local_db import require_local_db
-
-PRACTICE = pathlib.Path(__file__).resolve().parents[2] / "app" / "data" / "practice"
 
 
 def _load_problem(db, row: dict, check_only: bool) -> str:
@@ -69,10 +66,7 @@ def main() -> None:
     counts: Counter = Counter()
     with SessionLocal() as db:
         for topic in [args.topic] if args.topic else TOPICS:
-            path = PRACTICE / f"{topic}.md"
-            if not path.exists():
-                continue
-            bank = parse_authored(path.read_text("utf-8"), topic)
+            bank = load_practice(topic)
             authored = {row["external_id"]: row for row in bank["problems"]}
             for row in bank["problems"]:
                 print(f"  problem {row['external_id']}: {_load_problem(db, row, args.check)}")

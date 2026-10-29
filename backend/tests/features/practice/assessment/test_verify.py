@@ -1,7 +1,8 @@
 import pytest
 
+from app.core import content
 from app.features.grading.models import Language
-from app.features.practice.logic.assessment.parsing import parse_authored
+from app.features.practice.logic.assessment.content import load_practice
 from app.features.practice.logic.assessment.verify import verify_debug, verify_mcq
 from tests.features.practice.assessment.conftest import (
     BUGGY,
@@ -90,68 +91,34 @@ def test_debug_rejects_unknown_language_and_tag(bank_problem):
 
 
 C_PROGRAM = '#include <stdio.h>\nint main(void) { printf("3\\n"); return 0; }\n'
-AUTHORED = f"""=== PROBLEM ===
-ID: aita-sum
-DIFFICULTY: easy
-STATEMENT: Read two integers
-and print their sum.
-CONSTRAINTS: small.
-REFERENCE:
-```python
-print(1)
-```
-TESTS:
-### input
-1 2
-### output
-3
-### input
-0
-
-### output
-0
-=== END ===
-
-=== QUESTION ===
-LANGUAGE: c
-DIFFICULTY: easy
-STEM:
-What does this program print?
-```c
-{C_PROGRAM}```
-OPTIONS:
-A) 4 || off_by_one
-B) 3 || correct
-C) 5 || none
-EXPLANATION: It prints 3.
-=== END ===
-
-=== QUESTION ===
-LANGUAGE: any
-DIFFICULTY: easy
-STEM:
-How many times does a loop from 0 while less than 3 run?
-OPTIONS:
-A) 3 times || correct
-B) 2 times || off_by_one
-C) 4 times || off_by_one
-EXPLANATION: 0, 1 and 2.
-=== END ===
-
-=== DEBUG ===
-PROBLEM: aita-sum
-LANGUAGE: c
-BUG: off_by_one
-CORRECT:
-```c
-good
-```
-BUGGY:
-```c
-bad
-```
-=== END ===
-"""
+C_STEM = f"What does this program print?\n```c\n{C_PROGRAM}```"
+AUTHORED = {
+    "problems": [{
+        "id": "aita-sum", "difficulty": "easy",
+        "statement": "Read two integers and print their sum.", "constraints": "small.",
+        "reference": {"language": "python", "code": ["print(1)", ""]},
+        "tests": [{"input": ["1 2"], "output": ["3"]}, {"input": ["0"], "output": ["0"]}],
+    }],
+    "mcq": [{
+        "id": "mcq-c-loops-1", "language": "c", "difficulty": "easy",
+        "stem": content.lines(C_STEM),
+        "options": [{"text": "4", "misconception": "off_by_one"},
+                    {"text": "3", "misconception": None},
+                    {"text": "5", "misconception": None}],
+        "answer_index": 1, "explanation": "It prints 3.",
+    }, {
+        "id": "concept-loops-1", "language": "any", "difficulty": "easy",
+        "stem": ["How many times does a loop from 0 while less than 3 run?"],
+        "options": [{"text": "3 times", "misconception": None},
+                    {"text": "2 times", "misconception": "off_by_one"},
+                    {"text": "4 times", "misconception": "off_by_one"}],
+        "answer_index": 0, "explanation": "0, 1 and 2.",
+    }],
+    "debug": [{
+        "id": "debug-c-aita-sum", "language": "c", "problem_id": "aita-sum",
+        "bug_type": "off_by_one", "fixed_code": ["good", ""], "buggy_code": ["bad", ""],
+    }],
+}
 
 
 class LanguageProvider(ScriptedProvider):
@@ -160,13 +127,18 @@ class LanguageProvider(ScriptedProvider):
         return super().run_batch(language, source, stdins, limits)
 
 
-def test_authored_bank_runs_c_stems_as_c_and_keeps_concepts_code_free():
-    bank = parse_authored(AUTHORED, "loops")
+def test_authored_bank_runs_c_stems_as_c_and_keeps_concepts_code_free(monkeypatch, tmp_path):
+    monkeypatch.setattr("app.core.config.settings.CONTENT_DIR", tmp_path)
+    for kind, rows in AUTHORED.items():
+        content.write("loops", kind, rows)
+    bank = load_practice("loops")
     c_item, concept = bank["mcqs"]
 
     assert [p["external_id"] for p in bank["problems"]] == ["aita-sum"]
-    assert bank["problems"][0]["statement"] == "Read two integers and print their sum."
+    assert [t["kind"] for t in bank["problems"][0]["tests"]] == ["sample", "normal"]
     assert bank["problems"][0]["tests"][1]["stdin"] == "0\n"
+    assert bank["problems"][0]["reference"] == "print(1)\n"
+    assert c_item["stem"] == C_STEM and c_item["verify_code"] == ""
     assert (c_item["external_id"], c_item["answer_index"]) == ("mcq-c-loops-1", 1)
     assert concept["external_id"] == "concept-loops-1"
     assert bank["debug"] == [{

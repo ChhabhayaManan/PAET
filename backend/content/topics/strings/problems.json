@@ -1,0 +1,168 @@
+{
+  "schema": "problems/v1",
+  "topic": "strings",
+  "items": [
+    {
+      "id": "aita-fix-name-case",
+      "difficulty": "easy",
+      "statement": "A single line contains a name written as one word of English letters, where some letters are uppercase and some are lowercase. Print the name with its first letter in uppercase and every other letter in lowercase.",
+      "constraints": "The name has between 1 and 1000 letters, each from a to z or A to Z, with no spaces.",
+      "reference": {
+        "language": "python",
+        "code": [
+          "import sys",
+          "",
+          "data = sys.stdin.read().split()",
+          "t = int(data[0])",
+          "for k in range(1, t + 1):",
+          "    name = data[k]",
+          "    print(name[0].upper() + name[1:].lower())",
+          ""
+        ]
+      },
+      "tests": [
+        {
+          "input": [
+            "rAHUL"
+          ],
+          "output": [
+            "Rahul"
+          ]
+        },
+        {
+          "input": [
+            "a"
+          ],
+          "output": [
+            "A"
+          ]
+        },
+        {
+          "input": [
+            "Z"
+          ],
+          "output": [
+            "Z"
+          ]
+        },
+        {
+          "input": [
+            "AAAA"
+          ],
+          "output": [
+            "Aaaa"
+          ]
+        },
+        {
+          "input": [
+            "jAZZ"
+          ],
+          "output": [
+            "Jazz"
+          ]
+        },
+        {
+          "input": [
+            "Priya"
+          ],
+          "output": [
+            "Priya"
+          ]
+        },
+        {
+          "input": [
+            "zOYA"
+          ],
+          "output": [
+            "Zoya"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aita-run-length-code",
+      "difficulty": "medium",
+      "statement": "A single line contains a word of lowercase letters. Split the word into groups of equal letters that stand next to each other, making every group as long as possible. Replace each group by its letter followed by the number of letters in that group, and print the resulting compressed word. For example, aaabcc becomes a3b1c2.",
+      "constraints": "The word has between 1 and 1000 lowercase letters (a to z), with no spaces.",
+      "reference": {
+        "language": "python",
+        "code": [
+          "import sys",
+          "",
+          "data = sys.stdin.read().split()",
+          "t = int(data[0])",
+          "for k in range(1, t + 1):",
+          "    word = data[k]",
+          "    parts = []",
+          "    i = 0",
+          "    while i < len(word):",
+          "        j = i",
+          "        while j < len(word) and word[j] == word[i]:",
+          "            j += 1",
+          "        parts.append(word[i] + str(j - i))",
+          "        i = j",
+          "    print(\"\".join(parts))",
+          ""
+        ]
+      },
+      "tests": [
+        {
+          "input": [
+            "aaabcc"
+          ],
+          "output": [
+            "a3b1c2"
+          ]
+        },
+        {
+          "input": [
+            "z"
+          ],
+          "output": [
+            "z1"
+          ]
+        },
+        {
+          "input": [
+            "kkkkkkkkkkkk"
+          ],
+          "output": [
+            "k12"
+          ]
+        },
+        {
+          "input": [
+            "abc"
+          ],
+          "output": [
+            "a1b1c1"
+          ]
+        },
+        {
+          "input": [
+            "abba"
+          ],
+          "output": [
+            "a1b2a1"
+          ]
+        },
+        {
+          "input": [
+            "mississippi"
+          ],
+          "output": [
+            "m1i1s2i1s2i1p2i1"
+          ]
+        },
+        {
+          "input": [
+            "aabbbbbbbbbbz"
+          ],
+          "output": [
+            "a2b10z1"
+          ]
+        }
+      ]
+    }
+  ]
+}
