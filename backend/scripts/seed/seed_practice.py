@@ -1,6 +1,6 @@
 """Seed the hand-written practice bank in C, C++ and Python, inside the backend container:
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend python -m scripts.seed.seed_practice
+    docker compose exec backend python -m scripts.seed.seed_practice
 
 Reads problems.json, mcq.json and debug.json in content/topics/<topic>/. Every code item is
 proven by execution first, and each rejection is printed with its reason. --check only

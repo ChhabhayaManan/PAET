@@ -1,6 +1,6 @@
 """Load the verified diagnostic bank into diagnostic_items, inside the backend container:
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend python -m scripts.seed.seed_diagnostic
+    docker compose exec backend python -m scripts.seed.seed_diagnostic
 
 Reads content/topics/<topic>/diagnostic.json (written by scripts.generate.generate_diagnostic).
 Rerunning is safe: rows are upserted by external_id and an unchanged row keeps its review.

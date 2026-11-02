@@ -1,6 +1,6 @@
 """Seed the hand-written theory bank in C, C++ and Python, inside the backend container:
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend python -m scripts.seed.seed_theory
+    docker compose exec backend python -m scripts.seed.seed_theory
 
 Reads content/topics/<topic>/theory.json. --check only validates; --topic limits the run
 to one topic. Rerunning is safe (upsert by external_id)."""

@@ -1,6 +1,6 @@
 """Run once, inside the backend container (the Sandbox is on an internal network):
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend \\
+    docker compose exec backend \\
         python -m scripts.generate.generate_diagnostic
 
 Writes content/topics/<topic>/diagnostic.json. Raw model replies are cached in

@@ -1,4 +1,18 @@
 services:
+  db:
+    image: pgvector/pgvector:pg18
+    environment:
+      - POSTGRES_USER=paet
+      - POSTGRES_PASSWORD=paet
+      - POSTGRES_DB=paet_db
+    volumes:
+      - paet_pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
   executor:
     build: ./backend/executor
     networks: [sandbox]
@@ -20,14 +34,15 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      # DATABASE_URL deliberately not overridden here — it comes from backend/.env,
-      # the same database the host venv and Alembic migrate against. Pointing the
-      # container at a second database is what left it on a stale schema before.
-      # To use a host Postgres instead, migrate it first, then add:
-      #   - DATABASE_URL=postgresql://postgres@host.docker.internal:5432/aita_db
+      # Overrides any DATABASE_URL in backend/.env. To use another Postgres, remove
+      # this line and the db dependency, and migrate that database first.
+      - DATABASE_URL=postgresql://paet:paet@db:5432/paet_db
       - EXECUTOR_URL=http://executor:8080
     depends_on:
-      - executor
+      db:
+        condition: service_healthy
+      executor:
+        condition: service_started
     networks: [default, sandbox]
 
   frontend:
@@ -43,3 +58,6 @@ services:
 networks:
   sandbox:
     internal: true
+
+volumes:
+  paet_pgdata:

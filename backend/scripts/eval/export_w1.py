@@ -1,9 +1,9 @@
 r"""One CSV row per onboarding participant for the W1 analysis, plus one per language
 re-check (check = recheck), inside the backend container:
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend \
+    docker compose exec backend \
         python -m scripts.eval.export_w1 /tmp/w1.csv
-    docker compose -f docker-compose.yml -f docker-compose.local.yml cp \
+    docker compose cp \
         backend:/tmp/w1.csv G:/Study/BMP2/docs/study/w1.csv
 
 Read-only. The output path is required and may not be inside the repo."""

@@ -1,6 +1,6 @@
 """Spot-check the loaded diagnostic bank and approve it, inside the backend container:
 
-    docker compose -f docker-compose.yml -f docker-compose.local.yml exec backend \\
+    docker compose exec backend \\
         python -m scripts.tools.review_diagnostic
     ... python -m scripts.tools.review_diagnostic --approve 12,40
     ... python -m scripts.tools.review_diagnostic --approve-all-verified
