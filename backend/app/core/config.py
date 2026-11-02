@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # App
-    APP_NAME: str = "aiTA - AI Teaching Assistant"
+    APP_NAME: str = "PAET - Programming Assistant & Education Tool"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
     # Startup loads the book-search embedder in the background so the first chat
@@ -94,7 +94,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = Field(default="", repr=False)
-    SMTP_FROM_NAME: str = "aiTA"
+    SMTP_FROM_NAME: str = "PAET"
     
     # ── Gmail API (OAuth2 - works on Render via HTTPS) ────────────────────
     GMAIL_CLIENT_ID: str = ""

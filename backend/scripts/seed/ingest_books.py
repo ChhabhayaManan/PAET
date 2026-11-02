@@ -141,7 +141,7 @@ def select_sources(sources: list[SourceSpec], wanted: str | None) -> list[Source
 def run(argv: list[str] | None = None, *, sources: list[SourceSpec] | None = None,
         fetch: Fetcher | None = None, embed_fn=None, sink=None) -> dict[str, int]:
     parser = argparse.ArgumentParser(description="Chunk, embed and store the chatbot's books.")
-    parser.add_argument("--source", default=None, help="source id, or a prefix like aita-guide")
+    parser.add_argument("--source", default=None, help="source id, or a prefix like paet-guide")
     parser.add_argument("--dry-run", action="store_true", help="parse and chunk only")
     parser.add_argument("--cache-dir", type=pathlib.Path, default=DEFAULT_CACHE)
     parser.add_argument("--allow-remote", action="store_true",

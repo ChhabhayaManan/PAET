@@ -115,13 +115,13 @@ SOURCES: list[SourceSpec] = [
     ),
     *[
         SourceSpec(
-            id=f"aita-guide-{tag}", title=title, license="aiTA (own work)", url="",
+            id=f"paet-guide-{tag}", title=title, license="PAET (own work)", url="",
             lang_tag=tag, fetch="local", local_paths=(f"{tag}.md",),
         )
-        for tag, title in (("general", "aiTA misconception guide"),
-                           ("c", "aiTA guide to common C errors"),
-                           ("cpp", "aiTA guide to common C++ errors"),
-                           ("python", "aiTA guide to common Python errors"))
+        for tag, title in (("general", "PAET misconception guide"),
+                           ("c", "PAET guide to common C errors"),
+                           ("cpp", "PAET guide to common C++ errors"),
+                           ("python", "PAET guide to common Python errors"))
     ],
 ]
 
