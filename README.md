@@ -1,255 +1,291 @@
-# aiTA: AI Teaching Assistant
+<div align="center">
 
-aiTA is a practice platform for first-year programming students. Students learn in **C**,
-**C++** or **Python** across 12 topics, from basics and loops to recursion and dynamic
-programming. They answer questions, fix bugs and write code. Each answer moves their level
-on that topic, and the level decides what they get next.
+<img src="frontend/public/favicon.svg" width="88" alt="PAET logo" />
 
-Three ideas run through the whole system:
+# PAET
 
-- **Grades are verified, not guessed.** Code runs against tests in a sandbox and
-  multiple-choice answers are checked against a key. Only written theory answers go to an
-  LLM, which marks them against fixed key points and counts them at half weight.
-- **The learner model is per topic and per language.** Being strong at loops in Python
-  says nothing about loops in C, so switching language triggers a short re-check.
-- **Help never gives the answer away.** Every hint passes a guardrail that runs any code in
-  it against the problem's tests and blocks it if it passes.
+**Programming Assistant & Education Tool**
 
-![aiTA framework](docs/figures/aita_framework.png)
+Learn to code by thinking, not copying.
 
----
+![C](https://img.shields.io/badge/C-first--class-A8B9CC?logo=c&logoColor=white)
+![C++](https://img.shields.io/badge/C%2B%2B-supported-00599C?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-supported-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-frontend-61DAFB?logo=react&logoColor=black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white)
 
-## How it works
+The live website is linked in this repository's About section.
 
-The figure has four areas. Red dashed boxes call an LLM, grey boxes are plain rules, and a
-green shield marks output that passes the guardrail before the student sees it.
-
-### 1. Getting started
-
-A student registers and logs in with an emailed one-time code. **Onboarding** asks about
-their background, learning preferences and language, then runs a short adaptive check:
-predict the output, find the bug, fill the blank, write code, and three written answers.
-The results give a starting level on all 12 topics.
-
-### 2. The learning session
-
-This is the core loop, and every answer goes through it:
-
-1. The **Assessment Agent** reads the learner model, picks the weakest open topic and a
-   difficulty, and serves an item from the content bank. If no stored coding problem fits,
-   it writes a new one.
-2. The answer goes to the matching **grader**:
-   - the **MCQ Grader** checks the option against the key;
-   - the **Debug Grader** runs the student's fix against the item's tests;
-   - the **Evaluation Agent** builds a test suite for code, checks the suite against a
-     reference solution, runs the submission in the sandbox, and has an LLM explain the
-     result.
-3. The **Profiling Agent** turns the verified score into a mastery update for that topic
-   and language. A run that could not be verified, such as a compile error, adds nothing.
-4. When a student is stuck, the **Hint Agent** climbs a ladder (concept, then steps, then
-   a pointer to the line), grounded in their failing attempt. The **Guardrail** checks every
-   hint first.
-
-The **Gamification Engine** awards points, streaks and badges from verified events only,
-so it cannot be farmed by resubmitting. The **Dashboard** reads the learner model, the
-awards and recent activity.
-
-### 3. The chatbot (Content Player)
-
-A tutor that answers in chat and is grounded in course books. It is an agent with four
-tools:
-
-- searching the books (RAG over pgvector);
-- reading the student's progress;
-- checking code through the Evaluation Agent;
-- asking the Hint Agent for a hint, so the same guardrail applies.
-
-### 4. Standalone tools
-
-- **Topic practice:** pick a topic, read a short explanation, then answer 10 questions on
-  it.
-- **Practice workspace:** grade any piece of code against a problem statement.
-- **Feedback Agent:** reports on recent work, with errors, misconceptions and topics to
-  revisit.
+</div>
 
 ---
 
-## What students see
+## Demo
 
-| Page | Purpose |
+[![PAET demo](docs/figures/paet_home.png)](https://youtu.be/VIDEO_ID)
+
+Click the image to watch the demo.
+
+---
+
+## What PAET is
+
+PAET is a practice platform for students learning to program in C, C++ or Python. It covers
+12 topics, from basics and loops to recursion and dynamic programming. Students answer
+questions, fix broken code and write programs. PAET grades each answer, tracks how well the
+student knows every topic, and picks what to practise next. When a student is stuck, it gives
+hints one step at a time instead of the answer. A tutor chat answers questions from real
+textbooks.
+
+## Why PAET
+
+- **Copying is not learning.** A general chatbot hands a beginner the fixed program. The
+  student moves on without understanding the bug.
+- **Hints, not answers.** PAET's help gets more specific only when the student keeps
+  failing, and it is checked so it never contains the fix.
+- **Grades come from running the code.** A program passes when it passes real tests, not
+  when an AI thinks it looks right.
+- **Practice follows the student.** Each student gets the next item from their own weakest
+  topic, in their own language.
+
+---
+
+## How a student learns with PAET
+
+1. **Start.** A short diagnostic sets a starting level for each topic.
+2. **Next item.** PAET picks a multiple-choice question, a debugging task or a coding
+   problem from the weakest topic that is open.
+3. **Answer.** Code runs against tests in a sandbox. Multiple-choice answers are checked
+   against a key.
+4. **Level update.** The topic level moves with every graded answer.
+5. **Hints.** After a failed attempt, the student can ask for a hint. Each new hint is a
+   step more specific.
+6. **Feedback.** At the end of a session, a short report says what went well and what to
+   work on next.
+
+![PAET framework](docs/figures/paet_framework.png)
+
+---
+
+## What makes it accurate and personal
+
+- **Verified grading.** Code is compiled and run in an isolated sandbox against test cases.
+  Generated tests are first checked against a reference solution. A run that cannot be
+  verified does not count towards the student's level.
+- **Transparent topic levels.** Each answer moves the level by a fixed rule:
+  `new = old + 0.3 × weight × (score − old)`. Coding counts most (1.0), debugging 0.8,
+  multiple choice and theory 0.5. Hints reduce the score (one hint ×0.9, up to ×0.5 at the
+  fourth). Every level can be recomputed by hand from the student's answers.
+- **Levels per language.** Knowing loops in Python says nothing about loops in C. Each
+  language has its own levels, and switching language starts a short re-check.
+- **A four-step hint ladder.** L1 shows the failing input, L2 names the idea, L3 gives the
+  steps, L4 points at the line. A guardrail runs any code inside a hint against the tests and
+  blocks the hint if it would solve the problem.
+- **Cited answers in chat.** The tutor answers from open textbooks and PAET's own guides,
+  and shows the sources it used.
+- **Rewards for real progress only.** Points and badges come from verified results, never
+  from time spent or clicks.
+
+---
+
+## Agents
+
+| Agent | Type | What it does | Guardrail |
+|---|---|---|---|
+| Assessment | Rule-based, LLM on demand | Picks the next item from the weakest open topic; writes a new coding problem when the bank has none | |
+| Evaluation | LLM + sandbox | Runs the student's code against verified tests, scores it and explains the result | |
+| Profiling | Rule-based | Updates topic levels, points and the learner profile after every graded answer | |
+| Hint | Rule-based + LLM | Gives the next step of the hint ladder | Yes |
+| Feedback | LLM | Writes the end-of-session report from the student's real answers | Yes |
+| Content Player | LLM (ReAct) | The tutor chat: answers questions, searches the books, checks code, gives hints | Yes |
+
+<details>
+<summary><b>Assessment agent</b></summary>
+
+Reads the student's topic levels, chooses the weakest topic that is open, and picks an item at
+the right difficulty from the content bank. A topic opens once the topics it builds on
+reach 40%. If no saved coding problem fits, the LLM writes one, and it is
+only served once its tests are verified.
+
+</details>
+
+<details>
+<summary><b>Evaluation agent</b></summary>
+
+1. Reads the problem and the student's code.
+2. Makes sure the problem has tests that a reference solution passes.
+3. Runs the code in the sandbox against every test.
+4. Asks the LLM to explain what went wrong, in words, without code.
+5. Scores the run and attaches the first hint.
+
+Only verified runs change the student's level.
+
+</details>
+
+<details>
+<summary><b>Profiling agent</b></summary>
+
+Records each graded answer, updates the topic level with the rule above, awards points and
+badges for verified progress, and refreshes the learner profile that the other agents read.
+It uses no LLM, so every number it produces can be checked.
+
+</details>
+
+<details>
+<summary><b>Hint agent</b></summary>
+
+Four levels, each unlocked by another failed attempt:
+
+| Level | Shows |
 |---|---|
-| **Home** | Topic levels, the last session, shortcuts, and the chat panel |
-| **Practice** | One adaptive question at a time (MCQ, debug or coding), ending in a session summary |
-| **Topic practice** | A written explanation of one topic, then 10 questions: 3 theory, 3 MCQ, 3 debug and 1 coding problem |
-| **Coding problems** | A fresh problem on any topic and level, with hints, the chatbot, and a solution that opens after passing or after "I give up" |
-| **Code workspace** | Grade your own code against a problem statement |
-| **Feedback** | Reports on recent work |
-| **Profile** | Background, preferences, language and level on every topic |
+| L1 | The input the program failed on |
+| L2 | The idea or concept involved |
+| L3 | The steps to get there |
+| L4 | The line to look at |
 
-## Content
+L1 is built from the test result. L2 to L4 come from the LLM and pass the guardrail first: code
+in the hint is run against the tests, quoted solution lines are blocked, and a judge checks
+that the hint does not state the fix.
 
-All content exists in C, C++ and Python. Every MCQ, debug item and coding problem has been
-proven by running it.
+</details>
 
-| | Count |
-|---|---|
-| Topic explanations | 36 (12 topics × 3 languages) |
-| Coding problems | 96, each with its own tests |
-| Debug challenges | 216 |
-| Multiple-choice questions | 252 |
-| Theory questions | 216, each with a model answer and key points |
-| Onboarding check items | 120 |
+<details>
+<summary><b>Feedback agent</b></summary>
+
+Gathers the session's answers, finds patterns in the mistakes, and asks the LLM for a short
+report. The report is checked before it is saved so it does not leak a solution.
+
+</details>
+
+<details>
+<summary><b>Content Player (tutor chat)</b></summary>
+
+A ReAct agent with four tools: search the course books, read the student's own learning data,
+run the student's code, and give a hint. It never writes full programs for the student, and a
+moderation check keeps the conversation on learning.
+
+</details>
+
+<details>
+<summary><b>Onboarding</b></summary>
+
+New students go through a short setup: a few questions about themselves, their language, and
+a diagnostic of multiple-choice, predict-the-output and short theory questions. The results set
+the starting topic levels.
+
+</details>
+
+---
+
+## Choose your model
+
+Students can bring their own model from the **Model** card in the sidebar.
+
+**Cloud**
+
+![NVIDIA NIM](https://img.shields.io/badge/NVIDIA-NIM-76B900?logo=nvidia&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?logo=openai&logoColor=white)
+![Anthropic](https://img.shields.io/badge/Anthropic-Claude-D97757?logo=anthropic&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google-Gemini-4285F4?logo=googlegemini&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-API-F55036)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-API-6467F2?logo=openrouter&logoColor=white)
+
+**Local (self-hosted PAET only)**
+
+![Ollama](https://img.shields.io/badge/Ollama-local-000000?logo=ollama&logoColor=white)
+![LM Studio](https://img.shields.io/badge/LM%20Studio-local-4B5563)
+![OpenAI compatible](https://img.shields.io/badge/Any-OpenAI--compatible-6B7280)
+
+- **Your key stays with you.** It is kept in your browser in an encrypted cookie that page
+  scripts cannot read. The server uses it for your request and never stores or logs it.
+- **Every model is tested before it is saved.** PAET checks the connection, tool calling,
+  structured output and the context window. A model that fails any check cannot be saved,
+  and the window says why.
+- **Clear errors.** If your key fails later (rejected, rate limit, out of credit, request
+  too long), PAET stops and tells you exactly why.
+
+---
+
+## Run it locally
+
+Requires [Docker](https://docs.docker.com/get-docker/) with Compose.
+
+```bash
+git clone https://github.com/ChhabhayaManan/AiTa.git paet
+cd paet
+cp .env.example backend/.env
+```
+
+In `backend/.env`, set `SECRET_KEY` and a server model (`NVIDIA_API_KEY`, or
+`DEFAULT_LLM_PROVIDER`, `DEFAULT_LLM_MODEL` and `DEFAULT_LLM_API_KEY` for another provider).
+
+```bash
+# start the database, sandbox, backend and frontend
+docker compose up -d --build
+
+# create the tables
+docker compose exec backend sh -c "cd /app/app && PYTHONPATH=/app alembic upgrade head"
+
+# load the questions, problems and lessons
+docker compose exec backend python -m scripts.seed.ingest_problems
+docker compose exec backend python -m scripts.seed.seed_practice
+docker compose exec backend python -m scripts.seed.seed_theory
+docker compose exec backend python -m scripts.seed.seed_diagnostic
+
+# index the textbooks for the tutor chat (downloads the books, takes a few minutes)
+docker compose exec backend python -m scripts.seed.ingest_books
+```
+
+Open http://localhost:5173 and create an account. Without email settings, the login code is
+printed to the backend log:
+
+```bash
+docker compose logs backend | grep "\[DEV\] OTP"
+```
+
+API documentation: http://localhost:8000/docs
 
 ---
 
 ## Tech stack
 
-| | |
+| Part | Technology |
 |---|---|
-| **Frontend** | React 18, Vite, Tailwind CSS, CodeMirror 6 |
-| **Backend** | Python 3.11, FastAPI, SQLAlchemy 2, Alembic, LangGraph |
-| **Database** | PostgreSQL with pgvector |
-| **LLM** | NVIDIA NIM (Nemotron models) behind one gateway with per-task models, deadlines and a fallback |
-| **Code execution** | A self-hosted sandbox container with CPU, memory and process limits, on an internal network |
+| Frontend | React 18, Vite, Tailwind CSS, CodeMirror |
+| Backend | FastAPI, SQLAlchemy 2, Alembic |
+| Agents | LangGraph, LangChain |
+| Models | Any OpenAI-compatible provider through one gateway |
+| Search | PostgreSQL with pgvector, sentence-transformers |
+| Sandbox | Separate container, no network, read-only, limited CPU, memory and processes |
 
 ---
 
-## Running locally
-
-### Prerequisites
-
-- Docker with Compose
-- Node.js 18+ (only for running the frontend outside Docker)
-- `backend/.env` with at least `DATABASE_URL`, `SECRET_KEY` and `NVIDIA_API_KEY` (see
-  [Configuration](#configuration))
-
-### 1. Start the stack
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
-```
-
-This starts a local Postgres on port 5433, the sandbox and the backend. Leave out the
-`-f docker-compose.local.yml` part to use the database in `backend/.env` instead.
-
-### 2. Create the schema
-
-```bash
-docker compose exec backend sh -c "cd /app/app && PYTHONPATH=/app alembic upgrade head"
-```
-
-### 3. Load the content
-
-```bash
-docker compose exec backend python -m scripts.seed.ingest_problems
-docker compose exec backend python -m scripts.seed.seed_practice
-docker compose exec backend python -m scripts.seed.seed_theory
-docker compose exec backend python -m scripts.seed.seed_diagnostic
-docker compose exec backend python -m scripts.seed.ingest_books
-```
-
-Every script is safe to rerun. They read `backend/content/` (`CONTENT_DIR` to point elsewhere).
-
-### 4. Open it
-
-| | |
-|---|---|
-| App | http://localhost:5173 |
-| API docs | http://localhost:8000/docs |
-
-Without email credentials, login codes are printed to the backend log:
-`docker compose logs backend | grep "\[DEV\] OTP"`. For a one-click login during
-development, set `DEV_LOGIN_EMAIL` to an existing account and keep `DEBUG=True`.
-
-### Frontend with hot reload
-
-```bash
-cd frontend
-npm install
-npm run dev   # http://localhost:3000, proxies /api to the backend on :8000
-```
-
----
-
-## Development
-
-### Tests
-
-```bash
-cd backend && python -m pytest -q          # SQLite, fake sandbox, no LLM calls
-cd frontend && npm run lint && npm test && npm run build
-```
-
-### Project structure
+## Project structure
 
 ```
 backend/
-  app/
-    core/         config, database, auth helpers, LLM gateway, topics, languages
-    features/     one folder per feature, each with its own README.md:
-      accounts/       login, users, profile
-      onboarding/     first-run diagnostic and language re-check
-      practice/       next-item policy (agent), MCQ/debug/theory, sessions, topic practice
-      problems/       coding problem bank, generation, test cases, solutions
-      grading/        code evaluation (agent) and the sandbox client
-      hints/          hint ladder and guardrail
-      learner_model/  profiling (agent), mastery, learning data, personalisation
-      feedback/       feedback reports (agent)
-      chat/           chat tutor (agent), RAG over the course books, moderation
-      gamification/   points, badges and streaks
-    alembic/      database migrations
-  content/        question banks and lessons as JSON, one folder per topic (see content/README.md)
-  executor/       the code sandbox
-  scripts/        seed/, generate/, eval/, tools/
-  tests/          core/, features/ (mirrors app/features), executor/, scripts/
+  app/core/        config, database, auth, LLM gateway and model choice
+  app/features/    one folder per feature: accounts, onboarding, practice, problems,
+                   grading, hints, learner_model, feedback, chat, gamification,
+                   model_settings
+  content/         questions, problems and lessons as JSON, one folder per topic
+  executor/        the code sandbox
+  scripts/         content loading and evaluation scripts
 frontend/src/
-  pages/          one file per route
-  components/     UI per feature
-docs/figures/     diagrams
+  pages/           one file per screen
+  components/      interface pieces per feature
+docs/figures/      diagrams
 ```
-
-### Configuration
-
-Settings are read from `backend/.env` (see `backend/app/core/config.py` for all of them).
-
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URL` | PostgreSQL with pgvector (required) |
-| `SECRET_KEY` | Signs login tokens (required) |
-| `NVIDIA_API_KEY`, `NVIDIA_API_KEY_2` | LLM access; the second key serves the fallback model |
-| `EXECUTOR_URL` | The sandbox, `http://executor:8080` by default |
-| `GAMIFICATION_MODE` | `live` (default: shown on Home and toasted after each graded answer), `silent` (recorded, shown only on request) or `off` |
-| `GMAIL_*` or `SMTP_*` | Sending login codes by email |
-| `DEV_LOGIN_EMAIL` | One-click development login (needs `DEBUG=True`) |
-| `DEPLOY_MODE` | `web` (default) or `local`; see below |
-| `LLM_COOKIE_SECRET` | Seals students' model keys (defaults to `SECRET_KEY`) |
-| `DEFAULT_LLM_*` | Point the default model at another provider |
-
-### Choosing your model
-
-The **Model** card at the bottom of the sidebar opens the Model window. A student can keep
-PAET's default model, use their own key (NVIDIA, OpenAI, Anthropic, Gemini, Groq,
-OpenRouter), or, with `DEPLOY_MODE=local`, a model on their own machine (Ollama, LM Studio,
-any OpenAI-compatible server).
-
-- The key is kept only in the student's browser, in an encrypted cookie that page scripts
-  cannot read. The server decrypts it for each request and never stores or logs it.
-- If the student's key fails, PAET stops and says why (rejected key, rate limit, out of
-  credit, request too long, unknown model, provider unreachable).
-- Work that runs after the student has left uses the default model.
-- Every model call is logged with its provider and model in `llm_calls`.
-
-### Notes
-
-- Alembic owns the schema, and the app never creates tables on startup. Run Alembic from
-  `backend/app`, where `alembic.ini` lives.
-- The theory bank files are append-only. A question's id comes from its position, and
-  `seed_theory` refuses to change a question that students have already answered.
-- Keep the `exec` flag on the sandbox's tmpfs mount. Without it, every compiled submission
-  fails with "Permission denied".
 
 ---
 
-## License
+## Safety and privacy
 
-MIT. See [LICENSE](LICENSE).
+- Student code runs in a separate container with no network access, a read-only file
+  system, and limits on time, memory and processes.
+- The tutor chat has a moderation check and never writes full solutions.
+- Students' own model keys are never stored on the server.
+- Each AI call is logged with its purpose, provider, model and timing for quality checks.
+  Keys and student code are not part of that log.
