@@ -256,6 +256,9 @@ export default function CodeEvalPage() {
                 title={title} setTitle={setTitle}
                 evaluating={evaluating}
               />
+              <p className="mt-3 text-xs text-ink-subtle">
+                Try it with what you know first. If an evaluation of a picked problem fails, hints appear with the result.
+              </p>
             </Step>
           </div>
 

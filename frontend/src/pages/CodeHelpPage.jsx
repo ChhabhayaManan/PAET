@@ -472,7 +472,7 @@ export default function CodeHelpPage() {
                 {topLevel === 0 ? 'Get a hint' : 'Stronger hint'}
               </Button>
             ) : (
-              <span className="text-xs text-ink-subtle sm:ml-auto">Run checks the examples. Submit runs every test and scores your code.</span>
+              <span className="text-xs text-ink-subtle sm:ml-auto">Run checks the examples. Submit runs every test and scores your code. Try it with what you know first: hints open after a submission that fails.</span>
             )}
           </>
         }
