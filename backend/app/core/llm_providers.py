@@ -61,7 +61,20 @@ def build_client(choice: Choice, *, temperature: float, max_tokens: int, timeout
         raise classify(exc, choice) from exc
 
 
-def list_models(choice: Choice) -> list[str]:
+_CONTEXT_KEYS = ("context_length", "context_window", "max_context_length", "max_input_tokens",
+                 "input_token_limit")
+
+
+def _context(row: dict) -> int | None:
+    for key in _CONTEXT_KEYS:
+        value = row.get(key)
+        if isinstance(value, int) and value > 0:
+            return value
+    return None
+
+
+def list_models(choice: Choice) -> dict[str, int | None]:
+    """Model id → context window, where the provider reports one."""
     if choice.provider == "anthropic":
         headers = {"x-api-key": choice.api_key, "anthropic-version": "2023-06-01"}
     else:
@@ -72,7 +85,8 @@ def list_models(choice: Choice) -> list[str]:
         rows = response.json().get("data", [])
     except Exception as exc:
         raise classify(exc, choice) from exc
-    return sorted({str(row["id"]).removeprefix("models/") for row in rows if row.get("id")})
+    return {str(row["id"]).removeprefix("models/"): _context(row)
+            for row in sorted(rows, key=lambda r: str(r.get("id", ""))) if row.get("id")}
 
 
 def redact(text: str, key: str) -> str:

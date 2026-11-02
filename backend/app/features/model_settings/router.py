@@ -1,7 +1,9 @@
 # Endpoints, under /api/v1/model-settings:
 #   GET    /      the model in use (never the key) and the providers on offer
-#   POST   /test  check a provider, key and model; returns the account's models
-#   PUT    /      check, then keep the choice in this browser's encrypted cookie
+#   POST   /test  check a provider, key and model: connection, tool calls, structured
+#                 output, context window; returns the account's models
+#   PUT    /      refuse a model that fails a check, else keep the choice in this
+#                 browser's encrypted cookie
 #   DELETE /      forget the choice, back to PAET default
 
 from fastapi import APIRouter, Depends, Response
@@ -11,7 +13,7 @@ from app.core.exceptions import ModelChoiceRejected
 from app.core.llm_choice import clear_cookie, current_choice, set_cookie
 from app.features.accounts.models import User
 from app.features.model_settings.schemas import ChoiceIn, CheckOut, ModelSettingsOut
-from app.features.model_settings.service import check, resolve, view
+from app.features.model_settings.service import check, require_capable, resolve, view
 
 router = APIRouter(prefix="/model-settings", tags=["Model settings"])
 
@@ -23,7 +25,7 @@ def get_settings(_: User = Depends(get_current_active_user)):
 
 @router.post("/test", response_model=CheckOut, summary="Check a provider, key and model")
 def test_settings(data: ChoiceIn, _: User = Depends(get_current_active_user)):
-    return CheckOut(ok=True, models=check(resolve(data, current_choice())))
+    return check(resolve(data, current_choice()))
 
 
 @router.put("", response_model=ModelSettingsOut, summary="Use this model from now on")
@@ -32,7 +34,7 @@ def save_settings(data: ChoiceIn, response: Response,
     choice = resolve(data, current_choice())
     if not choice.model:
         raise ModelChoiceRejected("Pick a model.")
-    check(choice)
+    require_capable(choice)
     set_cookie(response, choice)
     return view(choice)
 

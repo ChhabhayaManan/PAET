@@ -26,6 +26,14 @@ class ModelSettingsOut(BaseModel):
     providers: list[ProviderOut]
 
 
+class CapabilityCheck(BaseModel):
+    name: str
+    ok: bool
+    detail: str
+
+
 class CheckOut(BaseModel):
     ok: bool
     models: list[str]
+    checks: list[CapabilityCheck] = []
+    context: int | None = None

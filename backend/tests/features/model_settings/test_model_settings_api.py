@@ -2,6 +2,7 @@ import types
 
 import pytest
 from fastapi.testclient import TestClient
+from langchain_core.messages import AIMessage
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -19,6 +20,23 @@ KEY = "sk-proj-student-secret-9876"
 URL = "/api/v1/model-settings"
 
 
+class FakeChat:
+    """'no-tools' never calls a tool; every other model passes both probes."""
+
+    def __init__(self, model):
+        self.model = model
+
+    def invoke(self, prompt):
+        return AIMessage(content="OK")
+
+    def bind_tools(self, tools, **kwargs):
+        calls = [] if self.model == "no-tools" else [{"name": "add", "args": {"a": 2, "b": 3}, "id": "1"}]
+        return types.SimpleNamespace(invoke=lambda prompt: AIMessage(content="", tool_calls=calls))
+
+    def with_structured_output(self, schema, **kwargs):
+        return types.SimpleNamespace(invoke=lambda prompt: {"parsed": schema(answer=5), "raw": None})
+
+
 @pytest.fixture
 def client(monkeypatch):
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False},
@@ -31,9 +49,9 @@ def client(monkeypatch):
 
     monkeypatch.setattr(settings, "DEPLOY_MODE", "local")
     checked = []
-    monkeypatch.setattr(service, "list_models", lambda choice: checked.append(choice) or ["gpt-4.1-mini"])
-    monkeypatch.setattr(service, "build_client", lambda choice, **kw: types.SimpleNamespace(
-        invoke=lambda prompt: "OK"))
+    monkeypatch.setattr(service, "list_models", lambda choice: checked.append(choice) or {
+        "gpt-4.1-mini": 1_047_576, "gpt-4.1": None, "tiny": 4096})
+    monkeypatch.setattr(service, "build_client", lambda choice, **kw: FakeChat(choice.model))
 
     from app.main import app
 
@@ -87,6 +105,27 @@ def test_key_failure_returns_424_with_code(client, monkeypatch):
 
     assert response.status_code == 424
     assert response.json()["code"] == "invalid_key"
+    assert COOKIE not in response.headers.get("set-cookie", "")
+
+
+def test_test_reports_each_capability(client):
+    body = client.post(f"{URL}/test", json={"provider": "openai", "api_key": KEY,
+                                            "model": "gpt-4.1-mini"}).json()
+
+    assert body["ok"] is True
+    assert [(c["name"], c["ok"]) for c in body["checks"]] == [
+        ("Connection", True), ("Tool calling", True), ("Structured output", True),
+        ("Context window", True)]
+    assert body["context"] == 1_047_576
+
+
+@pytest.mark.parametrize("model, failing", [("no-tools", "Tool calling"),
+                                            ("tiny", "Context window")])
+def test_saving_a_model_that_fails_a_check_is_refused_with_the_reason(client, model, failing):
+    response = client.put(URL, json={"provider": "openai", "api_key": KEY, "model": model})
+
+    assert response.status_code == 422
+    assert failing in response.json()["detail"]
     assert COOKIE not in response.headers.get("set-cookie", "")
 
 

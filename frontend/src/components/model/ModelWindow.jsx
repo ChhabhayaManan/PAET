@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react'
-import { KeyRound, PlugZap, X } from 'lucide-react'
+import { CheckCircle2, KeyRound, PlugZap, X, XCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { getErrorMessage, modelAPI } from '../../utils/api'
 import Button from '../ui/Button'
@@ -26,6 +26,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
   const [baseUrl, setBaseUrl] = useState('')
   const [model, setModel] = useState(settings.source === 'default' ? '' : settings.model)
   const [models, setModels] = useState([])
+  const [checks, setChecks] = useState([])
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState('')
   const listId = useId()
@@ -47,6 +48,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
     setProvider(startingProvider(settings, next))
     setModel(settings.source === next ? settings.model : '')
     setModels([])
+    setChecks([])
     setError(null)
   }
 
@@ -54,7 +56,13 @@ export default function ModelWindow({ settings, onClose, onChange }) {
     setProvider(next)
     setModel('')
     setModels([])
+    setChecks([])
     setError(null)
+  }
+
+  const changeModel = next => {
+    setModel(next)
+    setChecks([])
   }
 
   const body = () => ({ provider, model: model.trim(), api_key: apiKey.trim(), base_url: info?.local_only ? baseUrl.trim() : '' })
@@ -75,8 +83,13 @@ export default function ModelWindow({ settings, onClose, onChange }) {
   const test = () => run('test', async () => {
     const { data } = await modelAPI.test(body())
     setModels(data.models)
-    if (!model && data.models.length) setModel(data.models[0])
-    toast.success(data.models.length ? `Connected. ${data.models.length} models found.` : 'Connected.')
+    setChecks(data.checks)
+    if (!model.trim()) {
+      if (data.models.length) setModel(data.models[0])
+      toast.success(`Connected. ${data.models.length} models found. Pick one and test it.`)
+    } else if (data.ok) {
+      toast.success('All checks passed.')
+    }
   })
 
   const save = () => run('save', async () => {
@@ -111,6 +124,11 @@ export default function ModelWindow({ settings, onClose, onChange }) {
 
         <div className="mt-5">
           <ChoiceChips label="Model source" options={modes} value={mode} onChange={switchMode} />
+          <p className="mt-2 text-xs text-ink-subtle">
+            {settings.deploy_mode === 'local'
+              ? 'Local models run on the computer where PAET runs.'
+              : 'Local models (Ollama, LM Studio) work only when you run PAET on your own computer.'}
+          </p>
         </div>
 
         {mode === 'default' ? (
@@ -147,7 +165,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
             <TextField
               label="Model"
               value={model}
-              onChange={e => setModel(e.target.value)}
+              onChange={e => changeModel(e.target.value)}
               list={listId}
               placeholder={models.length ? 'Pick or type a model' : 'Test the connection to list models'}
               inputClassName="font-mono text-sm"
@@ -157,6 +175,25 @@ export default function ModelWindow({ settings, onClose, onChange }) {
               {models.map(m => <option key={m} value={m} />)}
             </datalist>
 
+            {checks.length === 0 && (
+              <p className="text-xs text-ink-subtle">
+                Test checks the connection, tool calling, structured output and context window. A model must pass all of them to be saved.
+              </p>
+            )}
+
+            {checks.length > 0 && (
+              <ul className="flex flex-col gap-2 rounded-md border border-line bg-tile-2 p-3" aria-label="Model checks">
+                {checks.map(c => (
+                  <li key={c.name} className="flex items-start gap-2 text-[13px]">
+                    {c.ok
+                      ? <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-pop-mint" aria-label="Passed" />
+                      : <XCircle size={15} className="mt-0.5 shrink-0 text-pop-coral" aria-label="Failed" />}
+                    <span><span className="font-medium text-ink">{c.name}</span> <span className="text-ink-subtle">{c.detail}</span></span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
             {error && (
               <div role="alert" className="rounded-md border border-pop-coral/40 bg-pop-coral/10 p-3 text-[13px] text-ink">
                 <p>{error.detail}</p>
@@ -165,7 +202,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
             )}
 
             <div className="flex flex-wrap gap-2">
-              <Button variant="secondary" icon={PlugZap} busy={busy === 'test'} disabled={Boolean(busy)} onClick={test}>Test connection</Button>
+              <Button variant="secondary" icon={PlugZap} busy={busy === 'test'} disabled={Boolean(busy)} onClick={test}>{model.trim() ? 'Test model' : 'Test connection'}</Button>
               <Button type="submit" busy={busy === 'save'} disabled={Boolean(busy) || !model.trim()}>Save</Button>
               {settings.source === mode && (
                 <Button variant="ghost" busy={busy === 'remove'} disabled={Boolean(busy)} onClick={useDefault} className="sm:ml-auto">Remove key</Button>
