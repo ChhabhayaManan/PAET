@@ -31,7 +31,7 @@ def resp(topic, score, kind="predict_output", difficulty="medium", phase="code",
 def walk(answer, responses=(), bank=FULL_BANK):
     responses = list(responses)
     while True:
-        step = next_step(responses, bank, 30.0 * len(responses))
+        step = next_step(responses, bank)
         if isinstance(step, Done):
             return responses
         assert len(responses) < ITEM_CAP
@@ -60,7 +60,7 @@ T1_PASSED = [resp("basics_io", 1.0, difficulty="easy", phase="warmup"),
 
 
 def test_first_item_is_warmup():
-    assert next_step([], FULL_BANK, 0.0) == Ask(WARMUP)
+    assert next_step([], FULL_BANK) == Ask(WARMUP)
 
 
 def test_all_wrong_stops_after_t1_and_asks_theory():
@@ -96,7 +96,7 @@ def test_level_k_bands(k):
 
 def test_fail_gets_one_followup():
     responses = T1_PASSED + [resp("loops", 0.0)]
-    step = next_step(responses, FULL_BANK, 0.0)
+    step = next_step(responses, FULL_BANK)
     assert step.ref.topic == "loops" and step.ref.difficulty == "easy"
     assert step.ref.phase == "followup" and step.ref.kind != "predict_output"
     responses.append(Resp(step.ref, 0.0, "key"))
@@ -125,7 +125,7 @@ def test_skipped_followup_after_used_retry_blocks_dependents():
 def test_basics_warmup_counts_as_followup():
     responses = [resp("basics_io", 1.0, difficulty="easy", phase="warmup"),
                  resp("basics_io", 0.0, kind="find_bug")]
-    step = next_step(responses, FULL_BANK, 60.0)
+    step = next_step(responses, FULL_BANK)
     assert step.ref.topic == "conditionals" and step.ref.phase == "code"
 
 
@@ -137,10 +137,10 @@ def test_followup_capped():
 
 def test_skipped_retries_as_predict_output_once():
     responses = T1_PASSED + [resp("loops", None, kind="find_bug", graded_by="skipped")]
-    step = next_step(responses, FULL_BANK, 120.0)
+    step = next_step(responses, FULL_BANK)
     assert step == Ask(ItemRef("loops", "predict_output", "medium", "retry"))
     responses.append(Resp(step.ref, None, "skipped"))
-    step = next_step(responses, FULL_BANK, 150.0)
+    step = next_step(responses, FULL_BANK)
     assert step.ref.topic != "loops"
     assert "loops" not in topic_scores(responses)
 
@@ -149,24 +149,24 @@ def test_skipped_retries_easy_predict_output_when_no_medium():
     bank = FULL_BANK - {("loops", "predict_output", "medium"),
                         ("basics_io", "predict_output", "medium")}
     responses = T1_PASSED + [resp("loops", None, kind="find_bug", graded_by="skipped")]
-    step = next_step(responses, bank, 120.0)
+    step = next_step(responses, bank)
     assert step == Ask(ItemRef("loops", "predict_output", "easy", "retry"))
     responses.append(Resp(step.ref, 1.0, "key"))
-    assert next_step(responses, bank, 150.0).ref.topic != "loops"
+    assert next_step(responses, bank).ref.topic != "loops"
     assert topic_scores(responses)["loops"] == 0.6
 
     warmup_used = [resp("basics_io", 1.0, difficulty="easy", phase="warmup"),
                    resp("basics_io", None, kind="find_bug", graded_by="skipped")]
-    assert next_step(warmup_used, bank, 60.0).ref.phase != "retry"
+    assert next_step(warmup_used, bank).ref.phase != "retry"
 
 
 def test_scored_warmup_decides_basics_when_medium_skipped():
     bank = FULL_BANK - {("basics_io", "predict_output", "medium")}
     failed = [resp("basics_io", 0.0, difficulty="easy", phase="warmup"),
               resp("basics_io", None, kind="find_bug", graded_by="skipped")]
-    assert next_step(failed, bank, 60.0).ref.phase == "theory"
+    assert next_step(failed, bank).ref.phase == "theory"
     passed = [resp("basics_io", 1.0, difficulty="easy", phase="warmup"), failed[1]]
-    assert next_step(passed, bank, 60.0).ref.topic == "conditionals"
+    assert next_step(passed, bank).ref.topic == "conditionals"
 
 
 def test_consecutive_code_items_vary_kind():
@@ -177,11 +177,6 @@ def test_consecutive_code_items_vary_kind():
         code = code_refs(simulate(level, bank))
         assert len(code) >= 4
         assert all(a.kind != b.kind for a, b in zip(code, code[1:])), (level, code)
-
-
-def test_time_reserve_switches_to_theory():
-    responses = T1_PASSED + [resp("loops", 1.0), resp("functions", 1.0, kind="find_bug")]
-    assert next_step(responses, FULL_BANK, 241.0).ref.phase == "theory"
 
 
 @pytest.mark.parametrize("level", [1, 5])
@@ -202,31 +197,23 @@ def test_theory_topics_slots():
 
 
 def test_pending_theory_counts_as_answered():
-    responses = T1_PASSED + [resp("loops", 1.0), resp("functions", 1.0, kind="find_bug")]
+    responses = [r for r in simulate(0) if r.ref.phase != "theory"]
     asked = []
     for _ in range(3):
-        step = next_step(responses, FULL_BANK, 241.0)
+        step = next_step(responses, FULL_BANK)
         assert step.ref.phase == "theory" and step.ref.topic not in asked
         asked.append(step.ref.topic)
         responses.append(Resp(step.ref, None, "pending"))
-    assert next_step(responses, FULL_BANK, 300.0) == Done()
-
-
-def test_theory_continues_past_time_cap():
-    responses = T1_PASSED + [resp("loops", 1.0), resp("functions", 1.0, kind="find_bug")]
-    first = next_step(responses, FULL_BANK, 241.0)
-    responses.append(Resp(first.ref, 1.0, "llm"))
-    step = next_step(responses, FULL_BANK, 600.0)
-    assert step.ref.phase == "theory" and step.ref.topic != first.ref.topic
+    assert next_step(responses, FULL_BANK) == Done()
 
 
 def test_remaining_estimate():
-    assert remaining([], FULL_BANK, 0.0) == ITEM_CAP
+    assert remaining([], FULL_BANK) == ITEM_CAP
     full = simulate(5)
-    assert remaining(full[:11], FULL_BANK, 330.0) == 1
-    assert remaining(full, FULL_BANK, 360.0) == 0
-    assert remaining(T1_PASSED, FULL_BANK, 999.0) == 3
+    assert remaining(full[:11], FULL_BANK) == 1
+    assert remaining(full, FULL_BANK) == 0
+    assert remaining(T1_PASSED, FULL_BANK) == ITEM_CAP - len(T1_PASSED)
     beginner = simulate(1)
     for n in range(len(beginner) + 1):
-        left = remaining(beginner[:n], FULL_BANK, 30.0 * n)
+        left = remaining(beginner[:n], FULL_BANK)
         assert 0 <= left <= ITEM_CAP - n

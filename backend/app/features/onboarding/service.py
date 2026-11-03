@@ -71,10 +71,6 @@ def onboarding_run(user: User, record: OnboardingRecord) -> Run:
     return Run(record, record.language or user.preferred_language, theory=True)
 
 
-def _elapsed_s(record) -> float:
-    return (now() - steps.utc(record.diagnostic_started_at)).total_seconds()
-
-
 def _answered_ids(db: Session, user_id: int) -> set[int]:
     return {item_id for (item_id,) in db.query(DiagnosticResponse.item_id)
             .filter(DiagnosticResponse.user_id == user_id)}
@@ -89,13 +85,13 @@ def _index(db: Session, run: Run) -> BankIndex:
     return index if run.theory else frozenset(k for k in index if k[1] != "theory")
 
 
-def _plan(db: Session, run: Run, resps: list[Resp], elapsed_s: float,
+def _plan(db: Session, run: Run, resps: list[Resp],
           exclude: set[int]) -> tuple[tuple[Ask, DiagnosticItem] | None, BankIndex]:
     """The walk's next ask and a bank item for it. A ref the bank cannot serve is a hole:
     it is dropped from the index and the walk asked again."""
     index = _index(db, run)
     for _ in range(HOLE_TRIES):
-        step = walk.next_step(resps, index, elapsed_s)
+        step = walk.next_step(resps, index)
         if not isinstance(step, Ask):
             break
         item = bank.fetch(db, step.ref, run.language, exclude)
@@ -107,11 +103,10 @@ def _plan(db: Session, run: Run, resps: list[Resp], elapsed_s: float,
 
 def _phase_of(db: Session, run: Run, item: DiagnosticItem, resps: list[Resp],
               exclude: set[int]) -> str:
-    """A code item was served before the time cap, so the walk with the clock at zero
-    replays the ask it was served for."""
+    """The walk on the same responses replays the ask the item was served for."""
     if item.kind == "theory":
         return "theory"
-    found, _ = _plan(db, run, resps, 0.0, exclude)
+    found, _ = _plan(db, run, resps, exclude)
     if found and found[1].id == item.id:
         return found[0].ref.phase
     return "write" if item.kind == "write_code" else "code"
@@ -140,28 +135,26 @@ def serve(db: Session, run: Run) -> DiagOut:
         return DiagOut(item=None, order=len(resps), remaining=0, topic_map=topic_map(resps),
                        phase=None, done=True)
     exclude = _answered_ids(db, run.user_id)
-    elapsed = _elapsed_s(record)
     current = record.current_item_id
     if current is not None and current not in exclude:
         item = db.get(DiagnosticItem, current)
         index = _index(db, run)
         phase = _phase_of(db, run, item, resps, exclude)
     else:
-        found, index = _plan(db, run, resps, elapsed, exclude)
+        found, index = _plan(db, run, resps, exclude)
         item, phase = (found[1], found[0].ref.phase) if found else (None, None)
         record.current_item_id = item.id if item else None
         db.commit()
     if item is None:
         return DiagOut(item=None, order=len(resps), remaining=0, topic_map=topic_map(resps),
                        phase=None, done=True)
-    left = walk.remaining(resps, index, elapsed)
+    left = walk.remaining(resps, index)
     return DiagOut(item=bank.payload(item), order=len(resps) + 1, remaining=max(0, left - 1),
                    topic_map=topic_map(resps, item.topic), phase=phase, done=False)
 
 
 def walk_done(db: Session, run: Run) -> bool:
-    found, _ = _plan(db, run, _responses(db, run), _elapsed_s(run.record),
-                     _answered_ids(db, run.user_id))
+    found, _ = _plan(db, run, _responses(db, run), _answered_ids(db, run.user_id))
     return found is None
 
 
@@ -262,7 +255,7 @@ def answer_in(db: Session, run: Run, data: AnswerIn,
 
     if item.kind != "theory":
         return _answer_out(db, run, row, saved_only=False)
-    found, _ = _plan(db, run, _responses(db, run), _elapsed_s(record), exclude | {item.id})
+    found, _ = _plan(db, run, _responses(db, run), exclude | {item.id})
     if found is not None:
         return _answer_out(db, run, row, saved_only=True)
     graded = _grade_theory_block(db, run.user_id, background_tasks)

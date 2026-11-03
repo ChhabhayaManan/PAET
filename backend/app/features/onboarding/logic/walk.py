@@ -1,5 +1,5 @@
 """The adaptive diagnostic walk. Pure: the next item is a function of the responses
-so far, the student's bank index and the elapsed diagnostic time."""
+so far and the student's bank index. There is no time limit, only item caps."""
 
 from app.core.topics import PREREQUISITES, TOPICS
 from app.features.onboarding.logic.types import Ask, BankIndex, Done, ItemRef, Resp
@@ -17,8 +17,6 @@ CODE_KINDS = ("predict_output", "find_bug", "fill_blank")
 ITEM_CAP = 12
 CODE_CAP = 9
 THEORY_COUNT = 3
-TIME_CAP_S = 420
-THEORY_RESERVE_S = 180
 PASS = 0.5
 FOLLOWUP_CAP = 0.6
 STRONG = 0.75
@@ -205,28 +203,27 @@ def _next_theory_ask(responses: list[Resp], bank: BankIndex) -> Ask | Done:
     return Done()
 
 
-def _code_walk_over(responses: list[Resp], elapsed_s: float) -> bool:
+def _code_walk_over(responses: list[Resp]) -> bool:
     theory_started = any(r.ref.phase == "theory" for r in responses)
-    return (theory_started or len(_code(responses)) >= CODE_CAP
-            or elapsed_s > TIME_CAP_S - THEORY_RESERVE_S)
+    return theory_started or len(_code(responses)) >= CODE_CAP
 
 
-def next_step(responses: list[Resp], bank: BankIndex, elapsed_s: float) -> Ask | Done:
+def next_step(responses: list[Resp], bank: BankIndex) -> Ask | Done:
     if len(responses) >= ITEM_CAP:
         return Done()
-    if not _code_walk_over(responses, elapsed_s):
+    if not _code_walk_over(responses):
         ask = _next_code_ask(_code(responses), bank)
         if ask:
             return ask
     return _next_theory_ask(responses, bank)
 
 
-def remaining(responses: list[Resp], bank: BankIndex, elapsed_s: float) -> int:
-    """Items still to ask if every remaining answer passed, with the clock held still."""
+def remaining(responses: list[Resp], bank: BankIndex) -> int:
+    """Items still to ask if every remaining answer passed."""
     simulated = list(responses)
-    step = next_step(simulated, bank, elapsed_s)
+    step = next_step(simulated, bank)
     while isinstance(step, Ask):
         simulated.append(Resp(step.ref, 1.0, "estimate"))
-        step = next_step(simulated, bank, elapsed_s)
+        step = next_step(simulated, bank)
     left = len(simulated) - len(responses)
     return max(0, min(left, ITEM_CAP - len(responses)))

@@ -146,7 +146,7 @@ export default function DiagnosticStep({ initial, onSaved, onConflict, onProgres
         {intro || (
           <>
             <StepTitle eyebrow="Starting check" title="A short check"
-              subtitle="Up to 12 questions in your language, about 5 minutes. It starts easy and adapts to your answers." />
+              subtitle="Up to 12 questions in your language. There is no time limit. It starts easy and adapts to your answers." />
             <ul className="mb-8 space-y-3">
               {INTRO_POINTS.map(({ icon: Icon, tone, text }) => (
                 <li key={text} className="flex items-start gap-3 text-sm leading-relaxed text-ink-muted">

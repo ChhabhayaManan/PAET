@@ -413,16 +413,20 @@ def test_llm_busy_theory_pending_card_says_reviewing(client, db, user, judge, re
     assert retries and set(retries) == {user.id}
 
 
-def test_time_cap_uses_server_clock(client, db, user, monkeypatch):
+def test_slow_student_gets_full_walk(client, db, user, judge, monkeypatch):
     make_bank(db)
-    warmup = begin(client)["item"]
+    step = begin(client)
     started = db.get(OnboardingRecord, user.id).diagnostic_started_at
-    later = started.replace(tzinfo=timezone.utc) + timedelta(seconds=241)
+    later = started.replace(tzinfo=timezone.utc) + timedelta(minutes=30)
     monkeypatch.setattr(service, "now", lambda: later)
 
-    out = submit(client, warmup["id"], right_answer(db, warmup["id"]), ms_taken=1).json()
+    kinds = []
+    while not step["done"]:
+        kinds.append(step["item"]["kind"])
+        out = submit(client, step["item"]["id"], right_answer(db, step["item"]["id"]))
+        step = out.json()["next"]
 
-    assert out["next"]["item"]["kind"] == "theory"
+    assert len(kinds) == 12 and kinds.count("theory") == 3
 
 
 def finish_onboarding_in_c(client, db, judge):
