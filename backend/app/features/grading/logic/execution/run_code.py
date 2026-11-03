@@ -1,3 +1,6 @@
+"""Runs code over several stdins through the provider and marks each case passed or not by
+comparing normalized output."""
+
 from pydantic import BaseModel
 
 from app.core.text import normalize_output

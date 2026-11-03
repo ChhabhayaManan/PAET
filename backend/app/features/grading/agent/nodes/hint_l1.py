@@ -1,3 +1,6 @@
+"""The level-1 hint, a template over the first failing case (no LLM), and the log that it
+was shown."""
+
 from app.features.grading.agent.schemas import HintReport
 from app.features.grading.agent.state import EvalState
 from app.features.hints.service import FailingCase, HintSource, l1_text, log_hint

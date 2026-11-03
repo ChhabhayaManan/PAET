@@ -1,3 +1,5 @@
+"""EvalState, the state passed between graph nodes."""
+
 from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict

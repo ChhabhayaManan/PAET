@@ -1,3 +1,6 @@
+"""Saves code submissions (with an auto-generated title) and runs the Evaluation Agent on
+them for the router."""
+
 import re
 
 from sqlalchemy.orm import Session

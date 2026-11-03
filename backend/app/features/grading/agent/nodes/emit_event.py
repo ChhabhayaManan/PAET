@@ -1,3 +1,6 @@
+"""Hands a verified, graded run to the Profiling Agent as a hint-discounted learning event,
+and collects the gamification awards it earns."""
+
 import logging
 from datetime import datetime, timezone
 

@@ -1,3 +1,6 @@
+"""Runs the student's code in the sandbox: every test case in one batched stdin, scored per
+case. Without trusted tests, one smoke run in review mode."""
+
 from app.core.exceptions import ExecutorUnavailable
 from app.features.grading.agent.multi_test import (
     all_failed, merge_cases, split_actual, verdict_for,

@@ -1,3 +1,5 @@
+"""Picks the configured execution provider; only the executor sidecar exists."""
+
 from functools import lru_cache
 
 from app.core.config import settings

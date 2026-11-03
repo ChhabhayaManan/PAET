@@ -1,3 +1,6 @@
+"""A student's evaluation stats: submission and evaluation counts, averages and score
+history."""
+
 from collections import Counter
 
 from sqlalchemy.orm import Session

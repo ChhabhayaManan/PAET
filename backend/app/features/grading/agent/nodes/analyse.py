@@ -1,3 +1,6 @@
+"""Static analysis node: lines of code, cyclomatic complexity and style issues, measured
+before anything runs."""
+
 from app.features.grading.agent.state import EvalState
 from app.features.grading.agent.static_metrics import find_issues, measure
 

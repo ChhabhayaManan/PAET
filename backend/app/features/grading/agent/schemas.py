@@ -1,3 +1,6 @@
+"""The agent's data shapes: the LLM's structured outputs (generated tests, explanation) and
+the EvalReport that leaves the agent, which never carries the answer key."""
+
 from datetime import datetime
 from typing import Literal, Optional
 

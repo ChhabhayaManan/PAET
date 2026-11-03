@@ -1,3 +1,6 @@
+"""Grading tables: code submissions, their evaluations and each student's evaluation
+history."""
+
 from sqlalchemy import (
     Column, Integer, String, Boolean, DateTime, Text,
     Float, Enum, Index, JSON, ForeignKey

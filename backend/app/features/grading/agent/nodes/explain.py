@@ -1,3 +1,6 @@
+"""The LLM explanation of a run, from the code, the first failing case and the static issues,
+pitched at the student's level and style. Scores never depend on it."""
+
 from app.core import llm_gateway
 from app.core.exceptions import LLMUnavailable
 from app.core.llm import invoke_with_retry

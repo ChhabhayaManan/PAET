@@ -1,3 +1,6 @@
+"""Prompt templates: test-case generation, reference-solution retry, porting a solution to
+C/C++, and the student-facing explanation with its failure and crash blocks."""
+
 from app.core.topics import MISCONCEPTIONS
 
 TEST_GENERATION_PROMPT = """You prepare test cases for a beginner programming exercise.

@@ -1,3 +1,7 @@
+"""The Evaluation Agent's LangGraph: route -> analyse -> ensure tests -> run -> explain (when
+useful) -> score -> L1 hint. evaluate_submission runs it, persists the report and hands a
+verified result to Profiling."""
+
 import time
 from functools import lru_cache
 

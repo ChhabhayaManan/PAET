@@ -1,3 +1,6 @@
+"""HTTP client for the executor container's /run-batch; any network or server failure
+becomes ExecutorUnavailable."""
+
 import httpx
 
 from app.core.exceptions import ExecutorUnavailable

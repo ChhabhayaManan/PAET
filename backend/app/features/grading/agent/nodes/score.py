@@ -1,3 +1,6 @@
+"""Builds the EvalReport: weighted scores, per-case pass/fail without expected outputs, the
+one revealed failing case, issues and misconceptions."""
+
 from app.core.topics import clean_misconceptions
 from app.features.grading.agent import scoring
 from app.features.grading.agent.schemas import (

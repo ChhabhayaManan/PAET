@@ -1,3 +1,5 @@
+"""Saves the evaluation, its per-case execution results and a history entry."""
+
 import time
 
 from app.core.text import ellipsize

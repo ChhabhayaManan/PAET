@@ -1,3 +1,6 @@
+"""Static code metrics via lizard (lines of code, cyclomatic complexity, comment ratio) and
+rule-based style issues."""
+
 import re
 
 import lizard

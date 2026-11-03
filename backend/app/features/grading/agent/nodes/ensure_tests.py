@@ -1,3 +1,6 @@
+"""Makes sure the problem has trusted test cases: cached ones, or LLM-generated ones checked
+against a reference solution. No trusted tests means review mode."""
+
 from app.core.exceptions import LLMUnavailable
 from app.features.grading.agent.state import EvalState
 from app.features.problems.logic.test_generation.generate_tests import generate_tests

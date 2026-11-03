@@ -1,3 +1,6 @@
+"""Turns test results and static metrics into 0-100 scores: correctness, complexity,
+efficiency, style, and their weighted overall."""
+
 import re
 
 from app.features.grading.agent.schemas import ScoreBreakdown

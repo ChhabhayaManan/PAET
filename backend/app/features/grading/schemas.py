@@ -1,3 +1,5 @@
+"""Request and response shapes for the code-eval HTTP API."""
+
 from datetime import datetime
 from typing import List, Optional
 

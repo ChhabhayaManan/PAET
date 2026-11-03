@@ -1,3 +1,6 @@
+"""Grades code against test cases the way submissions are graded: one run over all cases
+merged into one stdin, then a per-case split."""
+
 from dataclasses import dataclass
 
 from app.features.grading.agent.multi_test import SplitReport, all_failed, merge_cases, split_actual

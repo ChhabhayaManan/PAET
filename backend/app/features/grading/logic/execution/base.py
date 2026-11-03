@@ -1,3 +1,6 @@
+"""The sandbox contract: run statuses, resource limits, the result shape, and the
+ExecutionProvider interface every backend implements."""
+
 from abc import ABC, abstractmethod
 from enum import Enum
 

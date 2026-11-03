@@ -1,3 +1,6 @@
+"""First node: loads the submission and picks the mode. Verified when there is a problem to
+test and the language can run; review otherwise."""
+
 from app.core.exceptions import SubmissionNotFound
 from app.core.languages import EXECUTABLE_LANGUAGES
 from app.features.accounts.models import User
