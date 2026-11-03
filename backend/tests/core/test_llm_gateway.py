@@ -300,3 +300,13 @@ def test_no_choice_keeps_the_paet_path_and_logs_it(env):
     invoke("hint", "p")
 
     assert _logged(env) == [("ok", "nvidia", "paet", "primary", 0, "")]
+
+
+def test_no_server_model_and_no_choice_asks_for_a_model(env, monkeypatch):
+    monkeypatch.setattr(settings, "NVIDIA_API_KEY", "")
+
+    with pytest.raises(ModelKeyError) as caught:
+        invoke("hint", "p", template="canned hint")
+
+    assert caught.value.code == "no_model"
+    assert env.factory.calls == []

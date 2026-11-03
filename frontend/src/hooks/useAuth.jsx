@@ -7,17 +7,22 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)  // true on initial load
 
-  // ─── Restore session on mount ──────────────────────────────────────────────
+  // ─── Restore session on mount; a local PAET logs straight in ──────────────
   useEffect(() => {
+    const localLogin = () => authAPI.localLogin()
+      .then(({ data }) => {
+        localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('refresh_token', data.refresh_token)
+        return authAPI.getMe()
+      })
+      .then(({ data }) => setUser(data))
+      .catch(() => {})
+
     const token = localStorage.getItem('access_token')
-    if (token) {
-      authAPI.getMe()
-        .then(({ data }) => setUser(data))
-        .catch(() => localStorage.clear())
-        .finally(() => setLoading(false))
-    } else {
-      setLoading(false)
-    }
+    const restore = token
+      ? authAPI.getMe().then(({ data }) => setUser(data)).catch(() => { localStorage.clear(); return localLogin() })
+      : localLogin()
+    restore.finally(() => setLoading(false))
   }, [])
 
   // ─── Register ─────────────────────────────────────────────────────────────

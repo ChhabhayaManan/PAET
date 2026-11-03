@@ -54,7 +54,8 @@ textbooks.
 
 ## How a student learns with PAET
 
-1. **Start.** A short diagnostic sets a starting level for each topic.
+1. **Start.** The student picks an AI model, then a short diagnostic sets a starting level
+   for each topic.
 2. **Next item.** PAET picks a multiple-choice question, a debugging task or a coding
    problem from the weakest topic that is open.
 3. **Answer.** Code runs against tests in a sandbox. Multiple-choice answers are checked
@@ -181,7 +182,8 @@ the starting topic levels.
 
 ## Choose your model
 
-Students can bring their own model from the **Model** card in the sidebar.
+Pick a model from the **Model** card in the sidebar. A new student is asked to choose one
+during setup.
 
 **Cloud**
 
@@ -192,60 +194,40 @@ Students can bring their own model from the **Model** card in the sidebar.
 ![Groq](https://img.shields.io/badge/Groq-API-F55036)
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-API-6467F2?logo=openrouter&logoColor=white)
 
-**Local (self-hosted PAET only)**
+**Local (when you run PAET on your computer)**
 
 ![Ollama](https://img.shields.io/badge/Ollama-local-000000?logo=ollama&logoColor=white)
 ![LM Studio](https://img.shields.io/badge/LM%20Studio-local-4B5563)
 ![OpenAI compatible](https://img.shields.io/badge/Any-OpenAI--compatible-6B7280)
 
-- **Your key stays with you.** It is kept in your browser in an encrypted cookie that page
-  scripts cannot read. The server uses it for your request and never stores or logs it.
-- **Every model is tested before it is saved.** PAET checks the connection, tool calling,
-  structured output and the context window. A model that fails any check cannot be saved,
-  and the window says why.
-- **Clear errors.** If your key fails later (rejected, rate limit, out of credit, request
-  too long), PAET stops and tells you exactly why.
+- **Tested before use.** PAET checks the connection, tool calling, structured output and
+  context window, and only saves a model that passes all four.
+- **Your key stays with you.** It is kept encrypted in your browser and never stored on the
+  server.
+- **Clear errors.** If a key stops working (rejected, rate limit, out of credit), PAET says
+  exactly why.
 
 ---
 
-## Run it locally
+## Run it on your computer
 
-Requires [Docker](https://docs.docker.com/get-docker/) with Compose.
+Needs [Docker](https://docs.docker.com/get-docker/). Then:
 
 ```bash
 git clone https://github.com/ChhabhayaManan/AiTa.git paet
 cd paet
-cp .env.example backend/.env
-```
-
-In `backend/.env`, set `SECRET_KEY` and a server model (`NVIDIA_API_KEY`, or
-`DEFAULT_LLM_PROVIDER`, `DEFAULT_LLM_MODEL` and `DEFAULT_LLM_API_KEY` for another provider).
-
-```bash
-# start the database, sandbox, backend and frontend
 docker compose up -d --build
-
-# create the tables
-docker compose exec backend sh -c "cd /app/app && PYTHONPATH=/app alembic upgrade head"
-
-# load the questions, problems and lessons
-docker compose exec backend python -m scripts.seed.ingest_problems
-docker compose exec backend python -m scripts.seed.seed_practice
-docker compose exec backend python -m scripts.seed.seed_theory
-docker compose exec backend python -m scripts.seed.seed_diagnostic
-
-# index the textbooks for the tutor chat (downloads the books, takes a few minutes)
-docker compose exec backend python -m scripts.seed.ingest_books
 ```
 
-Open http://localhost:5173 and create an account. Without email settings, the login code is
-printed to the backend log:
+Open http://localhost:5173. There is no login: PAET opens straight away and asks you to
+choose an AI model during setup.
 
-```bash
-docker compose logs backend | grep "\[DEV\] OTP"
-```
+The first start takes a few minutes to build. The tutor chat starts citing textbooks a few
+minutes after that, once they are downloaded. To stop PAET, run `docker compose down`; your
+progress is kept.
 
-API documentation: http://localhost:8000/docs
+Settings are optional. To change one, for example to give every student a ready model,
+copy `.env.example` to `backend/.env`, edit it, and run `docker compose up -d` again.
 
 ---
 
@@ -287,5 +269,6 @@ docs/figures/      diagrams
   system, and limits on time, memory and processes.
 - The tutor chat has a moderation check and never writes full solutions.
 - Students' own model keys are never stored on the server.
+- PAET on your computer has no login, so it only accepts connections from that computer.
 - Each AI call is logged with its purpose, provider, model and timing for quality checks.
   Keys and student code are not part of that log.

@@ -143,6 +143,8 @@ def run(argv: list[str] | None = None, *, sources: list[SourceSpec] | None = Non
     parser = argparse.ArgumentParser(description="Chunk, embed and store the chatbot's books.")
     parser.add_argument("--source", default=None, help="source id, or a prefix like paet-guide")
     parser.add_argument("--dry-run", action="store_true", help="parse and chunk only")
+    parser.add_argument("--missing", action="store_true",
+                        help="skip sources that are already in the database")
     parser.add_argument("--cache-dir", type=pathlib.Path, default=DEFAULT_CACHE)
     parser.add_argument("--allow-remote", action="store_true",
                         help="write even when DATABASE_URL is not a local database")
@@ -161,9 +163,17 @@ def run(argv: list[str] | None = None, *, sources: list[SourceSpec] | None = Non
     if not args.dry_run and embed_fn is None:
         from app.features.chat.logic.rag.embedder import embed as embed_fn
 
+    done: set[str] = set()
+    if args.missing and db is not None:
+        from app.features.chat.models import BookChunk
+
+        done = {sid for (sid,) in db.query(BookChunk.source_id).distinct()}
+
     counts: dict[str, int] = {}
     try:
         for spec in select_sources(sources if sources is not None else SOURCES, args.source):
+            if spec.id in done:
+                continue
             try:
                 counts[spec.id] = ingest_source(spec, fetch=fetch, embed_fn=embed_fn,
                                                 sink=sink, dry_run=args.dry_run)

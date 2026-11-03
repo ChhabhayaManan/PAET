@@ -92,6 +92,8 @@ export const authAPI = {
   // Both 404 unless the backend has DEBUG on and DEV_LOGIN_EMAIL set.
   devLoginAvailable: () => api.get('/auth/dev-login'),
   devLogin: () => api.post('/auth/dev-login'),
+  // 404 unless PAET runs in local mode.
+  localLogin: () => api.post('/auth/local-login'),
 }
 
 // ─── User Profile API ─────────────────────────────────────────────────────────

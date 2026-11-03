@@ -392,6 +392,30 @@ class AuthService:
         logger.warning("[DEV] passwordless login as %s", user.email)
         return AuthService._issue_tokens(db, user, ip_address, user_agent)
 
+    LOCAL_EMAIL = "student@paet.local"
+
+    @staticmethod
+    def local_login(db: Session, ip_address: str = None,
+                    user_agent: str = None) -> TokenResponse:
+        """A self-hosted PAET has one student and no login screen."""
+        from app.core.llm_choice import is_local
+
+        if not is_local():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found.")
+        user = db.query(User).filter(User.email == AuthService.LOCAL_EMAIL).first()
+        if user is None:
+            user = User(email=AuthService.LOCAL_EMAIL, username="student",
+                        hashed_password=hash_password(uuid.uuid4().hex), is_verified=True,
+                        preferred_languages=[], learning_goals=[], interests=[], badges=[])
+            db.add(user)
+            db.flush()
+            db.add(LearningProfile(user_id=user.id, topic_scores={}, error_patterns=[],
+                                   strong_areas=[], weak_areas=[], recommended_next=[],
+                                   preferred_content_types=[]))
+            db.commit()
+            db.refresh(user)
+        return AuthService._issue_tokens(db, user, ip_address, user_agent)
+
     # ── Forgot Password: send OTP ─────────────────────────────────────────────
 
     @staticmethod

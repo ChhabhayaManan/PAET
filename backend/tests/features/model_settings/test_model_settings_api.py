@@ -48,6 +48,7 @@ def client(monkeypatch):
     db.commit()
 
     monkeypatch.setattr(settings, "DEPLOY_MODE", "local")
+    monkeypatch.setattr(settings, "NVIDIA_API_KEY", "server-key")
     checked = []
     monkeypatch.setattr(service, "list_models", lambda choice: checked.append(choice) or {
         "gpt-4.1-mini": 1_047_576, "gpt-4.1": None, "tiny": 4096})
@@ -76,6 +77,14 @@ def test_saved_choice_is_seen_by_requests_and_never_returned(client):
 
     client.delete(URL)
     assert client.get(URL).json()["source"] == "default"
+
+
+def test_without_a_server_model_the_student_must_choose(client, monkeypatch):
+    monkeypatch.setattr(settings, "NVIDIA_API_KEY", "")
+    monkeypatch.setattr(settings, "DEFAULT_LLM_PROVIDER", "")
+
+    seen = client.get(URL).json()
+    assert (seen["source"], seen["model"], seen["has_default"]) == ("none", "", False)
 
 
 def test_changing_model_reuses_the_saved_key_for_the_same_provider(client):

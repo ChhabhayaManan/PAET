@@ -23,6 +23,7 @@ class ModelSettingsOut(BaseModel):
     model: str
     key_hint: str
     deploy_mode: str
+    has_default: bool
     providers: list[ProviderOut]
 
 

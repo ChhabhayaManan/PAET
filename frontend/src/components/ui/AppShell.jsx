@@ -64,7 +64,7 @@ function NavItems({ unread }) {
   )
 }
 
-function UserBlock({ user, onLogout }) {
+function UserBlock({ user, onLogout, local }) {
   const name = user?.full_name || user?.username || 'You'
   const initials = name.split(/\s+/).map(p => p[0]).join('').slice(0, 2).toUpperCase()
   return (
@@ -83,13 +83,15 @@ function UserBlock({ user, onLogout }) {
           </p>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={onLogout}
-        className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-full text-[13px] font-medium text-ink-subtle transition-colors hover:bg-white/[0.06] hover:text-ink"
-      >
-        <LogOut size={15} /> Log out
-      </button>
+      {!local && (
+        <button
+          type="button"
+          onClick={onLogout}
+          className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-full text-[13px] font-medium text-ink-subtle transition-colors hover:bg-white/[0.06] hover:text-ink"
+        >
+          <LogOut size={15} /> Log out
+        </button>
+      )}
     </div>
   )
 }
@@ -103,7 +105,7 @@ function SidebarBody({ user, unread, onLogout, model, onOpenModel }) {
       </nav>
       <div className="flex flex-col gap-3">
         <ModelCard settings={model} onOpen={onOpenModel} />
-        <UserBlock user={user} onLogout={onLogout} />
+        <UserBlock user={user} onLogout={onLogout} local={model?.deploy_mode === 'local'} />
       </div>
     </div>
   )

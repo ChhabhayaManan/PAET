@@ -20,11 +20,12 @@ function startingProvider(settings, mode) {
 }
 
 export default function ModelWindow({ settings, onClose, onChange }) {
-  const [mode, setMode] = useState(settings.source)
-  const [provider, setProvider] = useState(() => startingProvider(settings, settings.source))
+  const firstMode = settings.source === 'none' ? 'own' : settings.source
+  const [mode, setMode] = useState(firstMode)
+  const [provider, setProvider] = useState(() => startingProvider(settings, firstMode))
   const [apiKey, setApiKey] = useState('')
   const [baseUrl, setBaseUrl] = useState('')
-  const [model, setModel] = useState(settings.source === 'default' ? '' : settings.model)
+  const [model, setModel] = useState(settings.source === 'own' || settings.source === 'local' ? settings.model : '')
   const [models, setModels] = useState([])
   const [checks, setChecks] = useState([])
   const [error, setError] = useState(null)
@@ -33,7 +34,8 @@ export default function ModelWindow({ settings, onClose, onChange }) {
 
   const info = settings.providers.find(p => p.id === provider)
   const savedKey = settings.source !== 'default' && settings.provider === provider && settings.key_hint
-  const modes = MODES.filter(m => m.value !== 'local' || settings.deploy_mode === 'local')
+  const modes = MODES.filter(m => (m.value !== 'local' || settings.deploy_mode === 'local')
+    && (m.value !== 'default' || settings.has_default))
 
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
@@ -102,7 +104,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
   const useDefault = () => run('remove', async () => {
     const { data } = await modelAPI.remove()
     onChange(data)
-    toast.success('Back to PAET default')
+    toast.success(data.source === 'default' ? 'Back to PAET default' : 'Model removed')
     onClose()
   })
 
@@ -114,7 +116,7 @@ export default function ModelWindow({ settings, onClose, onChange }) {
           <div>
             <h2 id="model-window-title" className="text-xl font-semibold tracking-tight text-ink">Model</h2>
             <p className="mt-1 text-[13px] text-ink-subtle">
-              In use: <span className="font-mono text-ink-muted">{settings.model}</span>
+              In use: <span className="font-mono text-ink-muted">{settings.model || 'none yet'}</span>
             </p>
           </div>
           <button type="button" autoFocus onClick={onClose} aria-label="Close" className="flex h-9 w-9 items-center justify-center rounded-full text-ink-muted hover:bg-white/[0.06] hover:text-ink">

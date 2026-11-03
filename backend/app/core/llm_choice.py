@@ -55,6 +55,10 @@ def paet_default():
     return use_choice(None)
 
 
+def has_server_model() -> bool:
+    return bool(settings.DEFAULT_LLM_PROVIDER or settings.NVIDIA_API_KEY)
+
+
 def server_choice() -> Choice | None:
     if not settings.DEFAULT_LLM_PROVIDER:
         return None

@@ -1,4 +1,5 @@
 import os
+import secrets
 from pathlib import Path
 from typing import List
 
@@ -14,8 +15,9 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = Field(repr=False)
 
-    # JWT
-    SECRET_KEY: str = Field(repr=False)
+    # JWT. Left empty, one is generated on first start and kept in SECRET_KEY_FILE.
+    SECRET_KEY: str = Field(default="", repr=False)
+    SECRET_KEY_FILE: Path = Path(__file__).resolve().parents[2] / "data" / "secret_key"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
@@ -110,4 +112,16 @@ class Settings(BaseSettings):
         extra = "ignore"
     
 
+def _stored_secret(path: Path) -> str:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("x") as f:
+            f.write(secrets.token_hex(32))
+    except FileExistsError:
+        pass
+    return path.read_text().strip()
+
+
 settings = Settings()
+if not settings.SECRET_KEY:
+    settings.SECRET_KEY = _stored_secret(settings.SECRET_KEY_FILE)

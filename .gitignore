@@ -57,3 +57,6 @@ ENV/
 # Environment variable file variants (.env already covered above)
 .env.*
 !.env.example
+
+# Generated secret key (backend/data/secret_key)
+backend/data/

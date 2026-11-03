@@ -166,3 +166,17 @@ def dev_login(request: Request, db: Session = Depends(get_db)):
         ip_address=request.client.host if request.client else None,
         user_agent=request.headers.get("user-agent"),
     )
+
+
+@router.post(
+    "/local-login",
+    response_model=TokenResponse,
+    summary="Open a self-hosted PAET without logging in",
+)
+def local_login(request: Request, db: Session = Depends(get_db)):
+    """404 unless DEPLOY_MODE is local."""
+    return AuthService.local_login(
+        db,
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent"),
+    )

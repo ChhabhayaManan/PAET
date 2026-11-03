@@ -14,6 +14,9 @@ import AboutStep from './steps/AboutStep'
 import LearningStep from './steps/LearningStep'
 import DiagnosticStep from './steps/DiagnosticStep'
 import ProfileCardStep from './steps/ProfileCardStep'
+import ModelStep from './steps/ModelStep'
+import ModelWindow from '../../components/model/ModelWindow'
+import { useModelSettings } from '../../components/model/ModelCard'
 
 const ORDER = [...STEPS.map(s => s.key), 'done']
 const VIEWS = {
@@ -38,6 +41,7 @@ export default function OnboardingFlow() {
   const [state, setState] = useState(null)
   const [view, setView] = useState(null)
   const [error, setError] = useState(null)
+  const model = useModelSettings()
 
   const load = useCallback(() => {
     setError(null)
@@ -75,8 +79,10 @@ export default function OnboardingFlow() {
     load()
   }
 
+  // The check grades written answers with the AI model, so one must be chosen first.
+  const needsModel = step === 'diagnostic' && model.settings?.source === 'none'
   const View = VIEWS[step]
-  const diag = step === 'diagnostic' ? state?.diagnostic : null
+  const diag = step === 'diagnostic' && !needsModel ? state?.diagnostic : null
   const question = diag && !diag.done && diag.item ? diag.order : null
 
   return (
@@ -98,6 +104,13 @@ export default function OnboardingFlow() {
             <Skeleton className="h-4 w-3/5" />
           </div>
         </div>
+      ) : needsModel ? (
+        <>
+          <ProgressHeader step={step} />
+          <div className="tile p-6 sm:p-10 motion-safe:animate-rise">
+            <ModelStep settings={model.settings} onOpen={() => model.setOpen(true)} />
+          </div>
+        </>
       ) : (
         <>
           <ProgressHeader step={step} question={question} remaining={diag?.remaining} />
@@ -112,6 +125,9 @@ export default function OnboardingFlow() {
             />
           </div>
         </>
+      )}
+      {model.open && model.settings && (
+        <ModelWindow settings={model.settings} onClose={() => model.setOpen(false)} onChange={model.setSettings} />
       )}
     </FocusLayout>
   )

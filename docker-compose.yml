@@ -1,3 +1,21 @@
+# Self-hosted PAET. Run `docker compose up -d --build`, then open http://localhost:5173.
+# docker-compose.dev.yml is the development stack.
+x-backend: &backend
+  build: ./backend
+  image: paet-backend
+  env_file:
+    - path: ./backend/.env
+      required: false
+  environment:
+    - DATABASE_URL=postgresql://paet:paet@db:5432/paet_db
+    - EXECUTOR_URL=http://executor:8080
+    - DEPLOY_MODE=local
+    - HF_HOME=/hf-cache
+  volumes:
+    - paet_data:/app/data
+    - hf_cache:/hf-cache
+  networks: [default, sandbox]
+
 services:
   db:
     image: pgvector/pgvector:pg18
@@ -27,23 +45,36 @@ services:
     pids_limit: 256
     mem_limit: 1g
 
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./backend/.env
-    environment:
-      # Overrides any DATABASE_URL in backend/.env. To use another Postgres, remove
-      # this line and the db dependency, and migrate that database first.
-      - DATABASE_URL=postgresql://paet:paet@db:5432/paet_db
-      - EXECUTOR_URL=http://executor:8080
+  # Creates the tables and loads the questions on every start; both are safe to rerun.
+  setup:
+    <<: *backend
+    command: >
+      sh -c "cd /app/app && PYTHONPATH=/app alembic upgrade head && cd /app &&
+             python -m scripts.seed.ingest_problems &&
+             python -m scripts.seed.seed_practice &&
+             python -m scripts.seed.seed_theory &&
+             python -m scripts.seed.seed_diagnostic"
     depends_on:
       db:
         condition: service_healthy
       executor:
         condition: service_started
-    networks: [default, sandbox]
+
+  # Indexes the textbooks for the tutor chat once, in the background.
+  books:
+    <<: *backend
+    command: python -m scripts.seed.ingest_books --missing
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+
+  backend:
+    <<: *backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      setup:
+        condition: service_completed_successfully
 
   frontend:
     build:
@@ -51,7 +82,7 @@ services:
       args:
         VITE_API_URL: http://localhost:8000/api/v1
     ports:
-      - "5173:5173"
+      - "127.0.0.1:5173:5173"
     depends_on:
       - backend
 
@@ -61,3 +92,5 @@ networks:
 
 volumes:
   paet_pgdata:
+  paet_data:
+  hf_cache:

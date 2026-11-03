@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from app.core.config import settings
 from app.core.exceptions import ModelChoiceRejected, ModelKeyError
 from app.core.llm import structured
-from app.core.llm_choice import Choice, is_local, server_choice
+from app.core.llm_choice import Choice, has_server_model, is_local, server_choice
 from app.core.llm_providers import PROVIDERS, build_client, classify, label, list_models
 from app.features.model_settings.schemas import (
     CapabilityCheck, CheckOut, ChoiceIn, ModelSettingsOut, ProviderOut,
@@ -29,7 +29,9 @@ def view(choice: Choice | None) -> ModelSettingsOut:
     providers = [ProviderOut(id=p.id, label=p.label, base_url=p.base_url, needs_key=p.needs_key,
                              local_only=p.local_only)
                  for p in PROVIDERS.values() if is_local() or not p.local_only]
-    if choice is None:
+    if choice is None and not has_server_model():
+        provider, model, source, hint = "", "", "none", ""
+    elif choice is None:
         default = server_choice()
         provider = default.provider if default else "nvidia"
         model = default.model if default else settings.NVIDIA_MODEL
@@ -37,9 +39,10 @@ def view(choice: Choice | None) -> ModelSettingsOut:
     else:
         provider, model, hint = choice.provider, choice.model, choice.key_hint
         source = "local" if PROVIDERS[provider].local_only else "own"
-    return ModelSettingsOut(source=source, provider=provider, provider_label=label(provider),
+    return ModelSettingsOut(source=source, provider=provider,
+                            provider_label=label(provider) if provider else "",
                             model=model, key_hint=hint, deploy_mode=settings.DEPLOY_MODE,
-                            providers=providers)
+                            has_default=has_server_model(), providers=providers)
 
 
 def resolve(data: ChoiceIn, existing: Choice | None) -> Choice:

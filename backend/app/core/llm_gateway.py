@@ -244,6 +244,8 @@ class Gateway:
         choice = current_choice() or server_choice()
         if choice is not None:
             return self._run_choice(spec, call, user_id, choice)
+        if not settings.NVIDIA_API_KEY:
+            raise ModelKeyError("no_model", "No AI model is set up yet. Choose one in the Model window.")
         factory = model_factory or self.model_factory
         primary = spec.model
         start = self.clock()
