@@ -4,6 +4,7 @@
   "items": [
     {
       "id": "aita-max-of-three",
+      "title": "Largest of Three",
       "difficulty": "easy",
       "statement": "A single line contains three integers a, b and c separated by spaces. Print the largest of them.",
       "constraints": "Each integer is between -1000 and 1000.",
@@ -73,6 +74,7 @@
     },
     {
       "id": "aita-leap-year",
+      "title": "Leap Year",
       "difficulty": "easy",
       "statement": "A single line contains a year y. Print YES if y is a leap year and NO otherwise. A year is a leap year if it divides by 4, except that a year dividing by 100 is a leap year only when it also divides by 400.",
       "constraints": "1 <= y <= 10000.",
@@ -143,6 +145,7 @@
     },
     {
       "id": "aita-letter-grade",
+      "title": "Letter Grade",
       "difficulty": "easy",
       "statement": "A single line contains an integer score. Print A for a score of 90 or more, B for 80 to 89, C for 70 to 79, D for 60 to 69, and F for anything below 60.",
       "constraints": "0 <= score <= 100.",
@@ -229,6 +232,7 @@
     },
     {
       "id": "aita-ticket-price",
+      "title": "Museum Ticket Price",
       "difficulty": "easy",
       "statement": "A single line contains two integers: a visitor's age and s, which is 1 if the visitor is a student and 0 if not. A museum ticket costs 0 for children under 5, 100 for ages 5 to 17, 200 for ages 18 to 59, and 120 for ages 60 and above. Students aged 18 to 25 pay 150 instead of 200. Print the ticket price.",
       "constraints": "0 <= age <= 120. s is 0 or 1.",
@@ -348,6 +352,7 @@
     },
     {
       "id": "aita-point-quadrant",
+      "title": "Point Quadrant",
       "difficulty": "easy",
       "statement": "A single line contains two integers x and y, the coordinates of a point. Print ORIGIN if the point is (0, 0), X-AXIS if it lies on the x-axis but is not the origin, and Y-AXIS if it lies on the y-axis but is not the origin. Otherwise print the quadrant it is in: Q1 when x > 0 and y > 0, Q2 when x < 0 and y > 0, Q3 when x < 0 and y < 0, and Q4 when x > 0 and y < 0.",
       "constraints": "-1000000000 <= x, y <= 1000000000.",
@@ -464,6 +469,7 @@
     },
     {
       "id": "aita-triangle-kind",
+      "title": "Triangle Type",
       "difficulty": "medium",
       "statement": "A single line contains three integers a, b and c, the lengths of three sticks. The sticks form a triangle only if every pair of sticks is longer in total than the third stick. Print INVALID if they do not form a triangle. Otherwise print EQUILATERAL if all three lengths are equal, ISOSCELES if exactly two are equal, and SCALENE if all three are different.",
       "constraints": "1 <= a, b, c <= 1000000.",
@@ -582,6 +588,7 @@
     },
     {
       "id": "aita-electricity-bill",
+      "title": "Electricity Bill",
       "difficulty": "medium",
       "statement": "A single line contains u, the number of electricity units a house used. The bill is worked out in slabs: each of the first 100 units costs 3, each unit from 101 to 200 costs 5, and each unit above 200 costs 8. If this total is more than 5000, a surcharge of one tenth of the total (rounded down) is added to it. Print the final bill.",
       "constraints": "0 <= u <= 1000000. The answer fits in a 32-bit integer.",
@@ -699,6 +706,7 @@
     },
     {
       "id": "aita-next-date",
+      "title": "Next Date",
       "difficulty": "hard",
       "statement": "A single line contains a valid date as three integers d, m and y (day, month, year). Print the date of the next day in the same form: d, m and y separated by single spaces, with no leading zeros. April, June, September and November have 30 days; February has 29 days in a leap year and 28 otherwise; every other month has 31 days. A year is a leap year if it divides by 4, except that a year dividing by 100 is a leap year only when it also divides by 400.",
       "constraints": "1 <= y <= 9998. The input is always a real date.",

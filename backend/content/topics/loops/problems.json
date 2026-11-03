@@ -4,6 +4,7 @@
   "items": [
     {
       "id": "aita-digit-sum",
+      "title": "Digit Sum",
       "difficulty": "easy",
       "statement": "A single line contains a non-negative integer n. Print the sum of its decimal digits.",
       "constraints": "0 <= n <= 1000000000.",
@@ -77,6 +78,7 @@
     },
     {
       "id": "aita-count-divisors",
+      "title": "Count Divisors",
       "difficulty": "easy",
       "statement": "A single line contains a positive integer n. Print how many positive integers divide n exactly, counting 1 and n itself.",
       "constraints": "1 <= n <= 10000.",
@@ -150,6 +152,7 @@
     },
     {
       "id": "aita-alternating-sum",
+      "title": "Alternating Sum",
       "difficulty": "easy",
       "statement": "A single line contains a positive integer n. Work out 1 - 2 + 3 - 4 + 5 - ... up to n, where every odd number is added and every even number is subtracted, and print the result.",
       "constraints": "1 <= n <= 1000000.",
@@ -225,6 +228,7 @@
     },
     {
       "id": "aita-countdown-rows",
+      "title": "Countdown Rows",
       "difficulty": "easy",
       "statement": "A single line contains a positive integer n. Print n lines. Line number i (counting from 1) contains the integers from i down to 1, separated by single spaces.",
       "constraints": "1 <= n <= 20.",
@@ -305,6 +309,7 @@
     },
     {
       "id": "aita-savings-days",
+      "title": "Days to Reach Savings",
       "difficulty": "medium",
       "statement": "A single line contains three integers a, d and s. Riya saves a rupees on day 1, and on every later day she saves d rupees more than she saved the day before. Print the number of days after which her total savings first become at least s rupees.",
       "constraints": "1 <= a <= 1000, 0 <= d <= 1000, 1 <= s <= 1000000.",
@@ -383,6 +388,7 @@
     },
     {
       "id": "aita-digit-sum-steps",
+      "title": "Digit Sum Steps",
       "difficulty": "medium",
       "statement": "A single line contains a non-negative integer n. Replace n by the sum of its digits, and keep doing this until n has only one digit. Print how many replacements were made. If n already has one digit, print 0.",
       "constraints": "0 <= n <= 1000000000000000000.",
@@ -468,6 +474,7 @@
     },
     {
       "id": "aita-digit-sum-divides",
+      "title": "Divisible by Digit Sum",
       "difficulty": "hard",
       "statement": "A single line contains two integers L and R. Count how many integers x with L <= x <= R are divisible by the sum of their own digits, and print the count. For example, 12 counts because 1 + 2 = 3 divides 12, but 13 does not count because 1 + 3 = 4 does not divide 13.",
       "constraints": "1 <= L <= R <= 1000000000, R - L <= 100000.",
@@ -550,6 +557,84 @@
           ],
           "output": [
             "4130"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lc-0009-palindrome-number",
+      "title": "Palindrome Number",
+      "difficulty": "easy",
+      "statement": "A single line contains an integer x. Print YES if x reads the same forwards and backwards, and NO otherwise. A negative number is never a palindrome, because of its minus sign.",
+      "constraints": "-1000000000 <= x <= 1000000000.",
+      "reference": {
+        "language": "python",
+        "code": [
+          "import sys",
+          "",
+          "data = sys.stdin.read().split()",
+          "t = int(data[0])",
+          "for k in range(1, t + 1):",
+          "    s = data[k]",
+          "    print(\"YES\" if s == s[::-1] else \"NO\")",
+          ""
+        ]
+      },
+      "tests": [
+        {
+          "input": [
+            "121"
+          ],
+          "output": [
+            "YES"
+          ]
+        },
+        {
+          "input": [
+            "-121"
+          ],
+          "output": [
+            "NO"
+          ]
+        },
+        {
+          "input": [
+            "10"
+          ],
+          "output": [
+            "NO"
+          ]
+        },
+        {
+          "input": [
+            "0"
+          ],
+          "output": [
+            "YES"
+          ]
+        },
+        {
+          "input": [
+            "7"
+          ],
+          "output": [
+            "YES"
+          ]
+        },
+        {
+          "input": [
+            "1000000000"
+          ],
+          "output": [
+            "NO"
+          ]
+        },
+        {
+          "input": [
+            "123454321"
+          ],
+          "output": [
+            "YES"
           ]
         }
       ]

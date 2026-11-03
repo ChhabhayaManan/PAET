@@ -7,6 +7,10 @@
           "title": "Id",
           "type": "string"
         },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
         "difficulty": {
           "enum": [
             "easy",
@@ -37,6 +41,7 @@
       },
       "required": [
         "id",
+        "title",
         "difficulty",
         "statement",
         "constraints",

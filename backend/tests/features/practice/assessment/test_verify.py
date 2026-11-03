@@ -94,7 +94,7 @@ C_PROGRAM = '#include <stdio.h>\nint main(void) { printf("3\\n"); return 0; }\n'
 C_STEM = f"What does this program print?\n```c\n{C_PROGRAM}```"
 AUTHORED = {
     "problems": [{
-        "id": "aita-sum", "difficulty": "easy",
+        "id": "aita-sum", "title": "Sum of Two", "difficulty": "easy",
         "statement": "Read two integers and print their sum.", "constraints": "small.",
         "reference": {"language": "python", "code": ["print(1)", ""]},
         "tests": [{"input": ["1 2"], "output": ["3"]}, {"input": ["0"], "output": ["0"]}],

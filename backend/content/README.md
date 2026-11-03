@@ -43,7 +43,7 @@ with `\n` and get back exactly the text that is stored in the database.
 | File | Item fields |
 |---|---|
 | explanation | `id, language, title, markdown[]` (the lesson is `# title` followed by the lines) |
-| problems | `id, difficulty, statement, constraints, reference{language, code[]}, tests[{input[], output[]}]` (first test is the shown sample) |
+| problems | `id, title, difficulty, statement, constraints, reference{language, code[]}, tests[{input[], output[]}]` (first test is the shown sample; `title` is a short Title Case name, never "Topic #n") |
 | mcq | `id, language, difficulty, stem[], options[{text, misconception}], answer_index, explanation, verify_code[]` |
 | debug | `id, language, problem_id, bug_type, fixed_code[], buggy_code[]` |
 | theory | `id, language, difficulty, question, model_answer, key_points[]` |
@@ -58,7 +58,7 @@ repeats, or a schema file is out of date.
 | | C | C++ | Python | any | Total |
 |---|---|---|---|---|---|
 | explanations | 12 | 12 | 12 | | 36 |
-| problems (Python reference) | | | | | 71 |
+| problems (Python reference) | | | | | 86 |
 | mcq | 72 | 72 | 72 | 36 | 252 |
 | debug | 72 | 72 | 72 | | 216 |
 | theory | 72 | 72 | 72 | | 216 |

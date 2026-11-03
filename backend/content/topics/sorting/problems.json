@@ -4,6 +4,7 @@
   "items": [
     {
       "id": "aita-sort-descending",
+      "title": "Sort Descending",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Print them sorted from largest to smallest, separated by single spaces.",
       "constraints": "1 <= n <= 300; each integer is between -10000 and 10000.",
@@ -82,6 +83,7 @@
     },
     {
       "id": "aita-median",
+      "title": "Median",
       "difficulty": "easy",
       "statement": "The first line contains an odd integer n. The second line contains n space-separated integers. Print their median, the middle value once the integers are sorted.",
       "constraints": "1 <= n <= 299 and n is odd; each integer is between -10000 and 10000.",
@@ -160,6 +162,7 @@
     },
     {
       "id": "aita-sort-kth-smallest",
+      "title": "K-th Smallest",
       "difficulty": "easy",
       "statement": "The first line contains two integers n and k. The second line contains n space-separated integers. Print the k-th smallest of them, counting repeated values separately, so k = 1 means the smallest value and k = n the largest.",
       "constraints": "1 <= k <= n <= 1000; each integer is between -100000 and 100000.",
@@ -247,6 +250,7 @@
     },
     {
       "id": "aita-sort-unique-values",
+      "title": "Unique Values in Order",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Print every different value exactly once, in ascending order, separated by single spaces.",
       "constraints": "1 <= n <= 1000; each integer is between -100000 and 100000.",
@@ -325,6 +329,7 @@
     },
     {
       "id": "aita-sort-min-gap",
+      "title": "Smallest Gap",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Choose two of them at different positions so that the absolute difference between them is as small as possible, and print that difference. If some value appears twice, the answer is 0.",
       "constraints": "2 <= n <= 1000; each integer is between -100000 and 100000.",
@@ -412,6 +417,7 @@
     },
     {
       "id": "aita-sort-rank-by-score",
+      "title": "Rank Players by Score",
       "difficulty": "medium",
       "statement": "The first line contains an integer n, the number of players, who are numbered 1 to n in input order. The second line contains their n scores. Print the player numbers ordered from the highest score to the lowest, separated by single spaces. Players with equal scores are listed with the smaller player number first.",
       "constraints": "1 <= n <= 1000; each score is between 0 and 1000000.",
@@ -491,6 +497,7 @@
     },
     {
       "id": "aita-sort-by-frequency",
+      "title": "Sort by Frequency",
       "difficulty": "hard",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Rearrange them so that values occurring more often come first, and values occurring the same number of times come from smallest to largest; all copies of a value stay next to each other. Print the n rearranged integers separated by single spaces.",
       "constraints": "1 <= n <= 1000; each integer is between -1000 and 1000.",
@@ -575,6 +582,122 @@
           ],
           "output": [
             "-1000 -1000 1000 1000 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lc-0056-merge-intervals",
+      "title": "Merge Intervals",
+      "difficulty": "medium",
+      "statement": "The first line contains n, the number of intervals. Each of the next n lines contains two integers start and end, with start <= end. Merge every group of intervals that overlap or touch, such as 1 4 and 4 5. Print the merged intervals one per line as start and end separated by a space, in ascending order of start.",
+      "constraints": "1 <= n <= 10000; each value is between 0 and 10000.",
+      "reference": {
+        "language": "python",
+        "code": [
+          "import sys",
+          "",
+          "data = sys.stdin.read().split()",
+          "t = int(data[0])",
+          "pos = 1",
+          "for _ in range(t):",
+          "    n = int(data[pos])",
+          "    pairs = []",
+          "    for i in range(n):",
+          "        pairs.append([int(data[pos + 1 + 2 * i]), int(data[pos + 2 + 2 * i])])",
+          "    pos += 1 + 2 * n",
+          "    pairs.sort()",
+          "    merged = [pairs[0]]",
+          "    for s, e in pairs[1:]:",
+          "        if s <= merged[-1][1]:",
+          "            merged[-1][1] = max(merged[-1][1], e)",
+          "        else:",
+          "            merged.append([s, e])",
+          "    for s, e in merged:",
+          "        print(s, e)",
+          ""
+        ]
+      },
+      "tests": [
+        {
+          "input": [
+            "4",
+            "1 3",
+            "2 6",
+            "8 10",
+            "15 18"
+          ],
+          "output": [
+            "1 6",
+            "8 10",
+            "15 18"
+          ]
+        },
+        {
+          "input": [
+            "2",
+            "1 4",
+            "4 5"
+          ],
+          "output": [
+            "1 5"
+          ]
+        },
+        {
+          "input": [
+            "1",
+            "5 5"
+          ],
+          "output": [
+            "5 5"
+          ]
+        },
+        {
+          "input": [
+            "3",
+            "2 2",
+            "2 2",
+            "2 2"
+          ],
+          "output": [
+            "2 2"
+          ]
+        },
+        {
+          "input": [
+            "3",
+            "8 10",
+            "1 3",
+            "2 6"
+          ],
+          "output": [
+            "1 6",
+            "8 10"
+          ]
+        },
+        {
+          "input": [
+            "2",
+            "1 10",
+            "2 3"
+          ],
+          "output": [
+            "1 10"
+          ]
+        },
+        {
+          "input": [
+            "4",
+            "0 0",
+            "1 1",
+            "3 4",
+            "2 2"
+          ],
+          "output": [
+            "0 0",
+            "1 1",
+            "2 2",
+            "3 4"
           ]
         }
       ]

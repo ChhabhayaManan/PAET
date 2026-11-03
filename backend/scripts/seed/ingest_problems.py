@@ -10,7 +10,7 @@ from app.core.exceptions import LLMUnavailable
 from app.features.problems.logic.test_generation.curated_tests import curated_tests
 from app.features.problems.logic.test_generation.generate_tests import generate_tests
 from app.features.problems.models import Difficulty, ProblemSource
-from app.features.problems.service import get_or_create_problem, has_test_cases
+from app.features.problems.service import fill_title, get_or_create_problem, has_test_cases
 
 DATA = content.root() / "imported" / "problems.json"
 
@@ -18,6 +18,7 @@ DATA = content.root() / "imported" / "problems.json"
 class IngestReport(BaseModel):
     seen: int = 0
     created: int = 0
+    titled: int = 0
     skipped: int = 0
     generated: int = 0
     curated: int = 0
@@ -41,9 +42,12 @@ def ingest(db: Session, rows: list[dict], *, generator=None, provider=None,
             difficulty=Difficulty(row["difficulty"]) if row.get("difficulty") else None,
             constraints=row.get("constraints"),
             external_id=row.get("external_id"),
+            title=row.get("title"),
         )
         if created:
             report.created += 1
+        elif row.get("title") and fill_title(db, row["external_id"], row["title"]):
+            report.titled += 1
 
         if has_test_cases(db, problem.id):
             report.skipped += 1
@@ -103,7 +107,8 @@ def main() -> None:
     finally:
         db.close()
 
-    print(f"\nseen={report.seen} created={report.created} skipped={report.skipped} "
+    print(f"\nseen={report.seen} created={report.created} titled={report.titled} "
+          f"skipped={report.skipped} "
           f"curated={report.curated} generated={report.generated} "
           f"unverified={len(report.unverified)}")
     if report.unverified:

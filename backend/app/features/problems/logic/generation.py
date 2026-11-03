@@ -91,6 +91,7 @@ def generate_problem(
         topic=normalise_topic(topic) or topic.strip() or None,
         difficulty=level,
         constraints="\n".join(constraints) or None,
+        title=draft.title.strip()[:120] or None,
     )
 
     # The row is worth keeping through either outage: the statement is sound, and a

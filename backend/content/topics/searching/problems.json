@@ -4,6 +4,7 @@
   "items": [
     {
       "id": "aita-count-occurrences",
+      "title": "Count Occurrences",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer target. Print how many of the n integers are equal to target.",
       "constraints": "0 <= n <= 300; every integer is between -1000 and 1000.",
@@ -89,6 +90,7 @@
     },
     {
       "id": "aita-srch-last-occurrence",
+      "title": "Last Occurrence",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer target. Print the 0-based position of the last occurrence of target among the n integers. If target does not appear, print -1.",
       "constraints": "1 <= n <= 100000; every integer and target are between -1000000000 and 1000000000.",
@@ -188,6 +190,7 @@
     },
     {
       "id": "aita-srch-first-above",
+      "title": "First Value Above K",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer k. Print the 0-based position of the first integer that is strictly greater than k. If no integer is greater than k, print -1.",
       "constraints": "1 <= n <= 100000; every integer and k are between -1000000000 and 1000000000.",
@@ -288,6 +291,7 @@
     },
     {
       "id": "aita-srch-insert-position",
+      "title": "Insert Position",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers in non-decreasing order. The third line contains an integer q. The fourth line contains q space-separated query values. For each query value x, print the smallest 0-based position at which x could be inserted so that the list stays in non-decreasing order, which is the number of list values strictly less than x. Print the q answers on one line, separated by single spaces.",
       "constraints": "1 <= n <= 100000; 1 <= q <= 100000; every list value and query value is between -1000000000 and 1000000000.",
@@ -382,6 +386,7 @@
     },
     {
       "id": "aita-srch-int-sqrt",
+      "title": "Integer Square Root",
       "difficulty": "medium",
       "statement": "A single line contains a non-negative integer x. Print the largest integer r such that r * r <= x.",
       "constraints": "0 <= x <= 1000000000. Do not use a floating-point square root; r * r can exceed the range of a 32-bit int while searching.",
@@ -467,6 +472,7 @@
     },
     {
       "id": "aita-srch-day-pages",
+      "title": "Pages Per Day",
       "difficulty": "hard",
       "statement": "The first line contains two integers n and d. The second line contains n space-separated positive integers; the i-th is the number of pages in chapter i. A student reads the chapters in the given order over at most d days. Each day they read one or more whole chapters that come next in order, and a chapter is never split across days. Print the smallest possible value of the largest number of pages read on any single day.",
       "constraints": "1 <= d <= n <= 100000; 1 <= pages in a chapter <= 1000000000; the total number of pages fits in a 64-bit integer.",
@@ -577,6 +583,92 @@
           ],
           "output": [
             "9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lc-0852-mountain-peak",
+      "title": "Peak of a Mountain Array",
+      "difficulty": "medium",
+      "statement": "The first line contains n. The second line contains n integers separated by spaces. The values rise strictly to one highest value and then fall strictly, so the highest value is never first or last. Print the 0-based position of the highest value.",
+      "constraints": "3 <= n <= 100000; each value is between 0 and 1000000.",
+      "reference": {
+        "language": "python",
+        "code": [
+          "import sys",
+          "",
+          "data = sys.stdin.read().split()",
+          "t = int(data[0])",
+          "pos = 1",
+          "for _ in range(t):",
+          "    n = int(data[pos])",
+          "    a = [int(x) for x in data[pos + 1:pos + 1 + n]]",
+          "    pos += 1 + n",
+          "    lo, hi = 0, n - 1",
+          "    while lo < hi:",
+          "        mid = (lo + hi) // 2",
+          "        if a[mid] < a[mid + 1]:",
+          "            lo = mid + 1",
+          "        else:",
+          "            hi = mid",
+          "    print(lo)",
+          ""
+        ]
+      },
+      "tests": [
+        {
+          "input": [
+            "3",
+            "0 1 0"
+          ],
+          "output": [
+            "1"
+          ]
+        },
+        {
+          "input": [
+            "4",
+            "0 2 1 0"
+          ],
+          "output": [
+            "1"
+          ]
+        },
+        {
+          "input": [
+            "4",
+            "0 10 5 2"
+          ],
+          "output": [
+            "1"
+          ]
+        },
+        {
+          "input": [
+            "6",
+            "1 2 3 4 5 0"
+          ],
+          "output": [
+            "4"
+          ]
+        },
+        {
+          "input": [
+            "6",
+            "1 9 8 7 6 5"
+          ],
+          "output": [
+            "1"
+          ]
+        },
+        {
+          "input": [
+            "7",
+            "1 3 5 4 2 1 0"
+          ],
+          "output": [
+            "2"
           ]
         }
       ]

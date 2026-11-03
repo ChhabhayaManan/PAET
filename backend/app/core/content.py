@@ -47,6 +47,7 @@ class Test(_Strict):
 
 class ProblemItem(_Strict):
     id: str
+    title: str
     difficulty: Difficulty
     statement: str
     constraints: str

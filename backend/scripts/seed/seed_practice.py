@@ -20,7 +20,7 @@ from app.features.practice.logic.assessment.seeding import seed
 from app.features.practice.logic.assessment.verify import Check, verify_debug, verify_mcq
 from app.features.problems.logic.test_generation.curated_tests import CuratedCase, curated_tests
 from app.features.problems.models import Difficulty, Problem, ProblemSource
-from app.features.problems.service import get_or_create_problem, has_test_cases
+from app.features.problems.service import fill_title, get_or_create_problem, has_test_cases
 from scripts._local_db import require_local_db
 
 
@@ -33,11 +33,12 @@ def _load_problem(db, row: dict, check_only: bool) -> str:
     problem, _ = get_or_create_problem(
         db, row["statement"], source=ProblemSource.DSA, topic=row["topic"],
         difficulty=Difficulty(row["difficulty"]), constraints=row["constraints"],
-        external_id=row["external_id"])
+        external_id=row["external_id"], title=row["title"])
+    titled = ", title filled in" if fill_title(db, row["external_id"], row["title"]) else ""
     if has_test_cases(db, problem.id):
-        return "already has tests"
+        return "already has tests" + titled
     suite = curated_tests(db, problem, row["reference"], row["tests"])
-    return suite.unverified_reason or f"{suite.agreed} tests ({suite.dropped} dropped)"
+    return (suite.unverified_reason or f"{suite.agreed} tests ({suite.dropped} dropped)") + titled
 
 
 def _with_problem(db, item: dict, authored: dict[str, dict]) -> tuple[dict, list]:

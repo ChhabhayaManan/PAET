@@ -4,6 +4,7 @@
   "items": [
     {
       "id": "aita-split-seconds",
+      "title": "Seconds to Hours and Minutes",
       "difficulty": "easy",
       "statement": "A single line contains a non-negative integer s, a number of seconds. Print it as whole hours, minutes and seconds, separated by single spaces, where the minutes and seconds are each less than 60.",
       "constraints": "0 <= s <= 1000000.",
@@ -73,6 +74,7 @@
     },
     {
       "id": "aita-reverse-three",
+      "title": "Reverse a Three-Digit Number",
       "difficulty": "easy",
       "statement": "A single line contains a three-digit integer n. Print the number you get by writing its digits in reverse order. Leading zeros are dropped, so 120 becomes 21.",
       "constraints": "100 <= n <= 999.",
@@ -150,6 +152,7 @@
     },
     {
       "id": "aita-benches-needed",
+      "title": "Benches Needed",
       "difficulty": "easy",
       "statement": "A single line contains two integers n and k: n students must sit on benches, and each bench seats at most k students. Print the smallest number of benches needed so that every student gets a seat.",
       "constraints": "0 <= n <= 1000000; 1 <= k <= 1000.",
@@ -228,6 +231,7 @@
     },
     {
       "id": "aita-average-temperature",
+      "title": "Average Temperature",
       "difficulty": "easy",
       "statement": "A single line contains three integers a, b and c: the temperatures, in degrees Celsius, recorded in the morning, the afternoon and the night. Print their average with exactly 2 digits after the decimal point.",
       "constraints": "-50 <= a, b, c <= 50.",
@@ -305,6 +309,7 @@
     },
     {
       "id": "aita-show-duration",
+      "title": "Show Duration",
       "difficulty": "medium",
       "statement": "A single line contains four integers sh, sm, eh and em: a show starts at sh hours sm minutes and ends at eh hours em minutes, on a 24-hour clock. If the end time is earlier than the start time, the show ran past midnight and ended the next day. If both times are the same, the show lasted 0 minutes. Print how long the show lasted as whole hours and minutes, separated by a single space, where the minutes are less than 60.",
       "constraints": "0 <= sh, eh <= 23; 0 <= sm, em <= 59. Every show lasts less than 24 hours.",
@@ -383,6 +388,7 @@
     },
     {
       "id": "aita-bill-total",
+      "title": "Bill Total",
       "difficulty": "medium",
       "statement": "A single line contains three integers r, p and q: one item costs r rupees and p paise, and a customer buys q of them. 100 paise make 1 rupee. Print the total cost in the form R.PP, where R is the number of whole rupees and PP is the remaining paise written with exactly two digits (so 5 paise is written as 05).",
       "constraints": "0 <= r <= 10000; 0 <= p <= 99; 1 <= q <= 1000.",

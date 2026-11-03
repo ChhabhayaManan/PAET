@@ -17,11 +17,13 @@ def is_curated(problem: Problem) -> bool:
 
 
 def _title(problem: Problem) -> str:
-    """Problems have no title column, so make a readable one.
+    """The stored title, else a readable one made up for rows seeded before titles.
 
     Slug ids like `dsa-two-sum` carry a real name; numeric ones like `mbpp-231`
     do not, and fall back to the topic.
     """
+    if problem.title:
+        return problem.title
     ext = problem.external_id or ""
     for prefix in _PREFIXES:
         if ext.startswith(prefix):

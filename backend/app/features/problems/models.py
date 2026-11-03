@@ -70,6 +70,7 @@ class Problem(Base):
     id                 = Column(Integer, primary_key=True, index=True)
     source             = Column(_enum(ProblemSource), nullable=False)
     external_id        = Column(String(100), nullable=True)
+    title              = Column(String(120), nullable=True)
     statement          = Column(Text, nullable=False)
     statement_hash     = Column(String(64), nullable=False, unique=True, index=True)
     constraints        = Column(Text, nullable=True)

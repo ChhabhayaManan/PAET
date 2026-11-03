@@ -7,6 +7,7 @@ from app.core import content
 def problem_row(item: dict, topic: str) -> dict:
     return {
         "external_id": item["id"],
+        "title": item["title"],
         "topic": topic,
         "difficulty": item["difficulty"],
         "statement": item["statement"],

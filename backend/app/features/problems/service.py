@@ -22,6 +22,7 @@ def get_or_create_problem(
     constraints: str | None = None,
     external_id: str | None = None,
     created_by_user_id: int | None = None,
+    title: str | None = None,
 ) -> tuple[Problem, bool]:
     existing = find_problem_by_statement(db, statement)
     if existing is not None:
@@ -36,11 +37,22 @@ def get_or_create_problem(
         constraints=constraints,
         external_id=external_id,
         created_by_user_id=created_by_user_id,
+        title=title,
     )
     db.add(problem)
     db.commit()
     db.refresh(problem)
     return problem, True
+
+
+def fill_title(db: Session, external_id: str, title: str) -> bool:
+    """Sets the title on the problem with this external_id; True when it changed."""
+    problem = db.query(Problem).filter(Problem.external_id == external_id).first()
+    if problem is None or problem.title == title:
+        return False
+    problem.title = title
+    db.commit()
+    return True
 
 
 def has_test_cases(db: Session, problem_id: int) -> bool:
