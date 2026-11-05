@@ -34,7 +34,7 @@ build/
 # package-lock.json
 # yarn.lock
 
-# Gmail API credentials (NEVER commit these!)
+# Credentials (never commit these)
 credentials.json
 token.json
 backend/app/credentials.json

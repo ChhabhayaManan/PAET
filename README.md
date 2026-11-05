@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="frontend/public/favicon.svg" width="88" alt="PAET logo" />
+<img src="frontend/public/favicon.svg" width="88" alt="PET logo" />
 
-# PAET
+# PET
 
-**Programming Assistant & Education Tool**
+**Programming Education Tool**
 
 Learn to code by thinking, not copying.
 
@@ -16,7 +16,8 @@ Learn to code by thinking, not copying.
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white)
 
-The live website is linked in this repository's About section.
+There is no hosted version. PET runs on your own computer: clone it, start it, and it is
+yours.
 
 </div>
 
@@ -24,26 +25,26 @@ The live website is linked in this repository's About section.
 
 ## Demo
 
-[![PAET demo](docs/figures/paet_home.png)](https://youtu.be/VIDEO_ID)
+[![PET demo](docs/figures/pet_home.png)](https://youtu.be/VIDEO_ID)
 
 Click the image to watch the demo.
 
 ---
 
-## What PAET is
+## What PET is
 
-PAET is a practice platform for students learning to program in C, C++ or Python. It covers
+PET is a practice platform for students learning to program in C, C++ or Python. It covers
 12 topics, from basics and loops to recursion and dynamic programming. Students answer
-questions, fix broken code and write programs. PAET grades each answer, tracks how well the
+questions, fix broken code and write programs. PET grades each answer, tracks how well the
 student knows every topic, and picks what to practise next. When a student is stuck, it gives
 hints one step at a time instead of the answer. A tutor chat answers questions from real
 textbooks.
 
-## Why PAET
+## Why PET
 
 - **Copying is not learning.** A general chatbot hands a beginner the fixed program. The
   student moves on without understanding the bug.
-- **Hints, not answers.** PAET's help gets more specific only when the student keeps
+- **Hints, not answers.** PET's help gets more specific only when the student keeps
   failing, and it is checked so it never contains the fix.
 - **Grades come from running the code.** A program passes when it passes real tests, not
   when an AI thinks it looks right.
@@ -52,11 +53,11 @@ textbooks.
 
 ---
 
-## How a student learns with PAET
+## How a student learns with PET
 
 1. **Start.** The student picks an AI model, then a short diagnostic sets a starting level
    for each topic.
-2. **Next item.** PAET picks a multiple-choice question, a debugging task or a coding
+2. **Next item.** PET picks a multiple-choice question, a debugging task or a coding
    problem from the weakest topic that is open.
 3. **Answer.** Code runs against tests in a sandbox. Multiple-choice answers are checked
    against a key.
@@ -66,7 +67,7 @@ textbooks.
 6. **Feedback.** At the end of a session, a short report says what went well and what to
    work on next.
 
-![PAET framework](docs/figures/paet_framework.png)
+![PET framework](docs/figures/pet_framework.png)
 
 ---
 
@@ -84,7 +85,7 @@ textbooks.
 - **A four-step hint ladder.** L1 shows the failing input, L2 names the idea, L3 gives the
   steps, L4 points at the line. A guardrail runs any code inside a hint against the tests and
   blocks the hint if it would solve the problem.
-- **Cited answers in chat.** The tutor answers from open textbooks and PAET's own guides,
+- **Cited answers in chat.** The tutor answers from open textbooks and PET's own guides,
   and shows the sources it used.
 - **Rewards for real progress only.** Points and badges come from verified results, never
   from time spent or clicks.
@@ -194,17 +195,17 @@ during setup.
 ![Groq](https://img.shields.io/badge/Groq-API-F55036)
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-API-6467F2?logo=openrouter&logoColor=white)
 
-**Local (when you run PAET on your computer)**
+**Local (runs on your computer, nothing leaves it)**
 
 ![Ollama](https://img.shields.io/badge/Ollama-local-000000?logo=ollama&logoColor=white)
 ![LM Studio](https://img.shields.io/badge/LM%20Studio-local-4B5563)
 ![OpenAI compatible](https://img.shields.io/badge/Any-OpenAI--compatible-6B7280)
 
-- **Tested before use.** PAET checks the connection, tool calling, structured output and
+- **Tested before use.** PET checks the connection, tool calling, structured output and
   context window, and only saves a model that passes all four.
-- **Your key stays with you.** It is kept encrypted in your browser and never stored on the
-  server.
-- **Clear errors.** If a key stops working (rejected, rate limit, out of credit), PAET says
+- **Your key stays with you.** It is kept encrypted in your browser and never written to
+  PET's database.
+- **Clear errors.** If a key stops working (rejected, rate limit, out of credit), PET says
   exactly why.
 
 ---
@@ -214,19 +215,19 @@ during setup.
 Needs [Docker](https://docs.docker.com/get-docker/). Then:
 
 ```bash
-git clone https://github.com/ChhabhayaManan/AiTa.git paet
-cd paet
+git clone https://github.com/ChhabhayaManan/AiTa.git pet
+cd pet
 docker compose up -d --build
 ```
 
-Open http://localhost:5173. There is no login: PAET opens straight away and asks you to
-choose an AI model during setup.
+Open http://localhost:5173. There are no accounts and no login: PET opens straight away and
+asks you to choose an AI model during setup.
 
 The first start takes a few minutes to build. The tutor chat starts citing textbooks a few
-minutes after that, once they are downloaded. To stop PAET, run `docker compose down`; your
+minutes after that, once they are downloaded. To stop PET, run `docker compose down`; your
 progress is kept.
 
-Settings are optional. To change one, for example to give every student a ready model,
+Settings are optional. To change one, for example to set a default model,
 copy `.env.example` to `backend/.env`, edit it, and run `docker compose up -d` again.
 
 ---
@@ -268,7 +269,7 @@ docs/figures/      diagrams
 - Student code runs in a separate container with no network access, a read-only file
   system, and limits on time, memory and processes.
 - The tutor chat has a moderation check and never writes full solutions.
-- Students' own model keys are never stored on the server.
-- PAET on your computer has no login, so it only accepts connections from that computer.
+- Your model key is never written to PET's database.
+- PET has no login, so it only accepts connections from the computer it runs on.
 - Each AI call is logged with its purpose, provider, model and timing for quality checks.
   Keys and student code are not part of that log.

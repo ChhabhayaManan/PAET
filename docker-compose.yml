@@ -1,18 +1,17 @@
-# Self-hosted PAET. Run `docker compose up -d --build`, then open http://localhost:5173.
+# Self-hosted PET. Run `docker compose up -d --build`, then open http://localhost:5173.
 # docker-compose.dev.yml is the development stack.
 x-backend: &backend
   build: ./backend
-  image: paet-backend
+  image: pet-backend
   env_file:
     - path: ./backend/.env
       required: false
   environment:
-    - DATABASE_URL=postgresql://paet:paet@db:5432/paet_db
+    - DATABASE_URL=postgresql://pet:pet@db:5432/pet_db
     - EXECUTOR_URL=http://executor:8080
-    - DEPLOY_MODE=local
     - HF_HOME=/hf-cache
   volumes:
-    - paet_data:/app/data
+    - pet_data:/app/data
     - hf_cache:/hf-cache
   networks: [default, sandbox]
 
@@ -20,11 +19,11 @@ services:
   db:
     image: pgvector/pgvector:pg18
     environment:
-      - POSTGRES_USER=paet
-      - POSTGRES_PASSWORD=paet
-      - POSTGRES_DB=paet_db
+      - POSTGRES_USER=pet
+      - POSTGRES_PASSWORD=pet
+      - POSTGRES_DB=pet_db
     volumes:
-      - paet_pgdata:/var/lib/postgresql
+      - pet_pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 2s
@@ -91,6 +90,6 @@ networks:
     internal: true
 
 volumes:
-  paet_pgdata:
-  paet_data:
+  pet_pgdata:
+  pet_data:
   hf_cache:
