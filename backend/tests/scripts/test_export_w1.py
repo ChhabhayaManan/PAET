@@ -17,7 +17,7 @@ START = datetime(2026, 10, 17, 10, 0, tzinfo=timezone.utc)
 
 
 def _user(db, name: str, language: str) -> User:
-    user = User(email=f"{name}@example.com", username=name, hashed_password="x",
+    user = User(email=f"{name}@example.com", username=name,
                 preferred_language=language)
     db.add(user)
     db.flush()

@@ -18,7 +18,7 @@ SUM_STATEMENT = ("Read an integer n on the first line, then n integers on the se
 
 @pytest.fixture
 def user(session):
-    u = User(email="s@example.com", username="student", hashed_password="x")
+    u = User(email="s@example.com", username="student")
     session.add(u)
     session.commit()
     return u

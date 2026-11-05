@@ -14,7 +14,7 @@ from app.features.learner_model.service import EventInput
 
 @pytest.fixture
 def user(session):
-    u = User(email="g@example.com", username="gamer", hashed_password="x")
+    u = User(email="g@example.com", username="gamer")
     session.add(u)
     session.commit()
     return u

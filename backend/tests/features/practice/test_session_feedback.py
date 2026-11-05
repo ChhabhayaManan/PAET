@@ -27,7 +27,7 @@ class FakeRunnable:
 
 @pytest.fixture
 def practice(session):
-    user = User(email="sf@example.com", username="sessfb", hashed_password="x")
+    user = User(email="sf@example.com", username="sessfb")
     session.add(user)
     session.flush()
     s = PracticeSession(user_id=user.id, language="c", started_at=T0, last_activity_at=T0,

@@ -22,7 +22,7 @@ class Provider:
     label: str
     base_url: str
     needs_key: bool = True
-    local_only: bool = False
+    local: bool = False
 
 
 PROVIDERS: dict[str, Provider] = {p.id: p for p in (
@@ -32,9 +32,9 @@ PROVIDERS: dict[str, Provider] = {p.id: p for p in (
     Provider("gemini", "Google Gemini", "https://generativelanguage.googleapis.com/v1beta/openai"),
     Provider("groq", "Groq", "https://api.groq.com/openai/v1"),
     Provider("openrouter", "OpenRouter", "https://openrouter.ai/api/v1"),
-    Provider("ollama", "Ollama", f"http://{_LOCAL_HOST}:11434/v1", needs_key=False, local_only=True),
-    Provider("lmstudio", "LM Studio", f"http://{_LOCAL_HOST}:1234/v1", needs_key=False, local_only=True),
-    Provider("custom", "Custom (OpenAI-compatible)", "", needs_key=False, local_only=True),
+    Provider("ollama", "Ollama", f"http://{_LOCAL_HOST}:11434/v1", needs_key=False, local=True),
+    Provider("lmstudio", "LM Studio", f"http://{_LOCAL_HOST}:1234/v1", needs_key=False, local=True),
+    Provider("custom", "Custom (OpenAI-compatible)", "", needs_key=False, local=True),
 )}
 
 SUFFIX = " Change your key or model in the Model window."

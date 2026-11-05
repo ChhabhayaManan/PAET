@@ -1,7 +1,6 @@
 # Endpoints, under /api/v1/users:
 #   GET   /profile          my full profile with learning data
 #   PATCH /profile          update my profile (name, study language, ...)
-#   POST  /change-password  change my password
 #   GET   /                 [admin] list all users
 #   GET   /{user_id}        [admin] one user by id
 #   PATCH /consent          turn data sharing on or off
@@ -15,8 +14,7 @@ from datetime import datetime, timezone
 from app.core.database import get_db
 from app.core.dependencies import get_current_active_user, require_role
 from app.features.accounts.schemas import (
-    UserProfileResponse, UpdateProfileRequest,
-    ChangePasswordRequest, MessageResponse
+    UserProfileResponse, UpdateProfileRequest, MessageResponse
 )
 from app.features.accounts.logic.user_service import UserService
 from app.features.accounts.models import User, UserRole, LearningProfile
@@ -50,20 +48,6 @@ def update_my_profile(
 ):
     """Update personal info, skill level, interests, and learning goals."""
     return UserService.update_profile(db, current_user.id, data)
-
-
-@router.post(
-    "/change-password",
-    response_model=MessageResponse,
-    summary="Change password",
-)
-def change_password(
-    data: ChangePasswordRequest,
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db),
-):
-    UserService.change_password(db, current_user.id, data)
-    return MessageResponse(message="Password changed successfully.")
 
 
 @router.get(

@@ -39,19 +39,20 @@ async def lifespan(app: FastAPI):
     stop.set()
     if sweep is not None:
         await sweep
-    print("👋 Shutting down aiTA backend.")
+    print("👋 Shutting down PET backend.")
 
 
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     description="""
-## aiTA — AI-Powered Teaching Assistant Backend
+## PET — Programming Education Tool backend
 
 Practice, graded code, hints, feedback and a learner model per topic and language.
 
-### Authentication
-Use `/auth/login` to get a Bearer token, then click **Authorize**.
+### Access
+PET runs on your own computer for one student. `POST /auth/session` returns a Bearer
+token; paste it into **Authorize**.
     """,
     docs_url="/docs",
     redoc_url="/redoc",

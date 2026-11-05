@@ -2,8 +2,7 @@ import httpx
 import pytest
 from openai import APIConnectionError
 
-from app.core.config import settings
-from app.core.llm_choice import Choice, cookie_kwargs, decode, encode
+from app.core.llm_choice import COOKIE_KWARGS, Choice, decode, encode
 from app.core.llm_providers import classify
 
 KEY = "sk-proj-abcdefghijklmnop1234"
@@ -54,12 +53,7 @@ def test_classify_never_echoes_the_key():
     assert KEY not in error.detail
 
 
-def test_cookie_lifetime_and_secure_follow_deploy_mode(monkeypatch):
-    monkeypatch.setattr(settings, "DEPLOY_MODE", "web")
-    web = cookie_kwargs()
-    monkeypatch.setattr(settings, "DEPLOY_MODE", "local")
-    local = cookie_kwargs()
-
-    assert (web["secure"], web["max_age"]) == (True, 30 * 86400)
-    assert (local["secure"], local["max_age"]) == (False, 365 * 86400)
-    assert web["httponly"] and web["samesite"] == "strict" and web["path"] == "/api"
+def test_cookie_is_http_only_and_kept_for_a_year():
+    assert COOKIE_KWARGS["max_age"] == 365 * 86400
+    assert COOKIE_KWARGS["httponly"] and COOKIE_KWARGS["samesite"] == "strict"
+    assert COOKIE_KWARGS["path"] == "/api" and "secure" not in COOKIE_KWARGS

@@ -7,8 +7,6 @@ import ErrorBoundary from './components/ui/ErrorBoundary'
 import Backdrop from './components/ui/Backdrop'
 import LogoMark from './components/ui/LogoMark'
 import { palette } from './styles/palette'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 
 const OnboardingPage     = lazy(() => import('./pages/OnboardingPage'))
@@ -57,8 +55,6 @@ export default function App() {
         <Suspense fallback={<PageLoading />}>
         <Routes>
           <Route path="/"                element={<Navigate to="/dashboard" replace />} />
-          <Route path="/login"           element={<LoginPage />} />
-          <Route path="/register"        element={<RegisterPage />} />
           <Route path="/onboarding"      element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
           <Route path="/dashboard"       element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/profile"         element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />

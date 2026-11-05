@@ -14,7 +14,7 @@ from cryptography.fernet import Fernet, InvalidToken
 
 from app.core.config import settings
 
-COOKIE = "paet_llm"
+COOKIE = "pet_llm"
 COOKIE_PATH = "/api"
 _DAY = 24 * 60 * 60
 
@@ -51,7 +51,7 @@ def use_choice(choice: Choice | None) -> Iterator[None]:
         _current.reset(token)
 
 
-def paet_default():
+def pet_default():
     return use_choice(None)
 
 
@@ -72,7 +72,7 @@ def server_choice() -> Choice | None:
 
 def _fernet() -> Fernet:
     secret = settings.LLM_COOKIE_SECRET or settings.SECRET_KEY
-    digest = hashlib.sha256(f"paet-llm:{secret}".encode()).digest()
+    digest = hashlib.sha256(f"pet-llm:{secret}".encode()).digest()
     return Fernet(base64.urlsafe_b64encode(digest))
 
 
@@ -90,23 +90,16 @@ def decode(token: str) -> Choice | None:
         return None
 
 
-def is_local() -> bool:
-    return settings.DEPLOY_MODE == "local"
-
-
-def cookie_kwargs() -> dict:
-    return {"httponly": True, "samesite": "strict", "path": COOKIE_PATH,
-            "secure": not is_local(), "max_age": (365 if is_local() else 30) * _DAY}
+COOKIE_KWARGS = {"httponly": True, "samesite": "strict", "path": COOKIE_PATH,
+                 "max_age": 365 * _DAY}
 
 
 def set_cookie(response, choice: Choice) -> None:
-    response.set_cookie(COOKIE, encode(choice), **cookie_kwargs())
+    response.set_cookie(COOKIE, encode(choice), **COOKIE_KWARGS)
 
 
 def clear_cookie(response) -> None:
-    kwargs = cookie_kwargs()
-    response.delete_cookie(COOKIE, path=kwargs["path"], secure=kwargs["secure"],
-                           httponly=True, samesite="strict")
+    response.delete_cookie(COOKIE, path=COOKIE_PATH, httponly=True, samesite="strict")
 
 
 def _cookie_from(scope) -> str | None:
@@ -137,9 +130,7 @@ class LLMChoiceMiddleware:
 
         async def send_clearing(message):
             if message["type"] == "http.response.start":
-                kwargs = cookie_kwargs()
-                header = (f"{COOKIE}=\"\"; Max-Age=0; Path={kwargs['path']}; HttpOnly; "
-                          f"SameSite=Strict{'; Secure' if kwargs['secure'] else ''}")
+                header = f"{COOKIE}=\"\"; Max-Age=0; Path={COOKIE_PATH}; HttpOnly; SameSite=Strict"
                 message = {**message, "headers": [*message.get("headers", []),
                                                   (b"set-cookie", header.encode())]}
             await send(message)

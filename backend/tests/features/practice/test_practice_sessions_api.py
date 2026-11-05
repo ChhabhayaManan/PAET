@@ -20,7 +20,7 @@ def client(monkeypatch):
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
-    user = User(email="ps@example.com", username="ps", hashed_password="x")
+    user = User(email="ps@example.com", username="ps")
     db.add(user)
     db.commit()
 
@@ -92,7 +92,7 @@ def test_reopening_failed_feedback_does_not_regenerate(client):
 
 def test_other_users_session_404(client):
     http, db, _ = client
-    other = User(email="other@example.com", username="other", hashed_password="x")
+    other = User(email="other@example.com", username="other")
     db.add(other)
     db.commit()
     now = datetime.now(timezone.utc)

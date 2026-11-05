@@ -7,7 +7,6 @@ from sqlalchemy import delete, func
 from sqlalchemy.orm import Session
 
 from app.features.accounts.models import LearningProfile, User
-from app.features.accounts.schemas import RegisterRequest
 from app.features.accounts.service import AuthService
 from app.features.gamification.models import GamificationAward
 from app.features.grading.models import CodeEvaluation
@@ -20,9 +19,9 @@ _LEARNER_TABLES = (GamificationAward, LearningEvent, TopicMastery, HintEvent, Mc
                    DebugAttempt, LearningProfile)
 
 
-def reset_account(db: Session, email: str, username: str, password: str,
+def reset_account(db: Session, email: str, username: str,
                   full_name: str = "Demo Student") -> User:
-    """Delete the account and everything it owns, then register it again from scratch.
+    """Delete the account and everything it owns, then create it again from scratch.
     The learner-model tables are cleared explicitly; the rest follow the user row
     through ON DELETE CASCADE."""
     existing = db.query(User).filter(User.email == email).first()
@@ -32,9 +31,7 @@ def reset_account(db: Session, email: str, username: str, password: str,
         db.execute(delete(User).where(User.id == existing.id))
         db.commit()
         db.expire_all()
-    return AuthService.register(db, RegisterRequest(
-        email=email, username=username, password=password, full_name=full_name,
-    ))
+    return AuthService.create_user(db, email, username, full_name)
 
 
 def mastery_trace(db: Session, user_id: int) -> dict[str, list[dict]]:

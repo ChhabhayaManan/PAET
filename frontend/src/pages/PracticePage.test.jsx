@@ -7,7 +7,7 @@ import PracticePage from './PracticePage'
 const session = { id: 7, graded_count: 0 }
 
 vi.mock('../hooks/useAuth', () => ({
-  useAuth: () => ({ user: { full_name: 'Demo Student', preferred_language: 'c' }, logout: () => {} }),
+  useAuth: () => ({ user: { full_name: 'Demo Student', preferred_language: 'c' } }),
 }))
 
 vi.mock('../utils/api', () => ({

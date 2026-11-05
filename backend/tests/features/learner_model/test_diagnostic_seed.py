@@ -16,7 +16,7 @@ from app.features.practice.logic.assessment import policy
 
 @pytest.fixture
 def user(session):
-    u = User(email="seed@example.com", username="seed", hashed_password="x")
+    u = User(email="seed@example.com", username="seed")
     session.add(u)
     session.commit()
     return u

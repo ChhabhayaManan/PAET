@@ -12,7 +12,7 @@ from app.features.problems.models import Problem, ProblemSource
 
 @pytest.fixture
 def other(session):
-    u = User(email="keep@example.com", username="keep", hashed_password="x")
+    u = User(email="keep@example.com", username="keep")
     session.add(u)
     session.commit()
     ingest(session, EventInput(user_id=u.id, kind="code", score=1.0, raw_topic="loops"))
@@ -20,10 +20,10 @@ def other(session):
 
 
 def test_reset_clears_only_the_named_account(session, other):
-    demo = reset_account(session, "demo@example.com", "demo", "DemoPass123!")
+    demo = reset_account(session, "demo@example.com", "demo")
     ingest(session, EventInput(user_id=demo.id, kind="code", score=0.5, raw_topic="loops"))
 
-    fresh = reset_account(session, "demo@example.com", "demo", "DemoPass123!")
+    fresh = reset_account(session, "demo@example.com", "demo")
 
     assert session.query(LearningEvent).filter_by(user_id=fresh.id).count() == 0
     assert session.query(TopicMastery).filter_by(user_id=fresh.id).count() == 0

@@ -19,7 +19,7 @@ from tests.features.feedback.test_feedback_graph import (
 
 @pytest.fixture
 def user(session):
-    u = User(email="mcq@example.com", username="mcq", hashed_password="x")
+    u = User(email="mcq@example.com", username="mcq")
     session.add(u)
     session.commit()
     return u
@@ -63,7 +63,7 @@ def test_no_activity_still_422(session, user):
 
 
 def test_another_users_evaluation_is_404_and_no_report(session, user, mcq_and_debug):
-    other = User(email="other@example.com", username="other", hashed_password="x")
+    other = User(email="other@example.com", username="other")
     session.add(other)
     session.commit()
     evaluation = make_evaluation(session, other)

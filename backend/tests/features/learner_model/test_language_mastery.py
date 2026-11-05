@@ -9,7 +9,7 @@ from app.features.learner_model.service import EventInput, mastery_snapshot
 
 @pytest.fixture
 def user(session):
-    u = User(email="l@example.com", username="lang", hashed_password="x",
+    u = User(email="l@example.com", username="lang",
              preferred_language="c")
     session.add(u)
     session.commit()

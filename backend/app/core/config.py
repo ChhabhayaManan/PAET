@@ -20,10 +20,9 @@ class Settings(BaseSettings):
     SECRET_KEY_FILE: Path = Path(__file__).resolve().parents[2] / "data" / "secret_key"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
-    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # App
-    APP_NAME: str = "PAET - Programming Assistant & Education Tool"
+    APP_NAME: str = "PET - Programming Education Tool"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
     # Startup loads the book-search embedder in the background so the first chat
@@ -35,9 +34,6 @@ class Settings(BaseSettings):
     # chat message. Live bge-small scores: on-topic passages ~0.72-0.80, loosely related
     # ones (hint requests, code reviews) just below.
     RAG_MIN_SCORE: float = 0.68
-    # Set to an existing user's email to enable POST /auth/dev-login, which skips
-    # the password and the OTP. Ignored unless DEBUG is also true.
-    DEV_LOGIN_EMAIL: str = ""
     ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:5173"
 
     # ── LLM (NVIDIA NIM) ──────────────────────────────────────────────────
@@ -59,8 +55,6 @@ class Settings(BaseSettings):
     LLM_QUEUE_DEADLINE_S: float = 20
 
     # ── Model selector ────────────────────────────────────────────────────
-    # web: 30-day key cookie, cloud providers only. local: 1-year cookie, local models too.
-    DEPLOY_MODE: str = "web"
     LLM_COOKIE_SECRET: str = Field(default="", repr=False)
     DEFAULT_LLM_PROVIDER: str = ""
     DEFAULT_LLM_MODEL: str = ""
@@ -91,18 +85,6 @@ class Settings(BaseSettings):
     # reveal (the study setting) · live: also toasted on each graded answer.
     GAMIFICATION_MODE: str = "live"
 
-    # ── Email (SMTP) for OTP delivery ─────────────────────────────────────
-    SMTP_HOST: str = "smtp.gmail.com"
-    SMTP_PORT: int = 587
-    SMTP_USER: str = ""
-    SMTP_PASSWORD: str = Field(default="", repr=False)
-    SMTP_FROM_NAME: str = "PAET"
-    
-    # ── Gmail API (OAuth2 - works on Render via HTTPS) ────────────────────
-    GMAIL_CLIENT_ID: str = ""
-    GMAIL_CLIENT_SECRET: str = Field(default="", repr=False)
-    GMAIL_REFRESH_TOKEN: str = Field(default="", repr=False)
-    GMAIL_FROM_EMAIL: str = ""
     @property
     def allowed_origins_list(self) -> List[str]:
         return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",")]

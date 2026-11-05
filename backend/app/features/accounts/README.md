@@ -1,20 +1,20 @@
 # accounts
 
-Who the student is. Registration, the two-step login (password, then a one-time code by
-email), access and refresh tokens, password reset, the one-click dev login, the student's
-own profile, data-sharing consent and the peer comparison.
+Who the student is. PET runs on the student's own computer, so there is no sign-in:
+the browser opens a session for the one local student and carries its token. Also the
+student's own profile, data-sharing consent and the peer comparison.
 
 ## Endpoints
 
 | Router | Prefix | Endpoints |
 |---|---|---|
-| `router_auth.py` | `/api/v1/auth` | register, login, verify-otp, forgot/reset password, refresh, logout, me, dev-login |
-| `router_users.py` | `/api/v1/users` | my profile (get/update), change password, consent, peer comparison, admin user list |
+| `router_auth.py` | `/api/v1/auth` | `POST /session` (opens the local student's session), `GET /me` |
+| `router_users.py` | `/api/v1/users` | my profile (get/update), consent, peer comparison, admin user list |
 | `router_profile.py` | `/api/v1/profile` | `GET /mastery`, measured mastery per topic (read from `learner_model`) |
 
 ## Tables
 
-- Writes: `users`, `otp_records`, `user_sessions`, `learning_profiles`
+- Writes: `users`, `user_sessions`, `learning_profiles`
 - Reads: `topic_mastery` (mastery endpoint), `code_submissions` / `code_evaluations`
   (profile stats), `onboarding_records` (profile)
 
@@ -26,8 +26,8 @@ own profile, data-sharing consent and the peer comparison.
 
 ```
 router_auth.py, router_users.py, router_profile.py   HTTP
-service.py            AuthService: register, login, OTP, tokens, sessions
+service.py            AuthService: the local student, sessions, tokens
 logic/user_service.py UserService: profile, consent, peer comparison
-models.py             User, OTPRecord, LearningProfile, UserSession
+models.py             User, LearningProfile, UserSession
 schemas.py            request/response models (auth, user, profile)
 ```

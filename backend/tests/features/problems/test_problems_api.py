@@ -49,7 +49,7 @@ def client():
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
 
-    user = User(email="cp@example.com", username="cpuser", hashed_password="x")
+    user = User(email="cp@example.com", username="cpuser")
     db.add(user)
     db.commit()
 

@@ -22,11 +22,10 @@ import { TextArea, TextField } from '../components/ui/Field'
 const TABS = [
   { value: 'profile', label: 'Profile info', icon: User },
   { value: 'learning', label: 'Learning', icon: Target },
-  { value: 'security', label: 'Security', icon: Lock },
   { value: 'privacy', label: 'Privacy', icon: Shield },
 ]
 
-const PRIVATE = ['Your name and email', 'Your code', 'Your chat messages']
+const PRIVATE = ['Your name', 'Your code', 'Your chat messages']
 
 function Panel({ title, description, children }) {
   return (
@@ -57,10 +56,7 @@ export default function ProfilePage() {
   })
   const language = user?.preferred_language || 'c'
 
-  const [pwForm, setPwForm] = useState({ current_password: '', new_password: '' })
-  const [pwError, setPwError] = useState('')
   const [saving, setSaving] = useState(false)
-  const [savingPw, setSavingPw] = useState(false)
   const [savingConsent, setSavingConsent] = useState(false)
   const [consent, setConsent] = useState(user?.data_sharing_consent ?? false)
   const [activeTab, setActiveTab] = useState('profile')
@@ -156,24 +152,6 @@ export default function ProfilePage() {
     }
   }
 
-  const handleChangePassword = async () => {
-    if (!pwForm.current_password || !pwForm.new_password) {
-      setPwError('Fill in both password fields.')
-      return
-    }
-    setPwError('')
-    setSavingPw(true)
-    try {
-      await userAPI.changePassword(pwForm)
-      toast.success('Password changed.')
-      setPwForm({ current_password: '', new_password: '' })
-    } catch (err) {
-      setPwError(getErrorMessage(err, "Couldn't change your password."))
-    } finally {
-      setSavingPw(false)
-    }
-  }
-
   const handleConsentToggle = async (value) => {
     setSavingConsent(true)
     try {
@@ -200,7 +178,7 @@ export default function ProfilePage() {
           </span>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-2xl font-semibold tracking-tight text-ink">{name}</h1>
-            <p className="mt-1 truncate text-sm text-ink-subtle">@{user?.username} · {user?.email}</p>
+            <p className="mt-1 truncate text-sm text-ink-subtle">@{user?.username}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Chip tone="aqua">Coding in {languageLabel(language)}</Chip>
@@ -300,25 +278,11 @@ export default function ProfilePage() {
           </>
         )}
 
-        {activeTab === 'security' && (
-          <Panel title="Change password" description="Min 8 chars, 1 uppercase, 1 digit.">
-            <div className="space-y-5">
-              <TextField label="Current password" type="password" autoComplete="current-password" value={pwForm.current_password}
-                onChange={e => setPwForm(f => ({ ...f, current_password: e.target.value }))} />
-              <TextField label="New password" type="password" autoComplete="new-password" value={pwForm.new_password}
-                onChange={e => setPwForm(f => ({ ...f, new_password: e.target.value }))} error={pwError} />
-            </div>
-            <div className="mt-6 flex justify-end border-t border-line pt-5">
-              <Button icon={Lock} onClick={handleChangePassword} busy={savingPw}>{savingPw ? 'Updating…' : 'Update password'}</Button>
-            </div>
-          </Panel>
-        )}
-
         {activeTab === 'privacy' && (
           <Panel title="Privacy" description="You decide whether your activity helps research.">
             <div className="flex items-start justify-between gap-4 rounded-[20px] border border-line bg-tile-2 p-5">
               <div className="flex-1">
-                <p id="consent-label" className="text-[15px] font-medium text-ink">Allow your anonymised activity to be used for research and to improve PAET</p>
+                <p id="consent-label" className="text-[15px] font-medium text-ink">Allow your anonymised activity to be used for research and to improve PET</p>
                 <p id="consent-desc" className="mt-1.5 text-xs leading-relaxed text-ink-subtle">
                   This covers things like your scores, how many hints you used and how your topic levels changed, with your name removed. You can turn it off at any time.
                 </p>

@@ -21,7 +21,7 @@ _ids = count(1)
 
 
 def make_user(session, name):
-    u = User(email=f"{name}@example.com", username=name, hashed_password="x")
+    u = User(email=f"{name}@example.com", username=name)
     session.add(u)
     session.commit()
     return u

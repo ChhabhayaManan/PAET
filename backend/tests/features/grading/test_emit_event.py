@@ -20,7 +20,7 @@ from tests.features.grading.test_graph import FakeExplainRunnable, merged
 
 @pytest.fixture
 def user(session):
-    u = User(email="e@example.com", username="emitter", hashed_password="x")
+    u = User(email="e@example.com", username="emitter")
     session.add(u)
     session.commit()
     return u

@@ -3,8 +3,7 @@ from fastapi import HTTPException, status
 
 from app.features.onboarding.models import OnboardingRecord
 from app.features.accounts.models import User, LearningProfile
-from app.features.accounts.schemas import UpdateProfileRequest, ChangePasswordRequest
-from app.core.security import verify_password, hash_password
+from app.features.accounts.schemas import UpdateProfileRequest
 
 
 class UserService:
@@ -44,21 +43,6 @@ class UserService:
         db.commit()
         db.refresh(user)
         return user
-
-    @staticmethod
-    def change_password(db: Session, user_id: int, data: ChangePasswordRequest):
-        user = db.query(User).filter(User.id == user_id).first()
-        if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found.")
-
-        if not verify_password(data.current_password, user.hashed_password):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Current password is incorrect."
-            )
-
-        user.hashed_password = hash_password(data.new_password)
-        db.commit()
 
     @staticmethod
     def _update_profile_completeness(db: Session, user: User):

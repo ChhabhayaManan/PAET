@@ -26,7 +26,7 @@ C_PORT = "#include <stdio.h>\nint main(void) { return 0; }\n"
 
 @pytest.fixture
 def user(session):
-    u = User(email="g@example.com", username="giver", hashed_password="x", preferred_language="c")
+    u = User(email="g@example.com", username="giver", preferred_language="c")
     session.add(u)
     session.commit()
     return u

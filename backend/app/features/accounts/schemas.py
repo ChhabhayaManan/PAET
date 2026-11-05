@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, validator
 from typing import Optional, List, Dict, Literal
 from datetime import datetime
 from app.features.accounts.models import UserRole, SkillLevel
@@ -6,39 +6,10 @@ from app.features.accounts.models import UserRole, SkillLevel
 
 # ─── Auth Schemas ────────────────────────────────────────────────────────────
 
-class RegisterRequest(BaseModel):
-    email: EmailStr
-    username: str = Field(..., min_length=3, max_length=50, pattern=r"^[a-zA-Z0-9_]+$")
-    password: str = Field(..., min_length=8, max_length=255)
-    full_name: Optional[str] = Field(None, max_length=255)
-    skill_level: Optional[str] = "beginner"  # beginner / intermediate / advanced
-    preferred_languages: Optional[List[str]] = ["python"]
-    interested_topics: Optional[List[str]] = []
-    role: UserRole = UserRole.STUDENT
-
-    @validator("password")
-    def password_strength(cls, v):
-        if not any(c.isupper() for c in v):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not any(c.isdigit() for c in v):
-            raise ValueError("Password must contain at least one digit")
-        return v
-
-
-class LoginRequest(BaseModel):
-    email: EmailStr
-    password: str
-
-
 class TokenResponse(BaseModel):
     access_token: str
-    refresh_token: str
     token_type: str = "bearer"
     expires_in: int  # seconds
-
-
-class RefreshTokenRequest(BaseModel):
-    refresh_token: str
 
 
 # ─── User Profile Schemas ─────────────────────────────────────────────────────
@@ -137,58 +108,11 @@ class UpdateProfileRequest(BaseModel):
             return None
 
 
-class ChangePasswordRequest(BaseModel):
-    current_password: str
-    new_password: str = Field(..., min_length=8, max_length=128)
-
-    @validator("new_password")
-    def password_strength(cls, v):
-        if not any(c.isupper() for c in v):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not any(c.isdigit() for c in v):
-            raise ValueError("Password must contain at least one digit")
-        return v
-
-
 # ─── General Response Schemas ─────────────────────────────────────────────────
 
 class MessageResponse(BaseModel):
     message: str
     success: bool = True
-
-
-# ─── 2FA / OTP Schemas ────────────────────────────────────────────────────────
-
-class OTPChallengeResponse(BaseModel):
-    """Returned after successful password check — frontend must now submit OTP."""
-    otp_token: str          # short-lived JWT (10 min), NOT an access token
-    message: str = "OTP sent to your registered email address."
-    email_hint: str         # e.g. "s***@gmail.com" — shows where OTP was sent
-
-
-class VerifyOTPRequest(BaseModel):
-    otp_token: str          # the otp_pending JWT from step 1
-    otp: str = Field(..., min_length=6, max_length=6, pattern=r"^\d{6}$")
-
-
-# ─── Forgot Password Schemas ──────────────────────────────────────────────────
-
-class ForgotPasswordRequest(BaseModel):
-    email: EmailStr
-
-
-class ResetPasswordRequest(BaseModel):
-    otp_token: str
-    otp: str = Field(..., min_length=6, max_length=6, pattern=r"^\d{6}$")
-    new_password: str = Field(..., min_length=8, max_length=128)
-
-    @validator("new_password")
-    def password_strength(cls, v):
-        if not any(c.isupper() for c in v):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not any(c.isdigit() for c in v):
-            raise ValueError("Password must contain at least one digit")
-        return v
 
 
 # ─── Profile / Mastery Schemas ────────────────────────────────────────────────

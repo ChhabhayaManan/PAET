@@ -24,7 +24,7 @@ def client(monkeypatch, tmp_path):
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
-    user = User(email="tp@example.com", username="tp", hashed_password="x",
+    user = User(email="tp@example.com", username="tp",
                 preferred_language="c")
     db.add(user)
     db.add(McqQuestion(external_id="mcq-c-loops-1", topic="loops", difficulty="easy",

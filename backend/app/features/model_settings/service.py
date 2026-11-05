@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from app.core.config import settings
 from app.core.exceptions import ModelChoiceRejected, ModelKeyError
 from app.core.llm import structured
-from app.core.llm_choice import Choice, has_server_model, is_local, server_choice
+from app.core.llm_choice import Choice, has_server_model, server_choice
 from app.core.llm_providers import PROVIDERS, build_client, classify, label, list_models
 from app.features.model_settings.schemas import (
     CapabilityCheck, CheckOut, ChoiceIn, ModelSettingsOut, ProviderOut,
@@ -27,8 +27,8 @@ class _Sum(BaseModel):
 
 def view(choice: Choice | None) -> ModelSettingsOut:
     providers = [ProviderOut(id=p.id, label=p.label, base_url=p.base_url, needs_key=p.needs_key,
-                             local_only=p.local_only)
-                 for p in PROVIDERS.values() if is_local() or not p.local_only]
+                             local=p.local)
+                 for p in PROVIDERS.values()]
     if choice is None and not has_server_model():
         provider, model, source, hint = "", "", "none", ""
     elif choice is None:
@@ -38,10 +38,10 @@ def view(choice: Choice | None) -> ModelSettingsOut:
         source, hint = "default", ""
     else:
         provider, model, hint = choice.provider, choice.model, choice.key_hint
-        source = "local" if PROVIDERS[provider].local_only else "own"
+        source = "local" if PROVIDERS[provider].local else "own"
     return ModelSettingsOut(source=source, provider=provider,
                             provider_label=label(provider) if provider else "",
-                            model=model, key_hint=hint, deploy_mode=settings.DEPLOY_MODE,
+                            model=model, key_hint=hint,
                             has_default=has_server_model(), providers=providers)
 
 
@@ -49,10 +49,8 @@ def resolve(data: ChoiceIn, existing: Choice | None) -> Choice:
     provider = PROVIDERS.get(data.provider)
     if provider is None:
         raise ModelChoiceRejected("Unknown provider.")
-    if provider.local_only and not is_local():
-        raise ModelChoiceRejected("Local models are only available when you run PAET yourself.")
     base_url = provider.base_url
-    if provider.local_only:
+    if provider.local:
         base_url = data.base_url.strip() or provider.base_url
         if not base_url.startswith(("http://", "https://")):
             raise ModelChoiceRejected("Enter the server address, starting with http:// or https://.")
@@ -83,12 +81,12 @@ def _context_check(context: int | None) -> CapabilityCheck:
                                detail="Not reported by the provider, so not checked.")
     if context < MIN_CONTEXT:
         return CapabilityCheck(name="Context window", ok=False,
-                               detail=f"{context:,} tokens. PAET needs at least {MIN_CONTEXT:,}.")
+                               detail=f"{context:,} tokens. PET needs at least {MIN_CONTEXT:,}.")
     return CapabilityCheck(name="Context window", ok=True, detail=f"{context:,} tokens.")
 
 
 def check(choice: Choice) -> CheckOut:
-    """Lists the account's models; with a model chosen, also proves the three things PAET
+    """Lists the account's models; with a model chosen, also proves the three things PET
     relies on: tool calls (the chatbot), structured replies (grading, hints, feedback) and
     enough context. Listing alone does not prove a key everywhere (OpenRouter's is public)."""
     try:
@@ -117,7 +115,7 @@ def check(choice: Choice) -> CheckOut:
                "Did not call a tool. The chatbot needs this to search the books and run code."),
         _probe(choice, "Structured output",
                lambda: structured(chat, _Sum).invoke(_SUM_PROMPT).get("parsed") is not None,
-               "Answers in PAET's JSON shapes, used by grading, hints and feedback.",
+               "Answers in PET's JSON shapes, used by grading, hints and feedback.",
                "Could not answer in a fixed JSON shape. Grading, hints and feedback need this."),
         _context_check(listed.get(choice.model)),
     ]
@@ -130,4 +128,4 @@ def require_capable(choice: Choice) -> None:
     failed = [c for c in result.checks if not c.ok]
     if failed:
         reasons = " ".join(f"{c.name}: {c.detail}" for c in failed)
-        raise ModelChoiceRejected(f"{choice.model} can't run PAET. {reasons} Pick another model.")
+        raise ModelChoiceRejected(f"{choice.model} can't run PET. {reasons} Pick another model.")

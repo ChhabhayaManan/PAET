@@ -43,11 +43,10 @@ def client(monkeypatch):
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
-    user = User(email="m@example.com", username="m", hashed_password="x")
+    user = User(email="m@example.com", username="m")
     db.add(user)
     db.commit()
 
-    monkeypatch.setattr(settings, "DEPLOY_MODE", "local")
     monkeypatch.setattr(settings, "NVIDIA_API_KEY", "server-key")
     checked = []
     monkeypatch.setattr(service, "list_models", lambda choice: checked.append(choice) or {
@@ -95,13 +94,14 @@ def test_changing_model_reuses_the_saved_key_for_the_same_provider(client):
     assert client.put(URL, json={"provider": "groq", "model": "llama"}).status_code == 422
 
 
-def test_web_mode_rejects_local_providers_and_hides_them(client, monkeypatch):
-    monkeypatch.setattr(settings, "DEPLOY_MODE", "web")
+def test_local_models_are_always_offered(client):
+    assert "ollama" in [p["id"] for p in client.get(URL).json()["providers"]]
 
-    for body in ({"provider": "ollama", "model": "llama3"},
-                 {"provider": "custom", "model": "x", "base_url": "http://10.0.0.5:8000/v1"}):
-        assert client.put(URL, json=body).status_code == 422
-    assert "ollama" not in [p["id"] for p in client.get(URL).json()["providers"]]
+    saved = client.put(URL, json={"provider": "custom", "model": "gpt-4.1-mini",
+                                  "base_url": "http://10.0.0.5:8000/v1"})
+    assert saved.status_code == 200
+    assert client.checked[-1].base_url == "http://10.0.0.5:8000/v1"
+    assert client.get(URL).json()["source"] == "local"
 
 
 def test_key_failure_returns_424_with_code(client, monkeypatch):

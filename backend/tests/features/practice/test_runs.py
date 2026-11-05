@@ -16,7 +16,7 @@ NOW = datetime.now(timezone.utc)
 
 @pytest.fixture
 def user(session):
-    u = User(email="t@example.com", username="topical", hashed_password="x")
+    u = User(email="t@example.com", username="topical")
     session.add(u)
     session.commit()
     return u

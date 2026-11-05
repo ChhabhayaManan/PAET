@@ -18,7 +18,7 @@ export const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'
 const api = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 60000,   // 60s — gives Render free tier time to wake up
+  timeout: 60000,
   withCredentials: true,   // the model-choice cookie
 })
 
@@ -27,20 +27,12 @@ const api = axios.create({
 // work completes while the UI reports "Network Error" and resets itself.
 const EVAL_TIMEOUT = 300000
 
-// Must go through API_BASE. A relative path posts to the frontend's own
-// origin, which 404s, so every refresh failed and logged the user out.
-export async function refreshAccessToken() {
-  const { data } = await axios.post(`${API_BASE}/auth/refresh`, {
-    refresh_token: localStorage.getItem('refresh_token'),
-  })
+// PET runs locally for one student, so an expired token is replaced by a new session.
+// Must go through API_BASE: a relative path posts to the frontend's own origin.
+export async function openSession() {
+  const { data } = await axios.post(`${API_BASE}/auth/session`)
   localStorage.setItem('access_token', data.access_token)
-  localStorage.setItem('refresh_token', data.refresh_token)
   return data.access_token
-}
-
-function sendToLogin() {
-  localStorage.clear()
-  window.location.href = '/login'
 }
 
 // ─── Request Interceptor: attach token ───────────────────────────────────────
@@ -53,7 +45,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-// ─── Response Interceptor: auto-refresh on 401 ───────────────────────────────
+// ─── Response Interceptor: new session on 401 ────────────────────────────────
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -65,15 +57,11 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      if (localStorage.getItem('refresh_token')) {
-        try {
-          const token = await refreshAccessToken()
-          originalRequest.headers.Authorization = `Bearer ${token}`
-          return api(originalRequest)
-        } catch {
-          sendToLogin()
-        }
-      }
+      try {
+        const token = await openSession()
+        originalRequest.headers.Authorization = `Bearer ${token}`
+        return api(originalRequest)
+      } catch { /* the backend is down; the caller shows the error */ }
     }
     return Promise.reject(error)
   }
@@ -81,26 +69,13 @@ api.interceptors.response.use(
 
 // ─── Auth API ─────────────────────────────────────────────────────────────────
 export const authAPI = {
-  register: (data) => api.post('/auth/register', data),
-  login: (data) => api.post('/auth/login', data),
-  verifyOtp: (data) => api.post('/auth/verify-otp', data),
-  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
-  resetPassword: (data) => api.post('/auth/reset-password', data),
-  logout: () => api.post('/auth/logout'),
   getMe: () => api.get('/auth/me'),
-  refresh: (refreshToken) => api.post('/auth/refresh', { refresh_token: refreshToken }),
-  // Both 404 unless the backend has DEBUG on and DEV_LOGIN_EMAIL set.
-  devLoginAvailable: () => api.get('/auth/dev-login'),
-  devLogin: () => api.post('/auth/dev-login'),
-  // 404 unless PAET runs in local mode.
-  localLogin: () => api.post('/auth/local-login'),
 }
 
 // ─── User Profile API ─────────────────────────────────────────────────────────
 export const userAPI = {
   getProfile: () => api.get('/users/profile'),
   updateProfile: (data) => api.patch('/users/profile', data),
-  changePassword: (data) => api.post('/users/change-password', data),
   updateConsent: (consent) => api.patch(`/users/consent?consent=${consent}`),
   getPeerComparison: () => api.get('/users/peer-comparison'),
 }
@@ -169,21 +144,14 @@ async function postStream(path, body, signal) {
       credentials: 'include',
     })
   }
-  let res = await send()
+  const res = await send()
   if (!signedOut(res)) return res
-  if (!localStorage.getItem('refresh_token')) {
-    sendToLogin()
-    return res
-  }
   try {
-    await refreshAccessToken()
+    await openSession()
   } catch {
-    sendToLogin()
     return res
   }
-  res = await send()
-  if (signedOut(res)) sendToLogin()
-  return res
+  return send()
 }
 
 export const chatAPI = {

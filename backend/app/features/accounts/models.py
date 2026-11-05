@@ -28,7 +28,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, index=True, nullable=False)
     username = Column(String(100), unique=True, index=True, nullable=False)
-    hashed_password = Column(String(255), nullable=False)
 
     # Basic profile
     full_name = Column(String(255), nullable=True)
@@ -75,7 +74,6 @@ class User(Base):
     # Relationships
     learning_profile = relationship("LearningProfile", back_populates="user", uselist=False)
     sessions = relationship("UserSession", back_populates="user")
-    otp_records = relationship("OTPRecord", back_populates="user", cascade="all, delete-orphan")
     onboarding_record = relationship(
         "OnboardingRecord", uselist=False, cascade="all, delete-orphan", passive_deletes=True,
     )
@@ -90,24 +88,6 @@ class User(Base):
 
     def __repr__(self):
         return f"<User id={self.id} username={self.username} role={self.role}>"
-
-
-class OTPRecord(Base):
-    """
-    Stores a bcrypt-hashed OTP for 2-step login verification.
-    One active record per user at a time — old ones are deleted on new OTP issue.
-    The raw OTP is NEVER stored; only the bcrypt hash.
-    """
-    __tablename__ = "otp_records"
-
-    id         = Column(Integer, primary_key=True, index=True)
-    user_id    = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    hashed_otp = Column(String(255), nullable=False)   # bcrypt hash of the 6-digit OTP
-    expires_at = Column(DateTime(timezone=True), nullable=False)
-    is_used    = Column(Boolean, default=False)        # consumed after first successful verify
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    user = relationship("User", back_populates="otp_records")
 
 
 class LearningProfile(Base):

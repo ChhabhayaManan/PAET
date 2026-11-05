@@ -20,7 +20,7 @@ def client(monkeypatch):
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
-    user = User(email="gam@example.com", username="gam", hashed_password="x")
+    user = User(email="gam@example.com", username="gam")
     db.add(user)
     db.add(McqQuestion(external_id="mcq-loops", topic="loops", difficulty="easy",
                        stem="?", options=[{"text": "a", "misconception": None},

@@ -50,7 +50,7 @@ def judge(monkeypatch):
 
 
 def make_user(db, name):
-    user = User(email=f"{name}@example.com", username=name, hashed_password="x")
+    user = User(email=f"{name}@example.com", username=name)
     db.add(user)
     db.commit()
     return user

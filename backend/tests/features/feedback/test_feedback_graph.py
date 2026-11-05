@@ -14,7 +14,7 @@ from app.features.learner_model.models import LearningEvent
 
 @pytest.fixture
 def user(session):
-    u = User(email="s@example.com", username="student", hashed_password="x")
+    u = User(email="s@example.com", username="student")
     session.add(u)
     session.commit()
     session.add(LearningProfile(user_id=u.id, weak_areas=["loops"],

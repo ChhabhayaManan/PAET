@@ -4,7 +4,7 @@ from app.features.practice.models import PracticeSession
 
 
 def test_session_roundtrip(session):
-    u = User(email="ps@example.com", username="psuser", hashed_password="x")
+    u = User(email="ps@example.com", username="psuser")
     session.add(u)
     session.flush()
     s = PracticeSession(user_id=u.id, language="c",

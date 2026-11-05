@@ -53,7 +53,7 @@ def tool_call(name: str, call_id: str, **args) -> AIMessage:
                                               "type": "tool_call"}])
 
 
-def new_thread(db, user, mode="aita") -> ChatThread:
+def new_thread(db, user, mode="pet") -> ChatThread:
     thread = ChatThread(user_id=user.id, mode=mode)
     db.add(thread)
     db.commit()
@@ -62,7 +62,7 @@ def new_thread(db, user, mode="aita") -> ChatThread:
 
 @pytest.fixture(autouse=True)
 def fake_query_embedding(monkeypatch):
-    """Every aita turn searches the books first; without passages that finds nothing."""
+    """Every pet turn searches the books first; without passages that finds nothing."""
     monkeypatch.setattr("app.features.chat.logic.rag.embedder.embed_query",
                         lambda text: [1.0] + [0.0] * (EMBED_DIM - 1))
 
@@ -79,7 +79,7 @@ def db():
 
 @pytest.fixture
 def student(db):
-    user = User(email="s@example.com", username="student", hashed_password="x")
+    user = User(email="s@example.com", username="student")
     db.add(user)
     db.commit()
     return user

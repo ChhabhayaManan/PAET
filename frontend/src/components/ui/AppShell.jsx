@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
-  LayoutGrid, Target, Shapes, Code2, SquareTerminal, MessageSquareText, UserRound, LogOut, Menu, X,
+  LayoutGrid, Target, Shapes, Code2, SquareTerminal, MessageSquareText, UserRound, Menu, X,
 } from 'lucide-react'
-import toast from 'react-hot-toast'
 import { useAuth } from '../../hooks/useAuth'
 import { feedbackAPI } from '../../utils/api'
 import { languageLabel } from '../learning/labels'
@@ -64,7 +63,7 @@ function NavItems({ unread }) {
   )
 }
 
-function UserBlock({ user, onLogout, local }) {
+function UserBlock({ user }) {
   const name = user?.full_name || user?.username || 'You'
   const initials = name.split(/\s+/).map(p => p[0]).join('').slice(0, 2).toUpperCase()
   return (
@@ -83,20 +82,11 @@ function UserBlock({ user, onLogout, local }) {
           </p>
         </div>
       </div>
-      {!local && (
-        <button
-          type="button"
-          onClick={onLogout}
-          className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-full text-[13px] font-medium text-ink-subtle transition-colors hover:bg-white/[0.06] hover:text-ink"
-        >
-          <LogOut size={15} /> Log out
-        </button>
-      )}
     </div>
   )
 }
 
-function SidebarBody({ user, unread, onLogout, model, onOpenModel }) {
+function SidebarBody({ user, unread, model, onOpenModel }) {
   return (
     <div className="flex h-full flex-col gap-8">
       <Logo />
@@ -105,7 +95,7 @@ function SidebarBody({ user, unread, onLogout, model, onOpenModel }) {
       </nav>
       <div className="flex flex-col gap-3">
         <ModelCard settings={model} onOpen={onOpenModel} />
-        <UserBlock user={user} onLogout={onLogout} local={model?.deploy_mode === 'local'} />
+        <UserBlock user={user} />
       </div>
     </div>
   )
@@ -113,8 +103,7 @@ function SidebarBody({ user, unread, onLogout, model, onOpenModel }) {
 
 // topBar: a strip above the page (study step + timer). navLocked: hides navigation during a timed block.
 export default function AppShell({ title, topBar, navLocked = false, children }) {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const location = useLocation()
   const [unread, setUnread] = useState(0)
   const [drawer, setDrawer] = useState(false)
@@ -126,8 +115,8 @@ export default function AppShell({ title, topBar, navLocked = false, children })
       .then(({ data }) => setUnread(data.unread ?? 0))
       .catch(() => {})
     load()
-    window.addEventListener('aita:feedback-changed', load)
-    return () => window.removeEventListener('aita:feedback-changed', load)
+    window.addEventListener('pet:feedback-changed', load)
+    return () => window.removeEventListener('pet:feedback-changed', load)
   }, [location.pathname])
 
   useEffect(() => { setDrawer(false) }, [location.pathname])
@@ -143,12 +132,6 @@ export default function AppShell({ title, topBar, navLocked = false, children })
     }
   }, [drawer])
 
-  const handleLogout = async () => {
-    await logout()
-    toast.success('Logged out')
-    navigate('/login')
-  }
-
   return (
     <div className={`min-h-[100dvh] ${navLocked ? '' : 'lg:grid lg:grid-cols-[232px_minmax(0,1fr)]'}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-canvas">
@@ -157,13 +140,13 @@ export default function AppShell({ title, topBar, navLocked = false, children })
 
       {!navLocked && (
         <aside className="sticky top-0 hidden h-[100dvh] border-r border-line px-4 py-6 lg:block">
-          <SidebarBody user={user} unread={unread} onLogout={handleLogout} model={model.settings} onOpenModel={openModel} />
+          <SidebarBody user={user} unread={unread} model={model.settings} onOpenModel={openModel} />
         </aside>
       )}
 
       <header className={`sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-line bg-canvas/90 px-4 backdrop-blur-md ${navLocked ? '' : 'lg:hidden'}`}>
         <LogoMark className="h-7 w-7" />
-        <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight text-ink">{title || 'PAET'}</span>
+        <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight text-ink">{title || 'PET'}</span>
         {!navLocked && (
           <button
             type="button"
@@ -191,7 +174,7 @@ export default function AppShell({ title, topBar, navLocked = false, children })
             >
               <X size={18} />
             </button>
-            <SidebarBody user={user} unread={unread} onLogout={handleLogout} model={model.settings} onOpenModel={openModel} />
+            <SidebarBody user={user} unread={unread} model={model.settings} onOpenModel={openModel} />
           </div>
         </div>
       )}

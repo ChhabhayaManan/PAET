@@ -20,7 +20,7 @@ def fk_session():
 
 def test_thread_messages_round_trip_and_cascade_with_user(fk_session):
     db = fk_session
-    user = User(email="a@x.io", username="a", hashed_password="h")
+    user = User(email="a@x.io", username="a")
     db.add(user)
     db.flush()
     thread = ChatThread(user_id=user.id)
@@ -35,7 +35,7 @@ def test_thread_messages_round_trip_and_cascade_with_user(fk_session):
     db.commit()
     db.expire_all()
 
-    assert db.get(ChatThread, thread.id).mode == "aita"
+    assert db.get(ChatThread, thread.id).mode == "pet"
     reply = db.scalars(select(ChatMessage).where(ChatMessage.role == "assistant")).one()
     assert reply.tool_calls == calls
 

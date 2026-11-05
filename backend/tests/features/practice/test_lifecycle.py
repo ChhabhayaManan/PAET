@@ -19,7 +19,7 @@ def at(minutes: int) -> datetime:
 
 @pytest.fixture
 def user(session):
-    u = User(email="p@example.com", username="practiser", hashed_password="x")
+    u = User(email="p@example.com", username="practiser")
     session.add(u)
     session.flush()
     return u

@@ -23,7 +23,7 @@ def db():
 
 @pytest.fixture
 def user(db):
-    u = User(email="lang@example.com", username="languser", hashed_password="x")
+    u = User(email="lang@example.com", username="languser")
     db.add(u)
     db.commit()
     return u

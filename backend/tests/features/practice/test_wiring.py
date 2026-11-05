@@ -24,7 +24,7 @@ from tests.features.practice.assessment.test_policy import add_mcq
 
 @pytest.fixture
 def user(session):
-    u = User(email="w@example.com", username="wired", hashed_password="x",
+    u = User(email="w@example.com", username="wired",
              preferred_language="c")
     session.add(u)
     session.commit()

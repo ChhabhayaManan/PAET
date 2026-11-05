@@ -13,7 +13,7 @@ class ProviderOut(BaseModel):
     label: str
     base_url: str
     needs_key: bool
-    local_only: bool
+    local: bool
 
 
 class ModelSettingsOut(BaseModel):
@@ -22,7 +22,6 @@ class ModelSettingsOut(BaseModel):
     provider_label: str
     model: str
     key_hint: str
-    deploy_mode: str
     has_default: bool
     providers: list[ProviderOut]
 

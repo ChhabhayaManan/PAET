@@ -1,13 +1,11 @@
 """Real chat turns, in-process, for the eval scripts: a dedicated eval account per script,
 a fresh thread per item, and each turn's events folded into one TurnResult."""
 
-import secrets
 from dataclasses import dataclass, field
 
 from sqlalchemy.orm import Session
 
 from app.features.accounts.models import User
-from app.features.accounts.schemas import RegisterRequest
 from app.features.accounts.service import AuthService
 from app.features.chat.models import ChatThread
 from app.features.chat.service import BUSY_FLAG, FAILED_FLAG, Error, Final, ToolStart, run_turn
@@ -42,13 +40,10 @@ def eval_user(db: Session, email: str) -> User:
     if user is not None:
         return user
     username = email.split("@")[0].replace("-", "_").replace(".", "_")[:50]
-    # Nobody signs in to this account; the password only satisfies registration.
-    password = secrets.token_urlsafe(24) + "A1"
-    return AuthService.register(db, RegisterRequest(email=email, username=username,
-                                                    password=password, full_name="Chat eval"))
+    return AuthService.create_user(db, email, username, "Chat eval")
 
 
-def new_thread(db: Session, user_id: int, mode: str = "aita") -> int:
+def new_thread(db: Session, user_id: int, mode: str = "pet") -> int:
     thread = ChatThread(user_id=user_id, mode=mode)
     db.add(thread)
     db.commit()

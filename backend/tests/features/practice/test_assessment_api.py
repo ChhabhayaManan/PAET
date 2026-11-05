@@ -17,7 +17,7 @@ def client():
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine)()
-    user = User(email="api-a@example.com", username="apia", hashed_password="x",
+    user = User(email="api-a@example.com", username="apia",
                 preferred_language="python")
     db.add(user)
     db.add(McqQuestion(external_id="q-basics", topic="basics_io", difficulty="easy",

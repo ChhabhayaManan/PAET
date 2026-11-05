@@ -31,8 +31,8 @@ def api():
                            poolclass=StaticPool)
     Base.metadata.create_all(engine)
     db = sessionmaker(bind=engine, autoflush=False)()
-    me = User(email="me@example.com", username="me", hashed_password="x")
-    other = User(email="other@example.com", username="other", hashed_password="x")
+    me = User(email="me@example.com", username="me")
+    other = User(email="other@example.com", username="other")
     db.add_all([me, other])
     db.commit()
     state = SimpleNamespace(db=db, me=me, other=other, script=[], turns=[],
@@ -145,7 +145,7 @@ def test_strangers_threads_and_bad_input_never_reach_the_agent(api):
     assert [r.status_code for r in responses] == [404, 404, 404]
     assert not any("their" in r.text for r in responses)
     assert [t["id"] for t in api.client.get(f"{CHAT}/threads").json()] == [mine["id"]]
-    assert mine["mode"] == "aita"
+    assert mine["mode"] == "pet"
 
     too_long = api.client.post(f"{CHAT}/threads/{mine['id']}/messages",
                                json={"content": "x" * 8001})

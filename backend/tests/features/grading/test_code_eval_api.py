@@ -36,7 +36,7 @@ def client():
     Local = sessionmaker(bind=engine)
     db = Local()
 
-    user = User(email="api@example.com", username="apiuser", hashed_password="x")
+    user = User(email="api@example.com", username="apiuser")
     db.add(user)
     db.commit()
 

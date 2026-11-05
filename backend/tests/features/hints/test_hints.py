@@ -34,7 +34,7 @@ SOLUTION = "for _ in range(int(input())):\n    print(max(map(int, input().split(
 
 @pytest.fixture
 def user(session):
-    u = User(email="h@example.com", username="hinted", hashed_password="x")
+    u = User(email="h@example.com", username="hinted")
     session.add(u)
     session.commit()
     return u

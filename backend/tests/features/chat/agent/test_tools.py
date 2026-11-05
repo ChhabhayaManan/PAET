@@ -152,7 +152,7 @@ def test_hint_lines_survive_markdown_but_code_fences_stay_untouched():
 
 
 def test_failures_become_error_json_and_failed_traces(session, user, monkeypatch):
-    other = User(email="o@example.com", username="other", hashed_password="x")
+    other = User(email="o@example.com", username="other")
     session.add(other)
     session.flush()
     private = Problem(source=ProblemSource.STUDENT, statement="theirs", statement_hash="o" * 64,

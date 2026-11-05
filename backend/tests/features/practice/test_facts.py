@@ -17,7 +17,7 @@ T0 = datetime(2026, 10, 24, 10, 0, tzinfo=timezone.utc)
 
 @pytest.fixture
 def user(session):
-    u = User(email="f@example.com", username="facts", hashed_password="x")
+    u = User(email="f@example.com", username="facts")
     session.add(u)
     session.flush()
     return u

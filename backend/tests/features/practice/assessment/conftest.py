@@ -33,7 +33,7 @@ class ScriptedProvider(ExecutionProvider):
 
 @pytest.fixture
 def user(session):
-    u = User(email="a@example.com", username="assessed", hashed_password="x")
+    u = User(email="a@example.com", username="assessed")
     session.add(u)
     session.commit()
     return u
