@@ -2,7 +2,7 @@ from sqlalchemy.engine import make_url
 
 LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1", "db"}
 LOCAL_DB_HINT = ("Point it at the local stack, e.g. "
-                 "DATABASE_URL=postgresql://aita:aita@localhost:5433/aita_db")
+                 "DATABASE_URL=postgresql://pet:pet@localhost:5433/pet_db")
 
 
 def require_local_db(url=None, hint: str = LOCAL_DB_HINT) -> None:

@@ -24,7 +24,7 @@ def onboard(session, user, concept_level="low", **overrides):
     session.commit()
 
 
-def chat_prompt(session, user, mode="aita"):
+def chat_prompt(session, user, mode="pet"):
     thread = ChatThread(user_id=user.id, mode=mode)
     session.add(thread)
     session.commit()
@@ -50,7 +50,7 @@ def test_style_line_empty_without_prefs(session, user):
     assert style_line(session, user.id) == ""
 
 
-def test_chat_prompt_includes_style_only_in_aita_mode(session, user):
+def test_chat_prompt_includes_style_only_in_pet_mode(session, user):
     onboard(session, user)
     assert f"- How this student learns: {SAMPLE}" in chat_prompt(session, user)
     assert SAMPLE not in system_prompt("plain", None)

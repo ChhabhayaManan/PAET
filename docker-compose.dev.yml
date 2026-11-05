@@ -1,21 +1,22 @@
 # Development stack with a local Postgres on host port 5433.
 #   docker compose -f docker-compose.dev.yml up -d --build
-# Host venv / Alembic: DATABASE_URL=postgresql://aita:aita@localhost:5433/aita_db
+# Host venv / Alembic: DATABASE_URL=postgresql://pet:pet@localhost:5433/pet_db
 # docker-compose.yml is the self-hosting stack described in the README.
+name: pet
 services:
   db:
     image: pgvector/pgvector:pg18
     environment:
-      - POSTGRES_USER=aita
-      - POSTGRES_PASSWORD=aita
-      - POSTGRES_DB=aita_db
+      - POSTGRES_USER=pet
+      - POSTGRES_PASSWORD=pet
+      - POSTGRES_DB=pet_db
     ports:
       # 5433: the native Windows Postgres already holds 5432.
       - "5433:5432"
     volumes:
-      - aita_pgdata:/var/lib/postgresql
+      - pet_pgdata:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U aita -d aita_db"]
+      test: ["CMD-SHELL", "pg_isready -U pet -d pet_db"]
       interval: 2s
       timeout: 3s
       retries: 15
@@ -41,7 +42,7 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - DATABASE_URL=postgresql://aita:aita@db:5432/aita_db
+      - DATABASE_URL=postgresql://pet:pet@db:5432/pet_db
       - EXECUTOR_URL=http://executor:8080
       - HF_HOME=/hf-cache
     volumes:
@@ -68,5 +69,5 @@ networks:
     internal: true
 
 volumes:
-  aita_pgdata:
+  pet_pgdata:
   hf_cache:

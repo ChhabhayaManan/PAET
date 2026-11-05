@@ -1,9 +1,9 @@
 import pytest
 
 from app.core.exceptions import (
-    AitaError,
     ExecutorUnavailable,
     LLMUnavailable,
+    PetError,
     ProblemNotFound,
     SubmissionNotFound,
     UnverifiableSubmission,
@@ -13,7 +13,7 @@ from app.core.exceptions import (
 def test_all_domain_errors_share_a_base():
     for cls in (SubmissionNotFound, ProblemNotFound, ExecutorUnavailable,
                 LLMUnavailable, UnverifiableSubmission):
-        assert issubclass(cls, AitaError)
+        assert issubclass(cls, PetError)
 
 
 def test_status_codes():
@@ -33,6 +33,6 @@ def test_unverifiable_carries_a_reason():
 
 
 def test_domain_errors_are_not_builtins():
-    assert not issubclass(AitaError, (ValueError, RuntimeError))
-    with pytest.raises(AitaError):
+    assert not issubclass(PetError, (ValueError, RuntimeError))
+    with pytest.raises(PetError):
         raise SubmissionNotFound("boom")

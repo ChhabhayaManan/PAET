@@ -18,7 +18,7 @@ class ChatThread(Base):
     id         = Column(Integer, primary_key=True, index=True)
     user_id    = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),
                         nullable=False, index=True)
-    mode       = Column(String(10), nullable=False, default="aita", server_default="aita")
+    mode       = Column(String(10), nullable=False, default="pet", server_default="pet")
     title      = Column(String(120), nullable=True)
     summary    = Column(Text, nullable=True)
     # How many of the thread's oldest messages `summary` stands for.

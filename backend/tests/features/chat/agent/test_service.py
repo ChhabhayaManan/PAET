@@ -189,7 +189,7 @@ def test_abusive_message_gets_the_safe_reply_without_calling_the_model(db, stude
     thread = new_thread(db, student)
     model = ScriptedModel(script=["never used"])
 
-    events = finish(run_turn(db, student.id, thread.id, "fuck you aita", model=model))
+    events = finish(run_turn(db, student.id, thread.id, "fuck you pet", model=model))
 
     assert model.calls == []
     assert [(type(e), e.content, e.moderation_flag) for e in events] == [
@@ -263,7 +263,7 @@ def test_turn_finishes_without_a_listener_and_rolls_old_messages_into_the_summar
     assert [m.content for m in stored(db)][-3:] == ["a13", "q14", "Here is where you stand."]
     assert len(model.calls[0].messages) == 1 + 29
     sent = summariser.calls[0].messages[0].content
-    assert "Student: q0" in sent and "aiTA: a9" in sent and "q10" not in sent
+    assert "Student: q0" in sent and "PET: a9" in sent and "q10" not in sent
     db.expire_all()
     folded = db.get(ChatThread, thread.id)
     assert (folded.summary, folded.summary_upto) == ("Asked q0 to q9 about loops.", 20)

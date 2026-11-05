@@ -69,7 +69,7 @@ def test_rerun_is_idempotent_and_drops_stale_positions():
 
 def test_refuses_a_remote_database_without_the_override(monkeypatch):
     monkeypatch.setattr(database, "engine", types.SimpleNamespace(
-        url=make_url("postgresql://u:secret@ep-cool.neon.tech/aita")))
+        url=make_url("postgresql://u:secret@ep-cool.neon.tech/pet")))
 
     with pytest.raises(SystemExit) as exc:
         run([], sources=SPECS, fetch=fetch, embed_fn=fake_embed)

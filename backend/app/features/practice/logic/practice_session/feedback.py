@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 MAX_WORK_ON_NEXT = 2
 
 SYSTEM_PROMPT = """You write the short feedback a student reads at the end of one \
-practice session in aiTA, a teaching assistant for Indian programming students.
+practice session in PET, a teaching assistant for Indian programming students.
 
 Rules:
 - Use only the facts given; never invent work the student did not do

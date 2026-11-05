@@ -84,7 +84,7 @@ def create_thread(
     db: Session = Depends(get_db),
 ):
     # Plain mode is the study's comparison arm; outside debug only study mode may grant it.
-    mode = "plain" if body and body.mode == "plain" and settings.DEBUG else "aita"
+    mode = "plain" if body and body.mode == "plain" and settings.DEBUG else "pet"
     thread = ChatThread(user_id=current_user.id, mode=mode)
     db.add(thread)
     db.commit()

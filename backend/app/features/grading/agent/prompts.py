@@ -89,7 +89,7 @@ Previous version:
 {previous}
 """
 
-EXPLANATION_PROMPT = """You are the Code Evaluation Agent inside aiTA, an AI teaching
+EXPLANATION_PROMPT = """You are the Code Evaluation Agent inside PET, an AI teaching
 assistant for beginner programmers who have no human teaching assistant available.
 
 STUDENT SKILL LEVEL: {skill_level}

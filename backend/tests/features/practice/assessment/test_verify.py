@@ -94,7 +94,7 @@ C_PROGRAM = '#include <stdio.h>\nint main(void) { printf("3\\n"); return 0; }\n'
 C_STEM = f"What does this program print?\n```c\n{C_PROGRAM}```"
 AUTHORED = {
     "problems": [{
-        "id": "aita-sum", "title": "Sum of Two", "difficulty": "easy",
+        "id": "pet-sum", "title": "Sum of Two", "difficulty": "easy",
         "statement": "Read two integers and print their sum.", "constraints": "small.",
         "reference": {"language": "python", "code": ["print(1)", ""]},
         "tests": [{"input": ["1 2"], "output": ["3"]}, {"input": ["0"], "output": ["0"]}],
@@ -115,7 +115,7 @@ AUTHORED = {
         "answer_index": 0, "explanation": "0, 1 and 2.",
     }],
     "debug": [{
-        "id": "debug-c-aita-sum", "language": "c", "problem_id": "aita-sum",
+        "id": "debug-c-pet-sum", "language": "c", "problem_id": "pet-sum",
         "bug_type": "off_by_one", "fixed_code": ["good", ""], "buggy_code": ["bad", ""],
     }],
 }
@@ -134,7 +134,7 @@ def test_authored_bank_runs_c_stems_as_c_and_keeps_concepts_code_free(monkeypatc
     bank = load_practice("loops")
     c_item, concept = bank["mcqs"]
 
-    assert [p["external_id"] for p in bank["problems"]] == ["aita-sum"]
+    assert [p["external_id"] for p in bank["problems"]] == ["pet-sum"]
     assert [t["kind"] for t in bank["problems"][0]["tests"]] == ["sample", "normal"]
     assert bank["problems"][0]["tests"][1]["stdin"] == "0\n"
     assert bank["problems"][0]["reference"] == "print(1)\n"
@@ -142,7 +142,7 @@ def test_authored_bank_runs_c_stems_as_c_and_keeps_concepts_code_free(monkeypatc
     assert (c_item["external_id"], c_item["answer_index"]) == ("mcq-c-loops-1", 1)
     assert concept["external_id"] == "concept-loops-1"
     assert bank["debug"] == [{
-        "external_id": "debug-c-aita-sum", "problem_external_id": "aita-sum", "language": "c",
+        "external_id": "debug-c-pet-sum", "problem_external_id": "pet-sum", "language": "c",
         "bug_type": "off_by_one", "fixed_code": "good\n", "buggy_code": "bad\n"}]
 
     provider = LanguageProvider({C_PROGRAM: "3\n"})

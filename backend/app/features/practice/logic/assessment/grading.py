@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import AitaError
+from app.core.exceptions import PetError
 from app.features.gamification.service import awards_for_event
 from app.features.grading.agent.multi_test import verdict_for
 from app.features.grading.logic.execution.judge import judge
@@ -22,11 +22,11 @@ from app.features.problems.models import Problem
 logger = logging.getLogger(__name__)
 
 
-class ItemNotFound(AitaError):
+class ItemNotFound(PetError):
     status_code = 404
 
 
-class InvalidAnswer(AitaError):
+class InvalidAnswer(PetError):
     status_code = 422
 
 

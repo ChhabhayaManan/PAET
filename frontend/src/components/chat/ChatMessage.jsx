@@ -25,7 +25,7 @@ const NOTICES = {
 
 const LIVE_LABELS = {
   thinking: 'Thinking',
-  waiting: 'PAET is still working on your last message',
+  waiting: 'PET is still working on your last message',
   reconnecting: 'Connection dropped — fetching the saved reply',
 }
 

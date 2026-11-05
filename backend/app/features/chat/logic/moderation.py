@@ -43,7 +43,7 @@ def _alternation(terms: list[str]) -> str:
 def _directed(expletives: list[str]) -> str:
     words = _alternation(expletives)
     filler = r"(?:are|r|is|a|an|such|so|total|complete|little|stupid|dumb|useless|worthless|fucking|piece|of|hai|ho|h)"
-    tail = r"(?=\s*(?:[.!?,;:]|$)|\s+(?:bot|aita|yaar|bro|bhai|hai|ho|h)\b)"
+    tail = r"(?=\s*(?:[.!?,;:]|$)|\s+(?:bot|pet|yaar|bro|bhai|hai|ho|h)\b)"
     return (
         rf"(?:you|u|ur|youre|tu|tum|aap|tujhe)(?:\s+{filler}){{0,4}}\s+(?:{words}){tail}"
         rf"|(?:{words})\s+(?:you|u){tail}"

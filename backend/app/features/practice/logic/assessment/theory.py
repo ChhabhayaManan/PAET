@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core import llm_gateway
-from app.core.exceptions import AitaError, LLMUnavailable, ModelKeyError
+from app.core.exceptions import LLMUnavailable, ModelKeyError, PetError
 from app.features.learner_model.agent.graph import ingest
 from app.features.learner_model.service import EventInput
 from app.features.onboarding.logic.graders.theory import score_from_points
@@ -34,7 +34,7 @@ PROMPT = (
 LANGUAGE_NAMES = {"c": "C", "cpp": "C++", "python": "Python"}
 
 
-class GraderBusy(AitaError):
+class GraderBusy(PetError):
     status_code = 503
 
 

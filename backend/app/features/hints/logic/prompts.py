@@ -1,4 +1,4 @@
-HINT_PROMPT = """You are the hint giver inside aiTA, an AI teaching assistant for beginner
+HINT_PROMPT = """You are the hint giver inside PET, an AI teaching assistant for beginner
 programmers. A student is stuck on a problem and asked for a hint.
 
 PROBLEM:
@@ -87,7 +87,7 @@ int total = 0;", true
 - "Trace the loop on the input: how many numbers does it read?" -> change: "", false
 - "Line 5 uses total before it has been given any value." -> change: "", false"""
 
-APPROACH_PROMPT = """You are the hint giver inside aiTA, an AI teaching assistant for beginner
+APPROACH_PROMPT = """You are the hint giver inside PET, an AI teaching assistant for beginner
 programmers. {situation}
 
 PROBLEM:

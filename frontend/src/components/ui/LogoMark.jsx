@@ -14,8 +14,8 @@ export default function LogoMark({ className = 'h-8 w-8' }) {
 export function Wordmark({ className = '', tagline = false }) {
   return (
     <span className="flex flex-col">
-      <span className={`font-display text-lg font-semibold tracking-[0.06em] text-ink ${className}`}>PAET</span>
-      {tagline && <span className="text-[11px] leading-tight text-ink-subtle">Programming Assistant &amp; Education Tool</span>}
+      <span className={`font-display text-lg font-semibold tracking-[0.06em] text-ink ${className}`}>PET</span>
+      {tagline && <span className="text-[11px] leading-tight text-ink-subtle">Programming Education Tool</span>}
     </span>
   )
 }

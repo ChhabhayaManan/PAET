@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import AitaError, LLMUnavailable
+from app.core.exceptions import LLMUnavailable, PetError
 from app.core.topics import PREREQUISITES, TOPIC_LABELS, TOPICS
 from app.features.grading.models import CodeEvaluation, CodeSubmission
 from app.features.learner_model.logic.mastery import (
@@ -33,7 +33,7 @@ TYPE_LABELS = {"mcq": "multiple-choice question", "diagnostic": "diagnostic ques
                "coding": "coding problem", "debug": "debugging challenge"}
 
 
-class NothingToServe(AitaError):
+class NothingToServe(PetError):
     status_code = 503
 
 

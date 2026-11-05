@@ -10,7 +10,7 @@ export default function AboutStep({ initial, onSaved, onBack, onConflict }) {
 
   return (
     <div>
-      <StepTitle eyebrow="About you" title="A little about you" subtitle="This helps PAET pitch questions and explanations at the right level." />
+      <StepTitle eyebrow="About you" title="A little about you" subtitle="This helps PET pitch questions and explanations at the right level." />
       <AboutFields form={form} onChange={setForm} />
       <StepNav onBack={onBack} onNext={() => save(aboutPayload(form))} saving={saving}
         canNext={aboutComplete(form)} />

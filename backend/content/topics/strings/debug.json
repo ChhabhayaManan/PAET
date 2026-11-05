@@ -311,9 +311,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-fix-name-case",
+      "id": "debug-c-pet-fix-name-case",
       "language": "c",
-      "problem_id": "aita-fix-name-case",
+      "problem_id": "pet-fix-name-case",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -367,9 +367,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-run-length-code",
+      "id": "debug-c-pet-run-length-code",
       "language": "c",
-      "problem_id": "aita-run-length-code",
+      "problem_id": "pet-run-length-code",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -479,9 +479,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-fix-name-case",
+      "id": "debug-cpp-pet-fix-name-case",
       "language": "cpp",
-      "problem_id": "aita-fix-name-case",
+      "problem_id": "pet-fix-name-case",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -535,9 +535,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-run-length-code",
+      "id": "debug-cpp-pet-run-length-code",
       "language": "cpp",
-      "problem_id": "aita-run-length-code",
+      "problem_id": "pet-run-length-code",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <iostream>",
@@ -766,9 +766,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-fix-name-case",
+      "id": "debug-python-pet-fix-name-case",
       "language": "python",
-      "problem_id": "aita-fix-name-case",
+      "problem_id": "pet-fix-name-case",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def fix_name(name):",
@@ -794,9 +794,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-run-length-code",
+      "id": "debug-python-pet-run-length-code",
       "language": "python",
-      "problem_id": "aita-run-length-code",
+      "problem_id": "pet-run-length-code",
       "bug_type": "off_by_one",
       "fixed_code": [
         "t = int(input())",

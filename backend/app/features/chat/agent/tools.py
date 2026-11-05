@@ -12,7 +12,7 @@ from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field, ValidationError
 
 from app.core.exceptions import (
-    AitaError, ExecutorUnavailable, LLMUnavailable, ModelKeyError, ProblemNotFound,
+    ExecutorUnavailable, LLMUnavailable, ModelKeyError, PetError, ProblemNotFound,
 )
 from app.core.topics import TOPICS
 from app.features.chat.logic.rag.search import search
@@ -142,7 +142,7 @@ def _failure(exc: Exception) -> str:
     for kind, text in FRIENDLY_ERRORS.items():
         if isinstance(exc, kind):
             return text
-    if isinstance(exc, AitaError):
+    if isinstance(exc, PetError):
         return exc.detail
     return "Unexpected failure."
 

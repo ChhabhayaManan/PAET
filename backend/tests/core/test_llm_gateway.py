@@ -296,10 +296,10 @@ def test_student_key_failure_stops_without_fallback_or_template(env, monkeypatch
     assert "sk-student-secret-1234" not in row[5]
 
 
-def test_no_choice_keeps_the_paet_path_and_logs_it(env):
+def test_no_choice_keeps_the_pet_path_and_logs_it(env):
     invoke("hint", "p")
 
-    assert _logged(env) == [("ok", "nvidia", "paet", "primary", 0, "")]
+    assert _logged(env) == [("ok", "nvidia", "pet", "primary", 0, "")]
 
 
 def test_no_server_model_and_no_choice_asks_for_a_model(env, monkeypatch):

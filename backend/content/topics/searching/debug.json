@@ -308,9 +308,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-count-occurrences",
+      "id": "debug-python-pet-count-occurrences",
       "language": "python",
-      "problem_id": "aita-count-occurrences",
+      "problem_id": "pet-count-occurrences",
       "bug_type": "uninitialised_variable",
       "fixed_code": [
         "t = int(input())",
@@ -340,9 +340,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-count-occurrences",
+      "id": "debug-c-pet-count-occurrences",
       "language": "c",
-      "problem_id": "aita-count-occurrences",
+      "problem_id": "pet-count-occurrences",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -398,9 +398,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-count-occurrences",
+      "id": "debug-cpp-pet-count-occurrences",
       "language": "cpp",
-      "problem_id": "aita-count-occurrences",
+      "problem_id": "pet-count-occurrences",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -462,9 +462,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-srch-first-above",
+      "id": "debug-c-pet-srch-first-above",
       "language": "c",
-      "problem_id": "aita-srch-first-above",
+      "problem_id": "pet-srch-first-above",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -524,9 +524,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-srch-last-occurrence",
+      "id": "debug-c-pet-srch-last-occurrence",
       "language": "c",
-      "problem_id": "aita-srch-last-occurrence",
+      "problem_id": "pet-srch-last-occurrence",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -586,9 +586,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-srch-int-sqrt",
+      "id": "debug-c-pet-srch-int-sqrt",
       "language": "c",
-      "problem_id": "aita-srch-int-sqrt",
+      "problem_id": "pet-srch-int-sqrt",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -642,9 +642,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-srch-insert-position",
+      "id": "debug-cpp-pet-srch-insert-position",
       "language": "cpp",
-      "problem_id": "aita-srch-insert-position",
+      "problem_id": "pet-srch-insert-position",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -728,9 +728,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-srch-int-sqrt",
+      "id": "debug-cpp-pet-srch-int-sqrt",
       "language": "cpp",
-      "problem_id": "aita-srch-int-sqrt",
+      "problem_id": "pet-srch-int-sqrt",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -786,9 +786,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-srch-day-pages",
+      "id": "debug-cpp-pet-srch-day-pages",
       "language": "cpp",
-      "problem_id": "aita-srch-day-pages",
+      "problem_id": "pet-srch-day-pages",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -934,9 +934,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-srch-last-occurrence",
+      "id": "debug-python-pet-srch-last-occurrence",
       "language": "python",
-      "problem_id": "aita-srch-last-occurrence",
+      "problem_id": "pet-srch-last-occurrence",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def last_position(values, target):",
@@ -974,9 +974,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-srch-insert-position",
+      "id": "debug-python-pet-srch-insert-position",
       "language": "python",
-      "problem_id": "aita-srch-insert-position",
+      "problem_id": "pet-srch-insert-position",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -1020,9 +1020,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-srch-day-pages",
+      "id": "debug-python-pet-srch-day-pages",
       "language": "python",
-      "problem_id": "aita-srch-day-pages",
+      "problem_id": "pet-srch-day-pages",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "def days_needed(pages, limit):",

@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from executor.runner import BatchResult, RunLimits, run_batch
 
-app = FastAPI(title="aiTA executor")
+app = FastAPI(title="PET executor")
 _slots = threading.Semaphore(4)
 
 

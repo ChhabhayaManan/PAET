@@ -49,7 +49,7 @@
 {"id": "tc-n01", "language": "c", "expected_tools": [], "query": "hi"}
 {"id": "tc-n02", "language": "c", "expected_tools": [], "query": "thanks, that really helped!"}
 {"id": "tc-n03", "language": "c", "expected_tools": [], "query": "who are you?"}
-{"id": "tc-n04", "language": "python", "expected_tools": [], "query": "good morning aiTA"}
+{"id": "tc-n04", "language": "python", "expected_tools": [], "query": "good morning PET"}
 {"id": "tc-n05", "language": "c", "expected_tools": [], "query": "what can you help me with?"}
 {"id": "tc-m01", "language": "c", "expected_tools": ["query_learning_data", "search_books"], "query": "which topic am I weakest in? explain that topic to me from the books"}
 {"id": "tc-m02", "language": "c", "expected_tools": ["evaluate_code", "search_books"], "query": "check my code and also explain what an off-by-one error is.\nProblem: the first line has n, the second line has n integers. Print them separated by spaces.\n```c\n#include <stdio.h>\nint main() {\n    int n, a[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &a[i]);\n    for (int i = 0; i <= n; i++) printf(\"%d \", a[i]);\n    return 0;\n}\n```"}

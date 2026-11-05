@@ -117,9 +117,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-count-divisors",
+      "id": "debug-python-pet-count-divisors",
       "language": "python",
-      "problem_id": "aita-count-divisors",
+      "problem_id": "pet-count-divisors",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",
@@ -145,9 +145,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-count-divisors",
+      "id": "debug-c-pet-count-divisors",
       "language": "c",
-      "problem_id": "aita-count-divisors",
+      "problem_id": "pet-count-divisors",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -193,9 +193,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-count-divisors",
+      "id": "debug-cpp-pet-count-divisors",
       "language": "cpp",
-      "problem_id": "aita-count-divisors",
+      "problem_id": "pet-count-divisors",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -243,9 +243,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-digit-sum",
+      "id": "debug-python-pet-digit-sum",
       "language": "python",
-      "problem_id": "aita-digit-sum",
+      "problem_id": "pet-digit-sum",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",
@@ -271,9 +271,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-digit-sum",
+      "id": "debug-c-pet-digit-sum",
       "language": "c",
-      "problem_id": "aita-digit-sum",
+      "problem_id": "pet-digit-sum",
       "bug_type": "uninitialised_variable",
       "fixed_code": [
         "#include <stdio.h>",
@@ -317,9 +317,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-digit-sum",
+      "id": "debug-cpp-pet-digit-sum",
       "language": "cpp",
-      "problem_id": "aita-digit-sum",
+      "problem_id": "pet-digit-sum",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -365,9 +365,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-alternating-sum",
+      "id": "debug-c-pet-alternating-sum",
       "language": "c",
-      "problem_id": "aita-alternating-sum",
+      "problem_id": "pet-alternating-sum",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -413,9 +413,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-savings-days",
+      "id": "debug-c-pet-savings-days",
       "language": "c",
-      "problem_id": "aita-savings-days",
+      "problem_id": "pet-savings-days",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -465,9 +465,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-digit-sum-steps",
+      "id": "debug-c-pet-digit-sum-steps",
       "language": "c",
-      "problem_id": "aita-digit-sum-steps",
+      "problem_id": "pet-digit-sum-steps",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -521,9 +521,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-countdown-rows",
+      "id": "debug-cpp-pet-countdown-rows",
       "language": "cpp",
-      "problem_id": "aita-countdown-rows",
+      "problem_id": "pet-countdown-rows",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <iostream>",
@@ -575,9 +575,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-digit-sum-divides",
+      "id": "debug-cpp-pet-digit-sum-divides",
       "language": "cpp",
-      "problem_id": "aita-digit-sum-divides",
+      "problem_id": "pet-digit-sum-divides",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -637,9 +637,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-digit-sum-steps",
+      "id": "debug-cpp-pet-digit-sum-steps",
       "language": "cpp",
-      "problem_id": "aita-digit-sum-steps",
+      "problem_id": "pet-digit-sum-steps",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <iostream>",
@@ -731,9 +731,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-alternating-sum",
+      "id": "debug-python-pet-alternating-sum",
       "language": "python",
-      "problem_id": "aita-alternating-sum",
+      "problem_id": "pet-alternating-sum",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",
@@ -761,9 +761,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-savings-days",
+      "id": "debug-python-pet-savings-days",
       "language": "python",
-      "problem_id": "aita-savings-days",
+      "problem_id": "pet-savings-days",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -795,9 +795,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-digit-sum-divides",
+      "id": "debug-python-pet-digit-sum-divides",
       "language": "python",
-      "problem_id": "aita-digit-sum-divides",
+      "problem_id": "pet-digit-sum-divides",
       "bug_type": "integer_division",
       "fixed_code": [
         "t = int(input())",

@@ -9,7 +9,7 @@ TONE_INSTRUCTIONS = {
         "Be Socratic — ask why, push deeper understanding, challenge assumptions.",
 }
 
-SYSTEM_PROMPT = """You are the Feedback Agent in aiTA — an AI teaching assistant for \
+SYSTEM_PROMPT = """You are the Feedback Agent in PET — an AI teaching assistant for \
 Indian programming students.
 You synthesise the student's latest code evaluation and recent learning activity \
 (MCQs, debug challenges, coding problems) into rich, personalised feedback.

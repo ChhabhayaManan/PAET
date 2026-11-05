@@ -207,9 +207,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-remove-adjacent",
+      "id": "debug-python-pet-remove-adjacent",
       "language": "python",
-      "problem_id": "aita-remove-adjacent",
+      "problem_id": "pet-remove-adjacent",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -239,9 +239,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-remove-adjacent",
+      "id": "debug-c-pet-remove-adjacent",
       "language": "c",
-      "problem_id": "aita-remove-adjacent",
+      "problem_id": "pet-remove-adjacent",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -307,9 +307,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-remove-adjacent",
+      "id": "debug-cpp-pet-remove-adjacent",
       "language": "cpp",
-      "problem_id": "aita-remove-adjacent",
+      "problem_id": "pet-remove-adjacent",
       "bug_type": "empty_input_unhandled",
       "fixed_code": [
         "#include <iostream>",
@@ -363,9 +363,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-postfix",
+      "id": "debug-python-pet-postfix",
       "language": "python",
-      "problem_id": "aita-postfix",
+      "problem_id": "pet-postfix",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def evaluate(expression):",
@@ -415,9 +415,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-postfix",
+      "id": "debug-c-pet-postfix",
       "language": "c",
-      "problem_id": "aita-postfix",
+      "problem_id": "pet-postfix",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -491,9 +491,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-postfix",
+      "id": "debug-cpp-pet-postfix",
       "language": "cpp",
-      "problem_id": "aita-postfix",
+      "problem_id": "pet-postfix",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -571,9 +571,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-stk-ticket-counter",
+      "id": "debug-c-pet-stk-ticket-counter",
       "language": "c",
-      "problem_id": "aita-stk-ticket-counter",
+      "problem_id": "pet-stk-ticket-counter",
       "bug_type": "empty_input_unhandled",
       "fixed_code": [
         "#include <stdio.h>",
@@ -650,9 +650,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-stk-next-greater",
+      "id": "debug-c-pet-stk-next-greater",
       "language": "c",
-      "problem_id": "aita-stk-next-greater",
+      "problem_id": "pet-stk-next-greater",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -728,9 +728,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-stk-bracket-error",
+      "id": "debug-c-pet-stk-bracket-error",
       "language": "c",
-      "problem_id": "aita-stk-bracket-error",
+      "problem_id": "pet-stk-bracket-error",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -818,9 +818,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-stk-final-stack",
+      "id": "debug-cpp-pet-stk-final-stack",
       "language": "cpp",
-      "problem_id": "aita-stk-final-stack",
+      "problem_id": "pet-stk-final-stack",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -914,9 +914,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-stk-ticket-counter",
+      "id": "debug-cpp-pet-stk-ticket-counter",
       "language": "cpp",
-      "problem_id": "aita-stk-ticket-counter",
+      "problem_id": "pet-stk-ticket-counter",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <iostream>",
@@ -994,9 +994,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-stk-browser-history",
+      "id": "debug-cpp-pet-stk-browser-history",
       "language": "cpp",
-      "problem_id": "aita-stk-browser-history",
+      "problem_id": "pet-stk-browser-history",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -1080,9 +1080,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-stk-browser-history",
+      "id": "debug-python-pet-stk-browser-history",
       "language": "python",
-      "problem_id": "aita-stk-browser-history",
+      "problem_id": "pet-stk-browser-history",
       "bug_type": "mutate_while_iterating",
       "fixed_code": [
         "t = int(input())",
@@ -1136,9 +1136,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-stk-next-greater",
+      "id": "debug-python-pet-stk-next-greater",
       "language": "python",
-      "problem_id": "aita-stk-next-greater",
+      "problem_id": "pet-stk-next-greater",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",
@@ -1174,9 +1174,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-stk-bracket-error",
+      "id": "debug-python-pet-stk-bracket-error",
       "language": "python",
-      "problem_id": "aita-stk-bracket-error",
+      "problem_id": "pet-stk-bracket-error",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def first_error(s):",

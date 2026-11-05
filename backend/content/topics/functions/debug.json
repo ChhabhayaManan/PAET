@@ -3,9 +3,9 @@
   "topic": "functions",
   "items": [
     {
-      "id": "debug-python-aita-gcd",
+      "id": "debug-python-pet-gcd",
       "language": "python",
-      "problem_id": "aita-gcd",
+      "problem_id": "pet-gcd",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def gcd(a, b):",
@@ -35,9 +35,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-gcd",
+      "id": "debug-c-pet-gcd",
       "language": "c",
-      "problem_id": "aita-gcd",
+      "problem_id": "pet-gcd",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "#include <stdio.h>",
@@ -89,9 +89,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-gcd",
+      "id": "debug-cpp-pet-gcd",
       "language": "cpp",
-      "problem_id": "aita-gcd",
+      "problem_id": "pet-gcd",
       "bug_type": "infinite_loop",
       "fixed_code": [
         "#include <iostream>",
@@ -144,9 +144,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-power",
+      "id": "debug-python-pet-power",
       "language": "python",
-      "problem_id": "aita-power",
+      "problem_id": "pet-power",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "def power(a, n):",
@@ -178,9 +178,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-power",
+      "id": "debug-c-pet-power",
       "language": "c",
-      "problem_id": "aita-power",
+      "problem_id": "pet-power",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -230,9 +230,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-power",
+      "id": "debug-cpp-pet-power",
       "language": "cpp",
-      "problem_id": "aita-power",
+      "problem_id": "pet-power",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -284,9 +284,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-count-primes",
+      "id": "debug-python-pet-count-primes",
       "language": "python",
-      "problem_id": "aita-count-primes",
+      "problem_id": "pet-count-primes",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "def is_prime(m):",
@@ -330,9 +330,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-count-primes",
+      "id": "debug-c-pet-count-primes",
       "language": "c",
-      "problem_id": "aita-count-primes",
+      "problem_id": "pet-count-primes",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -399,9 +399,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-count-primes",
+      "id": "debug-cpp-pet-count-primes",
       "language": "cpp",
-      "problem_id": "aita-count-primes",
+      "problem_id": "pet-count-primes",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "#include <iostream>",
@@ -475,9 +475,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-fn-digit-sum-winner",
+      "id": "debug-c-pet-fn-digit-sum-winner",
       "language": "c",
-      "problem_id": "aita-fn-digit-sum-winner",
+      "problem_id": "pet-fn-digit-sum-winner",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -553,9 +553,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-fn-divisor-classes",
+      "id": "debug-c-pet-fn-divisor-classes",
       "language": "c",
-      "problem_id": "aita-fn-divisor-classes",
+      "problem_id": "pet-fn-divisor-classes",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -635,9 +635,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-fn-nearest-prime",
+      "id": "debug-c-pet-fn-nearest-prime",
       "language": "c",
-      "problem_id": "aita-fn-nearest-prime",
+      "problem_id": "pet-fn-nearest-prime",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -721,9 +721,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-fn-round-best",
+      "id": "debug-cpp-pet-fn-round-best",
       "language": "cpp",
-      "problem_id": "aita-fn-round-best",
+      "problem_id": "pet-fn-round-best",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -796,9 +796,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-fn-nearest-prime",
+      "id": "debug-cpp-pet-fn-nearest-prime",
       "language": "cpp",
-      "problem_id": "aita-fn-nearest-prime",
+      "problem_id": "pet-fn-nearest-prime",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -884,9 +884,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-fn-triple-prime-kth",
+      "id": "debug-cpp-pet-fn-triple-prime-kth",
       "language": "cpp",
-      "problem_id": "aita-fn-triple-prime-kth",
+      "problem_id": "pet-fn-triple-prime-kth",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <iostream>",
@@ -1014,9 +1014,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-fn-digit-sum-winner",
+      "id": "debug-python-pet-fn-digit-sum-winner",
       "language": "python",
-      "problem_id": "aita-fn-digit-sum-winner",
+      "problem_id": "pet-fn-digit-sum-winner",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def digit_sum(x):",
@@ -1074,9 +1074,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-fn-divisor-classes",
+      "id": "debug-python-pet-fn-divisor-classes",
       "language": "python",
-      "problem_id": "aita-fn-divisor-classes",
+      "problem_id": "pet-fn-divisor-classes",
       "bug_type": "off_by_one",
       "fixed_code": [
         "def proper_divisor_sum(x):",
@@ -1130,9 +1130,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-fn-triple-prime-kth",
+      "id": "debug-python-pet-fn-triple-prime-kth",
       "language": "python",
-      "problem_id": "aita-fn-triple-prime-kth",
+      "problem_id": "pet-fn-triple-prime-kth",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "def is_prime(m):",

@@ -3,7 +3,7 @@
   "topic": "hashing_sets",
   "items": [
     {
-      "id": "aita-first-repeat",
+      "id": "pet-first-repeat",
       "title": "First Repeated Number",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Read them from left to right and print the first integer that you meet for the second time. If no integer appears twice, print -1.",
@@ -98,7 +98,7 @@
       ]
     },
     {
-      "id": "aita-pair-sum-count",
+      "id": "pet-pair-sum-count",
       "title": "Count Pairs With Sum K",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer k. Print how many pairs of positions i < j there are whose two integers add up to exactly k.",
@@ -209,7 +209,7 @@
       ]
     },
     {
-      "id": "aita-distinct-rank",
+      "id": "pet-distinct-rank",
       "title": "Rank Among Distinct Values",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. For each integer, in the order given, print how many different values in the list are smaller than it. Print the n answers on one line, separated by single spaces.",
@@ -291,7 +291,7 @@
       ]
     },
     {
-      "id": "aita-balanced-days",
+      "id": "pet-balanced-days",
       "title": "Longest Balanced Stretch",
       "difficulty": "hard",
       "statement": "A single line contains a string made only of the letters R and D, one letter for each day: R means a rainy day and D means a dry day. Print the length of the longest run of consecutive days that has exactly as many rainy days as dry days. If there is no such run, print 0.",

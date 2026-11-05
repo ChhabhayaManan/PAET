@@ -3,7 +3,7 @@
   "topic": "stacks_queues",
   "items": [
     {
-      "id": "aita-remove-adjacent",
+      "id": "pet-remove-adjacent",
       "title": "Remove Adjacent Duplicates",
       "difficulty": "medium",
       "statement": "A single line contains a string of lowercase letters. Repeatedly remove any two neighbouring letters that are equal, until no such pair is left. Print what remains, or EMPTY if nothing remains.",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "aita-postfix",
+      "id": "pet-postfix",
       "title": "Evaluate Postfix",
       "difficulty": "medium",
       "statement": "A single line contains an expression in postfix notation: single-digit numbers and the operators +, - and *, separated by single spaces. Each operator applies to the two values before it. Print the value of the expression.",
@@ -155,7 +155,7 @@
       ]
     },
     {
-      "id": "aita-stk-final-stack",
+      "id": "pet-stk-final-stack",
       "title": "Final Stack",
       "difficulty": "easy",
       "statement": "The first line contains n, the number of commands. Each of the next n lines is either PUSH x, which puts the integer x on top of a stack, or POP, which removes the value on top. A POP on an empty stack does nothing. The stack starts empty. After all the commands, print the values left on the stack from bottom to top, separated by single spaces, or EMPTY if no values are left.",
@@ -257,7 +257,7 @@
       ]
     },
     {
-      "id": "aita-stk-ticket-counter",
+      "id": "pet-stk-ticket-counter",
       "title": "Ticket Counter Queue",
       "difficulty": "easy",
       "statement": "People wait in one line at a ticket counter. The first line contains n, the number of events. Each of the next n lines is either JOIN x, meaning a person holding token number x joins the back of the line, or SERVE, meaning the person at the front is served and leaves. The line starts empty. For every SERVE, output the token number of the person served, or -1 if nobody is waiting. Print all these outputs on one line, separated by single spaces.",
@@ -369,7 +369,7 @@
       ]
     },
     {
-      "id": "aita-stk-browser-history",
+      "id": "pet-stk-browser-history",
       "title": "Browser History",
       "difficulty": "medium",
       "statement": "A web browser starts on page 1 with no history. The first line contains n, the number of commands. Each of the next n lines is one of: VISIT x, which opens page x (the current page is saved in the back history and the forward history is wiped); BACK, which returns to the most recently saved page in the back history and saves the current page in the forward history; FORWARD, which does the opposite of BACK. A BACK with an empty back history, or a FORWARD with an empty forward history, does nothing. After every command, output the page now on screen. Print all these outputs on one line, separated by single spaces.",
@@ -487,7 +487,7 @@
       ]
     },
     {
-      "id": "aita-stk-next-greater",
+      "id": "pet-stk-next-greater",
       "title": "Next Greater Element",
       "difficulty": "medium",
       "statement": "The first line contains n. The second line contains n positive integers. For each value, find the first value to its right that is strictly greater than it, or -1 if there is no such value. Print the n answers on one line, separated by single spaces.",
@@ -574,7 +574,7 @@
       ]
     },
     {
-      "id": "aita-stk-bracket-error",
+      "id": "pet-stk-bracket-error",
       "title": "First Bracket Error",
       "difficulty": "hard",
       "statement": "A single line contains a string made only of the characters ( ) [ ] { }, with positions numbered from 1. Read it from left to right. A closing bracket is wrong if no bracket is open at that moment, or if the most recently opened bracket that is still open is of a different kind. If there is a wrong closing bracket, print the position of the first one. Otherwise, if some opening brackets are never closed, print the position of the leftmost of them. If every bracket is closed correctly, print OK.",

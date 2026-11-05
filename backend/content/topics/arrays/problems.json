@@ -3,7 +3,7 @@
   "topic": "arrays",
   "items": [
     {
-      "id": "aita-arr-biggest-step",
+      "id": "pet-arr-biggest-step",
       "title": "Biggest Daily Jump",
       "difficulty": "easy",
       "statement": "The first line contains n, the number of daily readings. The second line contains the n readings in order, separated by spaces. The step from one day to the next is the later reading minus the earlier one. Print the largest step. A step can be negative. If n is 1 there are no steps, so print 0.",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "id": "aita-arr-longest-climb",
+      "id": "pet-arr-longest-climb",
       "title": "Longest Climb",
       "difficulty": "medium",
       "statement": "The first line contains n. The second line contains n integers separated by spaces. A climb is a block of consecutive positions in which every value is greater than or equal to the value just before it; a single value on its own is a climb of length 1. Print two integers separated by a space: the length of the longest climb, and the position (counting from 1) where it starts. If several climbs share the longest length, report the one that starts first.",

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 
-class AitaError(Exception):
+class PetError(Exception):
     status_code = 500
 
     def __init__(self, detail: str):
@@ -10,46 +10,46 @@ class AitaError(Exception):
         self.detail = detail
 
 
-class SubmissionNotFound(AitaError):
+class SubmissionNotFound(PetError):
     status_code = 404
 
 
-class ProblemNotFound(AitaError):
+class ProblemNotFound(PetError):
     status_code = 404
 
 
-class ThreadNotFound(AitaError):
+class ThreadNotFound(PetError):
     """A chat thread that does not exist or is not this user's: one answer for both,
     so thread ids cannot be probed."""
 
     status_code = 404
 
 
-class SessionNotFound(AitaError):
+class SessionNotFound(PetError):
     status_code = 404
 
 
-class TurnInProgress(AitaError):
+class TurnInProgress(PetError):
     status_code = 409
 
 
-class OnboardingConflict(AitaError):
+class OnboardingConflict(PetError):
     status_code = 409
 
 
-class InvalidAnswer(AitaError):
+class InvalidAnswer(PetError):
     status_code = 422
 
 
-class ExecutorUnavailable(AitaError):
+class ExecutorUnavailable(PetError):
     status_code = 503
 
 
-class LLMUnavailable(AitaError):
+class LLMUnavailable(PetError):
     status_code = 503
 
 
-class ModelKeyError(AitaError):
+class ModelKeyError(PetError):
     """The student's own key or model failed. Never an LLMUnavailable, so no caller
     degrades it into a template: the student must see why."""
 
@@ -61,27 +61,27 @@ class ModelKeyError(AitaError):
         self.provider_message = provider_message
 
 
-class ModelChoiceRejected(AitaError):
+class ModelChoiceRejected(PetError):
     status_code = 422
 
 
-class LanguageNotExecutable(AitaError):
+class LanguageNotExecutable(PetError):
     status_code = 422
 
 
-class LanguageCheckRequired(AitaError):
+class LanguageCheckRequired(PetError):
     status_code = 428
 
 
-class UnverifiableSubmission(AitaError):
+class UnverifiableSubmission(PetError):
     def __init__(self, reason: str):
         super().__init__(reason)
         self.reason = reason
 
 
 def register_exception_handlers(app: FastAPI) -> None:
-    @app.exception_handler(AitaError)
-    def handle(_: Request, exc: AitaError) -> JSONResponse:
+    @app.exception_handler(PetError)
+    def handle(_: Request, exc: PetError) -> JSONResponse:
         return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
     @app.exception_handler(ModelKeyError)

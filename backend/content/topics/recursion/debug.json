@@ -175,9 +175,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-factorial",
+      "id": "debug-python-pet-factorial",
       "language": "python",
-      "problem_id": "aita-factorial",
+      "problem_id": "pet-factorial",
       "bug_type": "missing_base_case",
       "fixed_code": [
         "def factorial(n):",
@@ -205,9 +205,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-factorial",
+      "id": "debug-c-pet-factorial",
       "language": "c",
-      "problem_id": "aita-factorial",
+      "problem_id": "pet-factorial",
       "bug_type": "missing_base_case",
       "fixed_code": [
         "#include <stdio.h>",
@@ -255,9 +255,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-factorial",
+      "id": "debug-cpp-pet-factorial",
       "language": "cpp",
-      "problem_id": "aita-factorial",
+      "problem_id": "pet-factorial",
       "bug_type": "infinite_loop",
       "fixed_code": [
         "#include <iostream>",
@@ -307,9 +307,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-to-binary",
+      "id": "debug-python-pet-to-binary",
       "language": "python",
-      "problem_id": "aita-to-binary",
+      "problem_id": "pet-to-binary",
       "bug_type": "missing_base_case",
       "fixed_code": [
         "def to_binary(n):",
@@ -337,9 +337,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-to-binary",
+      "id": "debug-c-pet-to-binary",
       "language": "c",
-      "problem_id": "aita-to-binary",
+      "problem_id": "pet-to-binary",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -389,9 +389,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-to-binary",
+      "id": "debug-cpp-pet-to-binary",
       "language": "cpp",
-      "problem_id": "aita-to-binary",
+      "problem_id": "pet-to-binary",
       "bug_type": "missing_base_case",
       "fixed_code": [
         "#include <iostream>",
@@ -443,9 +443,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-rec-digit-product",
+      "id": "debug-c-pet-rec-digit-product",
       "language": "c",
-      "problem_id": "aita-rec-digit-product",
+      "problem_id": "pet-rec-digit-product",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -493,9 +493,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-rec-ladder-123",
+      "id": "debug-c-pet-rec-ladder-123",
       "language": "c",
-      "problem_id": "aita-rec-ladder-123",
+      "problem_id": "pet-rec-ladder-123",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -565,9 +565,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-rec-digital-root",
+      "id": "debug-c-pet-rec-digital-root",
       "language": "c",
-      "problem_id": "aita-rec-digital-root",
+      "problem_id": "pet-rec-digital-root",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -629,9 +629,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-rec-digit-product",
+      "id": "debug-cpp-pet-rec-digit-product",
       "language": "cpp",
-      "problem_id": "aita-rec-digit-product",
+      "problem_id": "pet-rec-digit-product",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -681,9 +681,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-rec-ladder-123",
+      "id": "debug-cpp-pet-rec-ladder-123",
       "language": "cpp",
-      "problem_id": "aita-rec-ladder-123",
+      "problem_id": "pet-rec-ladder-123",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -753,9 +753,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-rec-power-mod-halving",
+      "id": "debug-cpp-pet-rec-power-mod-halving",
       "language": "cpp",
-      "problem_id": "aita-rec-power-mod-halving",
+      "problem_id": "pet-rec-power-mod-halving",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -819,9 +819,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-rec-digit-product",
+      "id": "debug-python-pet-rec-digit-product",
       "language": "python",
-      "problem_id": "aita-rec-digit-product",
+      "problem_id": "pet-rec-digit-product",
       "bug_type": "integer_division",
       "fixed_code": [
         "def product(n):",
@@ -849,9 +849,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-rec-digital-root",
+      "id": "debug-python-pet-rec-digital-root",
       "language": "python",
-      "problem_id": "aita-rec-digital-root",
+      "problem_id": "pet-rec-digital-root",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def digit_sum(n):",
@@ -891,9 +891,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-rec-ladder-123",
+      "id": "debug-python-pet-rec-ladder-123",
       "language": "python",
-      "problem_id": "aita-rec-ladder-123",
+      "problem_id": "pet-rec-ladder-123",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "memo = {}",

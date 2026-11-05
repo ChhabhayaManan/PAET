@@ -311,7 +311,7 @@ class Gateway:
     def _run_choice(self, spec: Purpose, call: Call, user_id: int | None,
                     choice: Choice) -> GatewayResult:
         """No rotation, fallback or template: a failing student key must be seen."""
-        key_source = "own" if choice.source == "own" else "paet"
+        key_source = "own" if choice.source == "own" else "pet"
         began = self.clock()
         try:
             chat = self.choice_factory(choice, temperature=spec.temperature,
@@ -370,7 +370,7 @@ class GatewayChatModel(BaseChatModel):
 
     @property
     def _llm_type(self) -> str:
-        return "aita-gateway"
+        return "pet-gateway"
 
     def bind_tools(self, tools: Sequence[Any], **kwargs: Any) -> "GatewayChatModel":
         return self.model_copy(update={"tools": list(tools), "tool_kwargs": kwargs})

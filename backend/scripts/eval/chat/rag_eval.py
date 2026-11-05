@@ -1,11 +1,11 @@
-"""RAG quality of the aita chat on questions from the course books, scored with RAGAS.
+"""RAG quality of the pet chat on questions from the course books, scored with RAGAS.
 
-    DATABASE_URL=postgresql://aita:aita@localhost:5433/aita_db \\
+    DATABASE_URL=postgresql://pet:pet@localhost:5433/pet_db \\
         python -m scripts.eval.chat.rag_eval [--out DIR] [--limit N] [--ids a,b]
 
 Refuses to run against a non-local database. --ids reruns those ids even if done.
 
-Each question is the first message of a new aita thread on the eval account. The passages
+Each question is the first message of a new pet thread on the eval account. The passages
 the model was shown are captured from search_books (clipped as the tool clips them).
 RAGAS then scores faithfulness, answer relevancy, context precision and context recall:
 the judge is the gateway's chat model under purpose "eval" (so every judge call lands in
@@ -114,7 +114,7 @@ def main(argv=None) -> None:
         scorer = RagasScorer(user.id, args.workers)
         for n, row in enumerate(todo, 1):
             recorder.hits.clear()
-            thread = harness.new_thread(db, user.id, "aita")
+            thread = harness.new_thread(db, user.id, "pet")
             turn = harness.ask(db, user.id, thread, row["question"], row["language"])
             if turn.failed:
                 print(f"[{n}/{len(todo)}] {row['id']}: turn failed ({turn.flag or turn.error}); "

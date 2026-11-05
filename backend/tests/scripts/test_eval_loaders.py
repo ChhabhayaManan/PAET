@@ -49,10 +49,10 @@ def test_evals_refuse_a_non_local_database():
     from scripts.eval.chat.harness import require_local_db
 
     with pytest.raises(SystemExit) as exc:
-        require_local_db("postgresql://u:secret@ep-cool.neon.tech/aita")
+        require_local_db("postgresql://u:secret@ep-cool.neon.tech/pet")
     assert "localhost:5433" in str(exc.value) and "secret" not in str(exc.value)
-    require_local_db("postgresql://aita:aita@localhost:5433/aita_db")
-    require_local_db("postgresql://aita:aita@db:5432/aita_db")
+    require_local_db("postgresql://pet:pet@localhost:5433/pet_db")
+    require_local_db("postgresql://pet:pet@db:5432/pet_db")
 
 
 def test_nudged_first_and_full_code_turn_use_the_judge_on_fenced_code():

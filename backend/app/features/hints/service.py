@@ -12,7 +12,7 @@ from sqlalchemy import String, and_, cast, func, literal, or_
 from sqlalchemy.orm import Session
 
 from app.core import llm_gateway
-from app.core.exceptions import AitaError, LLMUnavailable, ProblemNotFound
+from app.core.exceptions import LLMUnavailable, PetError, ProblemNotFound
 from app.core.llm import invoke_with_retry
 from app.features.grading.models import CodeEvaluation, CodeSubmission, Language
 from app.features.hints.logic import guardrail
@@ -47,7 +47,7 @@ _CRASH_STATUSES = ("runtime_error", "timeout", "memory_exceeded")
 HintSource = Literal["practice", "chat"]
 
 
-class NoHintAvailable(AitaError):
+class NoHintAvailable(PetError):
     status_code = 409
 
 

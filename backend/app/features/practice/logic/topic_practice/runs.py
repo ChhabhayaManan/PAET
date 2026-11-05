@@ -10,7 +10,7 @@ from functools import lru_cache
 from sqlalchemy.orm import Session
 
 from app.core import content
-from app.core.exceptions import AitaError, SessionNotFound
+from app.core.exceptions import PetError, SessionNotFound
 from app.core.topics import TOPIC_LABELS, TOPICS
 from app.features.learner_model.logic.mastery import PRIOR
 from app.features.learner_model.models import TopicMastery
@@ -44,7 +44,7 @@ FALLBACKS = {"theory": ("theory", "mcq", "debug"), "mcq": ("mcq", "theory", "deb
 NEW, WRONG, RIGHT = 0, 1, 2
 
 
-class UnknownTopic(AitaError):
+class UnknownTopic(PetError):
     status_code = 404
 
 

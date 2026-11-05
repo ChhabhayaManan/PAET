@@ -550,9 +550,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-first-repeat",
+      "id": "debug-python-pet-first-repeat",
       "language": "python",
-      "problem_id": "aita-first-repeat",
+      "problem_id": "pet-first-repeat",
       "bug_type": "off_by_one",
       "fixed_code": [
         "t = int(input())",
@@ -586,9 +586,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-balanced-days",
+      "id": "debug-python-pet-balanced-days",
       "language": "python",
-      "problem_id": "aita-balanced-days",
+      "problem_id": "pet-balanced-days",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -630,9 +630,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-first-repeat",
+      "id": "debug-c-pet-first-repeat",
       "language": "c",
-      "problem_id": "aita-first-repeat",
+      "problem_id": "pet-first-repeat",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -692,9 +692,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-pair-sum-count",
+      "id": "debug-c-pet-pair-sum-count",
       "language": "c",
-      "problem_id": "aita-pair-sum-count",
+      "problem_id": "pet-pair-sum-count",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <stdio.h>",
@@ -764,9 +764,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-distinct-rank",
+      "id": "debug-c-pet-distinct-rank",
       "language": "c",
-      "problem_id": "aita-distinct-rank",
+      "problem_id": "pet-distinct-rank",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -840,9 +840,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-pair-sum-count",
+      "id": "debug-cpp-pet-pair-sum-count",
       "language": "cpp",
-      "problem_id": "aita-pair-sum-count",
+      "problem_id": "pet-pair-sum-count",
       "bug_type": "uninitialised_variable",
       "fixed_code": [
         "#include <iostream>",
@@ -906,9 +906,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-distinct-rank",
+      "id": "debug-cpp-pet-distinct-rank",
       "language": "cpp",
-      "problem_id": "aita-distinct-rank",
+      "problem_id": "pet-distinct-rank",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -984,9 +984,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-balanced-days",
+      "id": "debug-cpp-pet-balanced-days",
       "language": "cpp",
-      "problem_id": "aita-balanced-days",
+      "problem_id": "pet-balanced-days",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <algorithm>",

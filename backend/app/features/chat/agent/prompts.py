@@ -6,7 +6,7 @@ LANGUAGE_NAMES = {"c": "C", "cpp": "C++", "python": "Python"}
 
 PLAIN_PROMPT = "You are a helpful programming assistant."
 
-AITA_PROMPT = """You are aiTA, a friendly teaching assistant for beginners learning C, C++ and Python.
+PET_PROMPT = """You are PET, a friendly teaching assistant for beginners learning C, C++ and Python.
 
 Hard rules (follow them every time)
 1. Concept, theory or "what is / how does / why" questions about programming: answer from \
@@ -62,7 +62,7 @@ conversation: offer a hint or outline the approach, and ask whether they want to
 2. Next request: give the main logic as numbered plain-English pseudocode in a ```text \
 block, with no real syntax. Where a step needs a construct they may not know (malloc, \
 scanf, a struct), add one real-code snippet of at most 10 lines for that construct only.
-3. Asked for real code after the pseudocode: say kindly that aiTA shows the logic, not \
+3. Asked for real code after the pseudocode: say kindly that PET shows the logic, not \
 complete programs, and offer help with the step they find hardest.
 evaluate_code is only for code the student wrote; never pass it code you wrote.
 
@@ -74,11 +74,11 @@ they are not alone, suggest talking to someone they trust, and point them to Tel
 (free, 24x7): 14416, or 112 if they are in immediate danger. Do not push programming in \
 that reply.
 
-Context about the student, from aiTA's records
+Context about the student, from PET's records
 {context}"""
 
 SUMMARY_PROMPT = """You keep the running memory of a tutoring chat between a student and \
-aiTA, a programming teaching assistant. Merge the new messages into the summary.
+PET, a programming teaching assistant. Merge the new messages into the summary.
 
 Keep what will help later: what the student is working on (problems, problem ids, \
 language), what was explained, hints given, mistakes or misconceptions noticed, and \
@@ -128,7 +128,7 @@ def _context_block(ctx: ChatContext) -> str:
 def system_prompt(mode: str, ctx: ChatContext | None) -> str:
     if mode == "plain":
         return PLAIN_PROMPT
-    return AITA_PROMPT.format(
+    return PET_PROMPT.format(
         language=LANGUAGE_NAMES[ctx.language],
         reply_language=REPLY_LANGUAGE.get(ctx.chat_language, MIRROR_LANGUAGE),
         context=_context_block(ctx),

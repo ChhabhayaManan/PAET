@@ -1,4 +1,4 @@
-"""The chat agent graph for a thread's mode: aita (tools, learner context, memory
+"""The chat agent graph for a thread's mode: pet (tools, learner context, memory
 guard) or plain (the study baseline: one-line prompt, no tools, no context)."""
 
 from collections.abc import Sequence

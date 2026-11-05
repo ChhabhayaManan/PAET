@@ -13,8 +13,8 @@ from app.features.chat.logic.rag.chunker import Chunk, Section, chunk
 from app.features.chat.logic.rag.sources import SOURCES, SourceSpec, load_local, parse_html, parse_pdf
 from scripts._local_db import LOCAL_DB_HINT, require_local_db
 
-USER_AGENT = "aiTA-book-ingest/1.0 (academic research; +https://github.com/mananchhabhaya)"
-DEFAULT_CACHE = pathlib.Path(tempfile.gettempdir()) / "aita-book-cache"
+USER_AGENT = "PET-book-ingest/1.0 (academic research; +https://github.com/mananchhabhaya)"
+DEFAULT_CACHE = pathlib.Path(tempfile.gettempdir()) / "pet-book-cache"
 EMBED_BATCH = 64
 
 Fetcher = Callable[[str], bytes]
@@ -141,7 +141,7 @@ def select_sources(sources: list[SourceSpec], wanted: str | None) -> list[Source
 def run(argv: list[str] | None = None, *, sources: list[SourceSpec] | None = None,
         fetch: Fetcher | None = None, embed_fn=None, sink=None) -> dict[str, int]:
     parser = argparse.ArgumentParser(description="Chunk, embed and store the chatbot's books.")
-    parser.add_argument("--source", default=None, help="source id, or a prefix like paet-guide")
+    parser.add_argument("--source", default=None, help="source id, or a prefix like pet-guide")
     parser.add_argument("--dry-run", action="store_true", help="parse and chunk only")
     parser.add_argument("--missing", action="store_true",
                         help="skip sources that are already in the database")

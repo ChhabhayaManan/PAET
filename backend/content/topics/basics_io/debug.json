@@ -254,9 +254,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-split-seconds",
+      "id": "debug-python-pet-split-seconds",
       "language": "python",
-      "problem_id": "aita-split-seconds",
+      "problem_id": "pet-split-seconds",
       "bug_type": "integer_division",
       "fixed_code": [
         "t = int(input())",
@@ -280,9 +280,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-split-seconds",
+      "id": "debug-c-pet-split-seconds",
       "language": "c",
-      "problem_id": "aita-split-seconds",
+      "problem_id": "pet-split-seconds",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <stdio.h>",
@@ -322,9 +322,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-split-seconds",
+      "id": "debug-cpp-pet-split-seconds",
       "language": "cpp",
-      "problem_id": "aita-split-seconds",
+      "problem_id": "pet-split-seconds",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <iostream>",
@@ -366,9 +366,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-average-temperature",
+      "id": "debug-c-pet-average-temperature",
       "language": "c",
-      "problem_id": "aita-average-temperature",
+      "problem_id": "pet-average-temperature",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <stdio.h>",
@@ -404,9 +404,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-benches-needed",
+      "id": "debug-c-pet-benches-needed",
       "language": "c",
-      "problem_id": "aita-benches-needed",
+      "problem_id": "pet-benches-needed",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -442,9 +442,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-bill-total",
+      "id": "debug-c-pet-bill-total",
       "language": "c",
-      "problem_id": "aita-bill-total",
+      "problem_id": "pet-bill-total",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <stdio.h>",
@@ -480,9 +480,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-benches-needed",
+      "id": "debug-cpp-pet-benches-needed",
       "language": "cpp",
-      "problem_id": "aita-benches-needed",
+      "problem_id": "pet-benches-needed",
       "bug_type": "empty_input_unhandled",
       "fixed_code": [
         "#include <iostream>",
@@ -520,9 +520,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-average-temperature",
+      "id": "debug-cpp-pet-average-temperature",
       "language": "cpp",
-      "problem_id": "aita-average-temperature",
+      "problem_id": "pet-average-temperature",
       "bug_type": "integer_division",
       "fixed_code": [
         "#include <iostream>",
@@ -560,9 +560,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-show-duration",
+      "id": "debug-cpp-pet-show-duration",
       "language": "cpp",
-      "problem_id": "aita-show-duration",
+      "problem_id": "pet-show-duration",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -606,9 +606,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-reverse-three",
+      "id": "debug-python-pet-reverse-three",
       "language": "python",
-      "problem_id": "aita-reverse-three",
+      "problem_id": "pet-reverse-three",
       "bug_type": "integer_division",
       "fixed_code": [
         "t = int(input())",
@@ -632,9 +632,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-benches-needed",
+      "id": "debug-python-pet-benches-needed",
       "language": "python",
-      "problem_id": "aita-benches-needed",
+      "problem_id": "pet-benches-needed",
       "bug_type": "off_by_one",
       "fixed_code": [
         "t = int(input())",
@@ -652,9 +652,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-show-duration",
+      "id": "debug-python-pet-show-duration",
       "language": "python",
-      "problem_id": "aita-show-duration",
+      "problem_id": "pet-show-duration",
       "bug_type": "integer_division",
       "fixed_code": [
         "t = int(input())",

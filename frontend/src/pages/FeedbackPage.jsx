@@ -41,7 +41,7 @@ export default function FeedbackPage() {
 
   const unread = reports.filter(r => !r.is_read).length
 
-  useEffect(() => { window.dispatchEvent(new Event('aita:feedback-changed')) }, [unread, reports.length])
+  useEffect(() => { window.dispatchEvent(new Event('pet:feedback-changed')) }, [unread, reports.length])
 
   return (
     <AppShell title="Feedback">

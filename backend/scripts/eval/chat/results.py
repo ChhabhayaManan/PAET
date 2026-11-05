@@ -12,7 +12,7 @@ DATA = settings.CONTENT_DIR / "eval" / "chat"
 
 
 def default_out(name: str) -> Path:
-    return Path(tempfile.gettempdir()) / "aita-eval" / name
+    return Path(tempfile.gettempdir()) / "pet-eval" / name
 
 
 def parser(description: str, name: str, data: str) -> argparse.ArgumentParser:

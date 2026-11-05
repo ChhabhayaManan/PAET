@@ -3,7 +3,7 @@
   "topic": "sorting",
   "items": [
     {
-      "id": "aita-sort-descending",
+      "id": "pet-sort-descending",
       "title": "Sort Descending",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Print them sorted from largest to smallest, separated by single spaces.",
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "id": "aita-median",
+      "id": "pet-median",
       "title": "Median",
       "difficulty": "easy",
       "statement": "The first line contains an odd integer n. The second line contains n space-separated integers. Print their median, the middle value once the integers are sorted.",
@@ -161,7 +161,7 @@
       ]
     },
     {
-      "id": "aita-sort-kth-smallest",
+      "id": "pet-sort-kth-smallest",
       "title": "K-th Smallest",
       "difficulty": "easy",
       "statement": "The first line contains two integers n and k. The second line contains n space-separated integers. Print the k-th smallest of them, counting repeated values separately, so k = 1 means the smallest value and k = n the largest.",
@@ -249,7 +249,7 @@
       ]
     },
     {
-      "id": "aita-sort-unique-values",
+      "id": "pet-sort-unique-values",
       "title": "Unique Values in Order",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Print every different value exactly once, in ascending order, separated by single spaces.",
@@ -328,7 +328,7 @@
       ]
     },
     {
-      "id": "aita-sort-min-gap",
+      "id": "pet-sort-min-gap",
       "title": "Smallest Gap",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Choose two of them at different positions so that the absolute difference between them is as small as possible, and print that difference. If some value appears twice, the answer is 0.",
@@ -416,7 +416,7 @@
       ]
     },
     {
-      "id": "aita-sort-rank-by-score",
+      "id": "pet-sort-rank-by-score",
       "title": "Rank Players by Score",
       "difficulty": "medium",
       "statement": "The first line contains an integer n, the number of players, who are numbered 1 to n in input order. The second line contains their n scores. Print the player numbers ordered from the highest score to the lowest, separated by single spaces. Players with equal scores are listed with the smaller player number first.",
@@ -496,7 +496,7 @@
       ]
     },
     {
-      "id": "aita-sort-by-frequency",
+      "id": "pet-sort-by-frequency",
       "title": "Sort by Frequency",
       "difficulty": "hard",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. Rearrange them so that values occurring more often come first, and values occurring the same number of times come from smallest to largest; all copies of a value stay next to each other. Print the n rearranged integers separated by single spaces.",

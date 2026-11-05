@@ -99,9 +99,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-climb-stairs",
+      "id": "debug-python-pet-climb-stairs",
       "language": "python",
-      "problem_id": "aita-climb-stairs",
+      "problem_id": "pet-climb-stairs",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -129,9 +129,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-climb-stairs",
+      "id": "debug-c-pet-climb-stairs",
       "language": "c",
-      "problem_id": "aita-climb-stairs",
+      "problem_id": "pet-climb-stairs",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -177,9 +177,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-climb-stairs",
+      "id": "debug-cpp-pet-climb-stairs",
       "language": "cpp",
-      "problem_id": "aita-climb-stairs",
+      "problem_id": "pet-climb-stairs",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -227,9 +227,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-min-coins",
+      "id": "debug-python-pet-min-coins",
       "language": "python",
-      "problem_id": "aita-min-coins",
+      "problem_id": "pet-min-coins",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -257,9 +257,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-min-coins",
+      "id": "debug-c-pet-min-coins",
       "language": "c",
-      "problem_id": "aita-min-coins",
+      "problem_id": "pet-min-coins",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -315,9 +315,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-min-coins",
+      "id": "debug-cpp-pet-min-coins",
       "language": "cpp",
-      "problem_id": "aita-min-coins",
+      "problem_id": "pet-min-coins",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <algorithm>",
@@ -377,9 +377,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-dp-tile-strip",
+      "id": "debug-c-pet-dp-tile-strip",
       "language": "c",
-      "problem_id": "aita-dp-tile-strip",
+      "problem_id": "pet-dp-tile-strip",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -429,9 +429,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-dp-no-adjacent",
+      "id": "debug-c-pet-dp-no-adjacent",
       "language": "c",
-      "problem_id": "aita-dp-no-adjacent",
+      "problem_id": "pet-dp-no-adjacent",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -491,9 +491,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-dp-knapsack-small",
+      "id": "debug-c-pet-dp-knapsack-small",
       "language": "c",
-      "problem_id": "aita-dp-knapsack-small",
+      "problem_id": "pet-dp-knapsack-small",
       "bug_type": "uninitialised_variable",
       "fixed_code": [
         "#include <stdio.h>",
@@ -614,9 +614,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-dp-tile-strip",
+      "id": "debug-cpp-pet-dp-tile-strip",
       "language": "cpp",
-      "problem_id": "aita-dp-tile-strip",
+      "problem_id": "pet-dp-tile-strip",
       "bug_type": "missing_base_case",
       "fixed_code": [
         "#include <iostream>",
@@ -667,9 +667,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-dp-stone-jumps",
+      "id": "debug-cpp-pet-dp-stone-jumps",
       "language": "cpp",
-      "problem_id": "aita-dp-stone-jumps",
+      "problem_id": "pet-dp-stone-jumps",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -737,9 +737,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-dp-knapsack-small",
+      "id": "debug-cpp-pet-dp-knapsack-small",
       "language": "cpp",
-      "problem_id": "aita-dp-knapsack-small",
+      "problem_id": "pet-dp-knapsack-small",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <algorithm>",
@@ -797,9 +797,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-dp-stone-jumps",
+      "id": "debug-python-pet-dp-stone-jumps",
       "language": "python",
-      "problem_id": "aita-dp-stone-jumps",
+      "problem_id": "pet-dp-stone-jumps",
       "bug_type": "index_out_of_range",
       "fixed_code": [
         "t = int(input())",
@@ -830,9 +830,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-dp-blocked-paths",
+      "id": "debug-python-pet-dp-blocked-paths",
       "language": "python",
-      "problem_id": "aita-dp-blocked-paths",
+      "problem_id": "pet-dp-blocked-paths",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "MOD = 1000000007",
@@ -874,9 +874,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-dp-knapsack-small",
+      "id": "debug-python-pet-dp-knapsack-small",
       "language": "python",
-      "problem_id": "aita-dp-knapsack-small",
+      "problem_id": "pet-dp-knapsack-small",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",

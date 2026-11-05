@@ -3,9 +3,9 @@
   "topic": "conditionals",
   "items": [
     {
-      "id": "debug-python-aita-max-of-three",
+      "id": "debug-python-pet-max-of-three",
       "language": "python",
-      "problem_id": "aita-max-of-three",
+      "problem_id": "pet-max-of-three",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -35,9 +35,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-max-of-three",
+      "id": "debug-c-pet-max-of-three",
       "language": "c",
-      "problem_id": "aita-max-of-three",
+      "problem_id": "pet-max-of-three",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -87,9 +87,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-max-of-three",
+      "id": "debug-cpp-pet-max-of-three",
       "language": "cpp",
-      "problem_id": "aita-max-of-three",
+      "problem_id": "pet-max-of-three",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -139,9 +139,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-leap-year",
+      "id": "debug-python-pet-leap-year",
       "language": "python",
-      "problem_id": "aita-leap-year",
+      "problem_id": "pet-leap-year",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -165,9 +165,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-leap-year",
+      "id": "debug-c-pet-leap-year",
       "language": "c",
-      "problem_id": "aita-leap-year",
+      "problem_id": "pet-leap-year",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -209,9 +209,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-leap-year",
+      "id": "debug-cpp-pet-leap-year",
       "language": "cpp",
-      "problem_id": "aita-leap-year",
+      "problem_id": "pet-leap-year",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -263,9 +263,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-letter-grade",
+      "id": "debug-python-pet-letter-grade",
       "language": "python",
-      "problem_id": "aita-letter-grade",
+      "problem_id": "pet-letter-grade",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -301,9 +301,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-letter-grade",
+      "id": "debug-c-pet-letter-grade",
       "language": "c",
-      "problem_id": "aita-letter-grade",
+      "problem_id": "pet-letter-grade",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -357,9 +357,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-letter-grade",
+      "id": "debug-cpp-pet-letter-grade",
       "language": "cpp",
-      "problem_id": "aita-letter-grade",
+      "problem_id": "pet-letter-grade",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -419,9 +419,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-ticket-price",
+      "id": "debug-c-pet-ticket-price",
       "language": "c",
-      "problem_id": "aita-ticket-price",
+      "problem_id": "pet-ticket-price",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -483,9 +483,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-triangle-kind",
+      "id": "debug-c-pet-triangle-kind",
       "language": "c",
-      "problem_id": "aita-triangle-kind",
+      "problem_id": "pet-triangle-kind",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -535,9 +535,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-next-date",
+      "id": "debug-c-pet-next-date",
       "language": "c",
-      "problem_id": "aita-next-date",
+      "problem_id": "pet-next-date",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -607,9 +607,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-point-quadrant",
+      "id": "debug-cpp-pet-point-quadrant",
       "language": "cpp",
-      "problem_id": "aita-point-quadrant",
+      "problem_id": "pet-point-quadrant",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <iostream>",
@@ -673,9 +673,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-electricity-bill",
+      "id": "debug-cpp-pet-electricity-bill",
       "language": "cpp",
-      "problem_id": "aita-electricity-bill",
+      "problem_id": "pet-electricity-bill",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -733,9 +733,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-next-date",
+      "id": "debug-cpp-pet-next-date",
       "language": "cpp",
-      "problem_id": "aita-next-date",
+      "problem_id": "pet-next-date",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -807,9 +807,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-point-quadrant",
+      "id": "debug-python-pet-point-quadrant",
       "language": "python",
-      "problem_id": "aita-point-quadrant",
+      "problem_id": "pet-point-quadrant",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -845,9 +845,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-triangle-kind",
+      "id": "debug-python-pet-triangle-kind",
       "language": "python",
-      "problem_id": "aita-triangle-kind",
+      "problem_id": "pet-triangle-kind",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",
@@ -881,9 +881,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-ticket-price",
+      "id": "debug-python-pet-ticket-price",
       "language": "python",
-      "problem_id": "aita-ticket-price",
+      "problem_id": "pet-ticket-price",
       "bug_type": "off_by_one",
       "fixed_code": [
         "t = int(input())",

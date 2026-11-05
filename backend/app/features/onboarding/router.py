@@ -11,7 +11,7 @@
 #   PATCH /profile             edit the background answers on the profile card
 
 """Onboarding over HTTP: background steps, the adaptive diagnostic and the profile card.
-Conflicts and invalid answers are AitaErrors, mapped to 409 / 422 by the app handler."""
+Conflicts and invalid answers are PetErrors, mapped to 409 / 422 by the app handler."""
 
 from fastapi import APIRouter, BackgroundTasks, Body, Depends
 from fastapi.exceptions import RequestValidationError

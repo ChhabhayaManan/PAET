@@ -3,7 +3,7 @@
   "topic": "functions",
   "items": [
     {
-      "id": "aita-gcd",
+      "id": "pet-gcd",
       "title": "Greatest Common Divisor",
       "difficulty": "easy",
       "statement": "A single line contains two positive integers a and b. Print their greatest common divisor, the largest integer that divides both.",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "id": "aita-power",
+      "id": "pet-power",
       "title": "Power of a Number",
       "difficulty": "easy",
       "statement": "A single line contains two integers a and n. Print a raised to the power n.",
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "id": "aita-count-primes",
+      "id": "pet-count-primes",
       "title": "Count Primes",
       "difficulty": "medium",
       "statement": "A single line contains an integer n. Print how many prime numbers are less than or equal to n.",
@@ -224,7 +224,7 @@
       ]
     },
     {
-      "id": "aita-fn-digit-sum-winner",
+      "id": "pet-fn-digit-sum-winner",
       "title": "Digit Sum Winner",
       "difficulty": "easy",
       "statement": "A single line contains two positive integers a and b. Add up the digits of each number. Print the number whose digits add up to more. If both digit sums are equal, print the smaller of the two numbers. Hint: write a function that returns the digit sum of a number, and call it once for a and once for b.",
@@ -310,7 +310,7 @@
       ]
     },
     {
-      "id": "aita-fn-round-best",
+      "id": "pet-fn-round-best",
       "title": "Best Player Each Round",
       "difficulty": "easy",
       "statement": "Three players play n rounds of a game. The first line contains an integer n. Each of the next n lines contains three integers: the scores of the three players in that round. A score can be negative. For every round take the highest of its three scores, and print the sum of these highest scores over all rounds. Hint: write a function that returns the largest of three numbers.",
@@ -411,7 +411,7 @@
       ]
     },
     {
-      "id": "aita-fn-divisor-classes",
+      "id": "pet-fn-divisor-classes",
       "title": "Perfect, Abundant or Deficient",
       "difficulty": "medium",
       "statement": "The proper divisors of a number are all its positive divisors smaller than the number itself (the proper divisors of 12 are 1, 2, 3, 4 and 6). A number is perfect if its proper divisors add up to exactly the number, abundant if they add up to more, and deficient if they add up to less. The first line contains an integer n. The second line contains n positive integers. Print three integers separated by single spaces: how many of the n numbers are deficient, how many are perfect, and how many are abundant. Hint: write a function that returns the sum of the proper divisors of a number.",
@@ -505,7 +505,7 @@
       ]
     },
     {
-      "id": "aita-fn-nearest-prime",
+      "id": "pet-fn-nearest-prime",
       "title": "Nearest Prime",
       "difficulty": "medium",
       "statement": "A single line contains a positive integer n. Print the prime number closest to n. If n itself is prime, print n. If two primes are equally close to n, print the smaller one. Hint: write a function that checks whether a number is prime, then call it on the numbers n, n - 1, n + 1, n - 2, n + 2 and so on.",
@@ -612,7 +612,7 @@
       ]
     },
     {
-      "id": "aita-fn-triple-prime-kth",
+      "id": "pet-fn-triple-prime-kth",
       "title": "K-th Triple Prime",
       "difficulty": "hard",
       "statement": "Call a number a triple prime if three numbers are all prime: the number itself, the number written with its digits in reverse order, and the sum of its digits. For example, 113 is a triple prime because 113, 311 and 1 + 1 + 3 = 5 are all prime. 13 is not, because 1 + 3 = 4 is not prime, and 23 is not, because 32 is not prime. The smallest triple primes are 2, 3, 5, 7, 11, 101, 113. A single line contains an integer k. Print the k-th smallest triple prime. Hint: write separate functions for checking a prime, reversing a number and adding up its digits, and reuse them.",

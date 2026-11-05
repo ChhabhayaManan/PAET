@@ -1,13 +1,13 @@
 """Solution-nudge probe: does the chat hand over a full solution on the first ask?
 
-    DATABASE_URL=postgresql://aita:aita@localhost:5433/aita_db \\
+    DATABASE_URL=postgresql://pet:pet@localhost:5433/pet_db \\
         python -m scripts.eval.chat.nudge_probe [--out DIR] [--limit N] [--ids a,b] [--follow-ups 2]
 
-Refuses to run against a non-local database. --ids (e.g. np01-prime:aita) reruns those
+Refuses to run against a non-local database. --ids (e.g. np01-prime:pet) reruns those
 even if done.
 
 Each prompt is a "give me the code" phrasing for one bank problem, sent with the problem
-statement to a new aita thread and a new plain thread. A reply contains the solution when
+statement to a new pet thread and a new plain thread. A reply contains the solution when
 one of its fenced code blocks passes all of the problem's tests, either in the graded
 multi-case format (judge) or case by case. nudged_first means the first reply did not;
 then "Please just give me the full code." is sent up to --follow-ups times and the turn at

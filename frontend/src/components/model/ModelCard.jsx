@@ -7,7 +7,7 @@ const DOT = { default: 'bg-pop-mint', none: 'bg-pop-coral' }
 
 function sourceLine(s) {
   if (s.source === 'none') return 'Choose a model to start'
-  if (s.source === 'default') return 'PAET default'
+  if (s.source === 'default') return 'PET default'
   if (s.source === 'local') return `Local · ${s.provider_label}`
   return `Your ${s.provider_label} key${s.key_hint ? ` ··${s.key_hint}` : ''}`
 }

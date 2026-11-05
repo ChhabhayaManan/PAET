@@ -9,9 +9,9 @@ const RECOVER_EVERY_MS = 2500
 const RECOVER_TRIES = 24
 const RECENT_MS = 3 * 60 * 1000
 
-const BUSY_NOTICE = 'PAET is still answering your previous message in this chat. Your new message was not sent — try again once the reply arrives.'
+const BUSY_NOTICE = 'PET is still answering your previous message in this chat. Your new message was not sent — try again once the reply arrives.'
 const LOST_NOTICE = 'The reply is taking longer than usual. Reopen this chat in a minute to see it.'
-const OFFLINE_NOTICE = "Couldn't reach PAET. Check your connection and try again."
+const OFFLINE_NOTICE = "Couldn't reach PET. Check your connection and try again."
 const FAILED_REPLY = 'Sorry — something went wrong. Please try again.'
 const RETRYABLE = new Set(['busy', 'error'])
 
@@ -43,9 +43,9 @@ async function describeFailure(res) {
   if (res.status === 404) return 'This chat could not be found. Start a new chat.'
   try {
     const body = await res.json()
-    return getErrorMessage({ response: { data: body } }, `PAET couldn't take that message (error ${res.status}).`)
+    return getErrorMessage({ response: { data: body } }, `PET couldn't take that message (error ${res.status}).`)
   } catch {
-    return `PAET couldn't take that message (error ${res.status}). Try again.`
+    return `PET couldn't take that message (error ${res.status}). Try again.`
   }
 }
 

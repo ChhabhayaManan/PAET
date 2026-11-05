@@ -14,7 +14,7 @@ class LLMCall(Base):
     key_slot   = Column(Integer, nullable=True)
     model      = Column(String(120), nullable=False, default="")
     provider   = Column(String(30), nullable=False, default="nvidia", server_default="nvidia")
-    key_source = Column(String(10), nullable=False, default="paet", server_default="paet")
+    key_source = Column(String(10), nullable=False, default="pet", server_default="pet")
     queued_ms  = Column(Integer, nullable=False, default=0)
     latency_ms = Column(Integer, nullable=False, default=0)
     tokens_in  = Column(Integer, nullable=False, default=0)

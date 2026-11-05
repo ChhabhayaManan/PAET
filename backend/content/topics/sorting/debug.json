@@ -105,9 +105,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-sort-descending",
+      "id": "debug-python-pet-sort-descending",
       "language": "python",
-      "problem_id": "aita-sort-descending",
+      "problem_id": "pet-sort-descending",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "t = int(input())",
@@ -141,9 +141,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-sort-descending",
+      "id": "debug-c-pet-sort-descending",
       "language": "c",
-      "problem_id": "aita-sort-descending",
+      "problem_id": "pet-sort-descending",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -209,9 +209,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-sort-descending",
+      "id": "debug-cpp-pet-sort-descending",
       "language": "cpp",
-      "problem_id": "aita-sort-descending",
+      "problem_id": "pet-sort-descending",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <iostream>",
@@ -281,9 +281,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-median",
+      "id": "debug-python-pet-median",
       "language": "python",
-      "problem_id": "aita-median",
+      "problem_id": "pet-median",
       "bug_type": "off_by_one",
       "fixed_code": [
         "t = int(input())",
@@ -303,9 +303,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-median",
+      "id": "debug-c-pet-median",
       "language": "c",
-      "problem_id": "aita-median",
+      "problem_id": "pet-median",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -365,9 +365,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-median",
+      "id": "debug-cpp-pet-median",
       "language": "cpp",
-      "problem_id": "aita-median",
+      "problem_id": "pet-median",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <algorithm>",
@@ -417,9 +417,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-sort-kth-smallest",
+      "id": "debug-c-pet-sort-kth-smallest",
       "language": "c",
-      "problem_id": "aita-sort-kth-smallest",
+      "problem_id": "pet-sort-kth-smallest",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <stdio.h>",
@@ -479,9 +479,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-sort-min-gap",
+      "id": "debug-c-pet-sort-min-gap",
       "language": "c",
-      "problem_id": "aita-sort-min-gap",
+      "problem_id": "pet-sort-min-gap",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <stdio.h>",
@@ -553,9 +553,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-sort-rank-by-score",
+      "id": "debug-c-pet-sort-rank-by-score",
       "language": "c",
-      "problem_id": "aita-sort-rank-by-score",
+      "problem_id": "pet-sort-rank-by-score",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -695,9 +695,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-sort-unique-values",
+      "id": "debug-cpp-pet-sort-unique-values",
       "language": "cpp",
-      "problem_id": "aita-sort-unique-values",
+      "problem_id": "pet-sort-unique-values",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <algorithm>",
@@ -767,9 +767,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-sort-by-frequency",
+      "id": "debug-cpp-pet-sort-by-frequency",
       "language": "cpp",
-      "problem_id": "aita-sort-by-frequency",
+      "problem_id": "pet-sort-by-frequency",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <algorithm>",
@@ -837,9 +837,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-sort-kth-smallest",
+      "id": "debug-cpp-pet-sort-kth-smallest",
       "language": "cpp",
-      "problem_id": "aita-sort-kth-smallest",
+      "problem_id": "pet-sort-kth-smallest",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <algorithm>",
@@ -905,9 +905,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-sort-unique-values",
+      "id": "debug-python-pet-sort-unique-values",
       "language": "python",
-      "problem_id": "aita-sort-unique-values",
+      "problem_id": "pet-sort-unique-values",
       "bug_type": "mutate_while_iterating",
       "fixed_code": [
         "t = int(input())",
@@ -935,9 +935,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-sort-min-gap",
+      "id": "debug-python-pet-sort-min-gap",
       "language": "python",
-      "problem_id": "aita-sort-min-gap",
+      "problem_id": "pet-sort-min-gap",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "t = int(input())",
@@ -963,9 +963,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-sort-rank-by-score",
+      "id": "debug-python-pet-sort-rank-by-score",
       "language": "python",
-      "problem_id": "aita-sort-rank-by-score",
+      "problem_id": "pet-sort-rank-by-score",
       "bug_type": "return_vs_print",
       "fixed_code": [
         "def ranking(scores):",

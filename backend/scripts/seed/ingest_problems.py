@@ -90,7 +90,7 @@ def ingest(db: Session, rows: list[dict], *, generator=None, provider=None,
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Seed the aiTA problem bank.")
+    parser = argparse.ArgumentParser(description="Seed the PET problem bank.")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--only", choices=["dsa", "mbpp"], default=None)
     args = parser.parse_args()

@@ -4,7 +4,7 @@
 #                 output, context window; returns the account's models
 #   PUT    /      refuse a model that fails a check, else keep the choice in this
 #                 browser's encrypted cookie
-#   DELETE /      forget the choice, back to PAET default
+#   DELETE /      forget the choice, back to PET default
 
 from fastapi import APIRouter, Depends, Response
 
@@ -39,7 +39,7 @@ def save_settings(data: ChoiceIn, response: Response,
     return view(choice)
 
 
-@router.delete("", response_model=ModelSettingsOut, summary="Back to PAET default")
+@router.delete("", response_model=ModelSettingsOut, summary="Back to PET default")
 def remove_settings(response: Response, _: User = Depends(get_current_active_user)):
     clear_cookie(response)
     return view(None)

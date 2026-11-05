@@ -3,7 +3,7 @@
   "topic": "dynamic_programming",
   "items": [
     {
-      "id": "aita-climb-stairs",
+      "id": "pet-climb-stairs",
       "title": "Climbing Stairs",
       "difficulty": "easy",
       "statement": "A single line contains an integer n. A staircase has n steps and you climb it taking either 1 or 2 steps at a time. Print the number of different ways to reach the top.",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "id": "aita-min-coins",
+      "id": "pet-min-coins",
       "title": "Fewest Coins",
       "difficulty": "medium",
       "statement": "A single line contains an amount n. Coins of value 1, 3 and 4 are available, as many of each as needed. Print the smallest number of coins whose values add up to exactly n.",
@@ -151,7 +151,7 @@
       ]
     },
     {
-      "id": "aita-dp-tile-strip",
+      "id": "pet-dp-tile-strip",
       "title": "Tile a Strip",
       "difficulty": "easy",
       "statement": "A single line contains an integer n. A strip of length n must be covered exactly, with no gaps and no overlaps, by tiles of length 2 and tiles of length 3 placed end to end. Two tilings are different if the sequence of tile lengths from left to right is different. Print the number of different tilings modulo 1000000007.",
@@ -235,7 +235,7 @@
       ]
     },
     {
-      "id": "aita-dp-stone-jumps",
+      "id": "pet-dp-stone-jumps",
       "title": "Cheapest Stone Path",
       "difficulty": "easy",
       "statement": "The first line contains an integer n, the number of stones in a row. The second line contains n integers, the cost of standing on each stone from left to right. You start on the first stone and must finish on the last one, and each move takes you forward by exactly one or exactly two stones. You pay the cost of every stone you stand on, including the first and the last. Print the smallest total cost.",
@@ -329,7 +329,7 @@
       ]
     },
     {
-      "id": "aita-dp-no-adjacent",
+      "id": "pet-dp-no-adjacent",
       "title": "Max Sum Without Neighbours",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n integers. Choose some of these numbers, possibly none of them, so that no two chosen numbers stand next to each other in the list. Print the largest possible sum of the chosen numbers; choosing nothing gives a sum of 0.",
@@ -420,7 +420,7 @@
       ]
     },
     {
-      "id": "aita-dp-blocked-paths",
+      "id": "pet-dp-blocked-paths",
       "title": "Paths Around Blocks",
       "difficulty": "medium",
       "statement": "The first line contains two integers r and c. Each of the next r lines contains a string of exactly c characters with no spaces, where '.' is an open cell and '#' is a blocked cell. A robot starts in the top-left cell and wants to reach the bottom-right cell. At each step it moves one cell to the right or one cell down, and it may never stand on a blocked cell. Print the number of different routes modulo 1000000007.",
@@ -572,7 +572,7 @@
       ]
     },
     {
-      "id": "aita-dp-knapsack-small",
+      "id": "pet-dp-knapsack-small",
       "title": "Small Knapsack",
       "difficulty": "hard",
       "statement": "The first line contains two integers n and W, the number of items and the capacity of a bag. Each of the next n lines contains two integers w and v, the weight and the value of one item. Each item can be packed at most once, and the total weight packed must not exceed W. Print the largest total value that can be packed.",

@@ -37,7 +37,7 @@ from app.features.chat.models import ChatMessage, ChatThread
 
 logger = logging.getLogger(__name__)
 
-BUSY_REPLY = "aiTA is busy right now — please try again in a moment."
+BUSY_REPLY = "PET is busy right now — please try again in a moment."
 EMPTY_REPLY = "Sorry, I couldn't put an answer together. Could you ask that again?"
 FAILED = "Sorry — something went wrong. Please try again."
 BUSY_FLAG = "busy"
@@ -102,7 +102,7 @@ _in_flight_lock = threading.Lock()
 def _claim(thread_id: int) -> None:
     with _in_flight_lock:
         if thread_id in _in_flight:
-            raise TurnInProgress("aiTA is still answering your last message in this chat.")
+            raise TurnInProgress("PET is still answering your last message in this chat.")
         _in_flight.add(thread_id)
 
 
@@ -158,7 +158,7 @@ def _as_message(row) -> BaseMessage:
 
 
 def _transcript(rows) -> str:
-    return "\n".join(f"{'Student' if r.role == 'user' else 'aiTA'}: "
+    return "\n".join(f"{'Student' if r.role == 'user' else 'PET'}: "
                      f"{_clip(r.content, SUMMARY_LINE_CHARS)}"
                      for r in rows if not r.moderation_flag)
 
@@ -270,7 +270,7 @@ class _Job:
             ctx.passages = self._retrieve(db, rows[-1].content if rows else "", tool_ctx, emit)
             events = ToolEvents(tool_ctx, on_start=lambda name, args: emit(ToolStart(name, args)),
                                 on_end=lambda trace: emit(ToolEnd(trace)))
-            graph = build_agent("aita", ctx, build_tools(tool_ctx), model, self._summary_model(),
+            graph = build_agent("pet", ctx, build_tools(tool_ctx), model, self._summary_model(),
                                 middleware=[events, FixedReply(tool_ctx), ForceHint(tool_ctx)])
         # Hand the connection back while the model works; tools check one out as needed.
         db.commit()

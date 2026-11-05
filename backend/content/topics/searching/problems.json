@@ -3,7 +3,7 @@
   "topic": "searching",
   "items": [
     {
-      "id": "aita-count-occurrences",
+      "id": "pet-count-occurrences",
       "title": "Count Occurrences",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer target. Print how many of the n integers are equal to target.",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": "aita-srch-last-occurrence",
+      "id": "pet-srch-last-occurrence",
       "title": "Last Occurrence",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer target. Print the 0-based position of the last occurrence of target among the n integers. If target does not appear, print -1.",
@@ -189,7 +189,7 @@
       ]
     },
     {
-      "id": "aita-srch-first-above",
+      "id": "pet-srch-first-above",
       "title": "First Value Above K",
       "difficulty": "easy",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers. The third line contains an integer k. Print the 0-based position of the first integer that is strictly greater than k. If no integer is greater than k, print -1.",
@@ -290,7 +290,7 @@
       ]
     },
     {
-      "id": "aita-srch-insert-position",
+      "id": "pet-srch-insert-position",
       "title": "Insert Position",
       "difficulty": "medium",
       "statement": "The first line contains an integer n. The second line contains n space-separated integers in non-decreasing order. The third line contains an integer q. The fourth line contains q space-separated query values. For each query value x, print the smallest 0-based position at which x could be inserted so that the list stays in non-decreasing order, which is the number of list values strictly less than x. Print the q answers on one line, separated by single spaces.",
@@ -385,7 +385,7 @@
       ]
     },
     {
-      "id": "aita-srch-int-sqrt",
+      "id": "pet-srch-int-sqrt",
       "title": "Integer Square Root",
       "difficulty": "medium",
       "statement": "A single line contains a non-negative integer x. Print the largest integer r such that r * r <= x.",
@@ -471,7 +471,7 @@
       ]
     },
     {
-      "id": "aita-srch-day-pages",
+      "id": "pet-srch-day-pages",
       "title": "Pages Per Day",
       "difficulty": "hard",
       "statement": "The first line contains two integers n and d. The second line contains n space-separated positive integers; the i-th is the number of pages in chapter i. A student reads the chapters in the given order over at most d days. Each day they read one or more whole chapters that come next in order, and a chapter is never split across days. Print the smallest possible value of the largest number of pages read on any single day.",

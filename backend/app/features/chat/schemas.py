@@ -37,7 +37,7 @@ class ThreadDetailOut(BaseModel):
 
 
 class CreateThreadIn(BaseModel):
-    mode: Literal["aita", "plain"] | None = None
+    mode: Literal["pet", "plain"] | None = None
 
 
 class SendMessageIn(BaseModel):

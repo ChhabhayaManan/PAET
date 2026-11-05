@@ -9,7 +9,7 @@ from tests.features.chat.agent.conftest import new_thread
 
 def test_system_prompt_carries_the_last_attempt_only_when_there_is_one(db, student):
     thread = new_thread(db, student)
-    fresh = system_prompt("aita", context.load(db, student.id, thread))
+    fresh = system_prompt("pet", context.load(db, student.id, thread))
     assert "Last attempt: none yet" in fresh
     assert "No graded practice yet." in fresh and "Write code in C unless" in fresh
     assert "Tele-MANAS (free, 24x7): 14416, or 112" in fresh
@@ -34,7 +34,7 @@ def test_system_prompt_carries_the_last_attempt_only_when_there_is_one(db, stude
     thread.summary = "They were tracing a loop over an array."
     db.commit()
 
-    prompt = system_prompt("aita", context.load(db, student.id, thread, language="python"))
+    prompt = system_prompt("pet", context.load(db, student.id, thread, language="python"))
     assert (f'"Largest of N numbers" (problem_id {problem.id}), Failed some tests, '
             "3/4 tests passed") in prompt
     assert "may or may not be what they are asking about" in prompt

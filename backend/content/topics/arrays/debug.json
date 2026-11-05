@@ -542,9 +542,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-arr-biggest-step",
+      "id": "debug-c-pet-arr-biggest-step",
       "language": "c",
-      "problem_id": "aita-arr-biggest-step",
+      "problem_id": "pet-arr-biggest-step",
       "bug_type": "wrong_loop_bound",
       "fixed_code": [
         "#include <stdio.h>",
@@ -606,9 +606,9 @@
       ]
     },
     {
-      "id": "debug-c-aita-arr-longest-climb",
+      "id": "debug-c-pet-arr-longest-climb",
       "language": "c",
-      "problem_id": "aita-arr-longest-climb",
+      "problem_id": "pet-arr-longest-climb",
       "bug_type": "wrong_comparison_operator",
       "fixed_code": [
         "#include <stdio.h>",
@@ -672,9 +672,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-arr-biggest-step",
+      "id": "debug-cpp-pet-arr-biggest-step",
       "language": "cpp",
-      "problem_id": "aita-arr-biggest-step",
+      "problem_id": "pet-arr-biggest-step",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "#include <algorithm>",
@@ -738,9 +738,9 @@
       ]
     },
     {
-      "id": "debug-cpp-aita-arr-longest-climb",
+      "id": "debug-cpp-pet-arr-longest-climb",
       "language": "cpp",
-      "problem_id": "aita-arr-longest-climb",
+      "problem_id": "pet-arr-longest-climb",
       "bug_type": "off_by_one",
       "fixed_code": [
         "#include <iostream>",
@@ -960,9 +960,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-arr-biggest-step",
+      "id": "debug-python-pet-arr-biggest-step",
       "language": "python",
-      "problem_id": "aita-arr-biggest-step",
+      "problem_id": "pet-arr-biggest-step",
       "bug_type": "index_out_of_range",
       "fixed_code": [
         "t = int(input())",
@@ -992,9 +992,9 @@
       ]
     },
     {
-      "id": "debug-python-aita-arr-longest-climb",
+      "id": "debug-python-pet-arr-longest-climb",
       "language": "python",
-      "problem_id": "aita-arr-longest-climb",
+      "problem_id": "pet-arr-longest-climb",
       "bug_type": "wrong_initial_value",
       "fixed_code": [
         "t = int(input())",

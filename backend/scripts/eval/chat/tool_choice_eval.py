@@ -1,11 +1,11 @@
-"""Which tools the aita agent picks for labelled student messages.
+"""Which tools the pet agent picks for labelled student messages.
 
-    DATABASE_URL=postgresql://aita:aita@localhost:5433/aita_db \\
+    DATABASE_URL=postgresql://pet:pet@localhost:5433/pet_db \\
         python -m scripts.eval.chat.tool_choice_eval [--out DIR] [--limit N] [--ids a,b]
 
 Refuses to run against a non-local database. --ids reruns those ids even if done.
 
-Each query is the first message of a new aita thread on the eval account, and the tools
+Each query is the first message of a new pet thread on the eval account, and the tools
 the agent calls in that turn are compared with expected_tools: exact-set accuracy,
 first-tool accuracy, per-tool precision and recall (with "none" for no tool), and a
 confusion table. The tools really run, so evaluate_code and get_hint need the executor
@@ -34,7 +34,7 @@ def main(argv=None) -> None:
     with SessionLocal() as db:
         user = harness.eval_user(db, args.email)
         for n, row in enumerate(todo, 1):
-            thread = harness.new_thread(db, user.id, "aita")
+            thread = harness.new_thread(db, user.id, "pet")
             turn = harness.ask(db, user.id, thread, row["query"], row["language"])
             if turn.failed:
                 print(f"[{n}/{len(todo)}] {row['id']}: turn failed ({turn.flag or turn.error}); "

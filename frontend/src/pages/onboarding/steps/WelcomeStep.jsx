@@ -32,7 +32,7 @@ export default function WelcomeStep({ onSaved, onConflict }) {
       </ul>
 
       <div className="mt-6 space-y-2 text-sm leading-relaxed text-ink-subtle">
-        <p>PAET uses this to pick your practice problems, hints and chat style, so you start at the right level instead of from scratch.</p>
+        <p>PET uses this to pick your practice problems, hints and chat style, so you start at the right level instead of from scratch.</p>
         <p>You can see and change everything later on your Profile page.</p>
       </div>
 

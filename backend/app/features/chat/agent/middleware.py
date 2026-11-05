@@ -73,10 +73,10 @@ _FENCE = re.compile(r"```([^\n`]*)\n(.*?)(?:```|$)", re.DOTALL)
 _PROGRAM = re.compile(r"\bmain\s*\(|\bif\s+__name__\s*==")
 _PROSE_TAGS = {"text", "txt", "pseudocode", "plaintext", "output", "console"}
 REWRITE = ("Your reply contains a complete program or a code block longer than 10 lines, "
-           "which aiTA never shows. Rewrite it: give the main logic as numbered plain-English "
+           "which PET never shows. Rewrite it: give the main logic as numbered plain-English "
            "pseudocode in a ```text block, and keep any real code to one short snippet of at "
            "most 10 lines for a specific construct.")
-CODE_HIDDEN = ("```text\nFull code is not shown in aiTA. Work from the steps above, or ask "
+CODE_HIDDEN = ("```text\nFull code is not shown in PET. Work from the steps above, or ask "
                "for a hint.\n```")
 
 

@@ -3,7 +3,7 @@
   "topic": "strings",
   "items": [
     {
-      "id": "aita-fix-name-case",
+      "id": "pet-fix-name-case",
       "title": "Fix Name Case",
       "difficulty": "easy",
       "statement": "A single line contains a name written as one word of English letters, where some letters are uppercase and some are lowercase. Print the name with its first letter in uppercase and every other letter in lowercase.",
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "id": "aita-run-length-code",
+      "id": "pet-run-length-code",
       "title": "Run-Length Code",
       "difficulty": "medium",
       "statement": "A single line contains a word of lowercase letters. Split the word into groups of equal letters that stand next to each other, making every group as long as possible. Replace each group by its letter followed by the number of letters in that group, and print the resulting compressed word. For example, aaabcc becomes a3b1c2.",

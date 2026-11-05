@@ -3,7 +3,7 @@
   "topic": "recursion",
   "items": [
     {
-      "id": "aita-factorial",
+      "id": "pet-factorial",
       "title": "Factorial",
       "difficulty": "easy",
       "statement": "A single line contains an integer n. Print n factorial, the product 1 * 2 * ... * n, where the factorial of 0 is 1.",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "id": "aita-to-binary",
+      "id": "pet-to-binary",
       "title": "Decimal to Binary",
       "difficulty": "medium",
       "statement": "A single line contains a non-negative integer n. Print n written in binary, without leading zeros; for 0 print 0.",
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "id": "aita-rec-digit-product",
+      "id": "pet-rec-digit-product",
       "title": "Digit Product",
       "difficulty": "easy",
       "statement": "A single line contains a non-negative integer n. Print the product of all the digits of n. The number 0 has the single digit 0, so its product is 0. Solve it with a recursive function: the product for n is its last digit times the product for n with that digit removed.",
@@ -234,7 +234,7 @@
       ]
     },
     {
-      "id": "aita-rec-digital-root",
+      "id": "pet-rec-digital-root",
       "title": "Digital Root",
       "difficulty": "easy",
       "statement": "A single line contains a non-negative integer n. Replace n by the sum of its digits, and keep doing this until only one digit is left. Print that digit. For example, 38 becomes 3 + 8 = 11, then 1 + 1 = 2, so the answer is 2. A number that already has one digit is its own answer. Solve it with recursion.",
@@ -324,7 +324,7 @@
       ]
     },
     {
-      "id": "aita-rec-ladder-123",
+      "id": "pet-rec-ladder-123",
       "title": "Ladder Climb With 1, 2 or 3",
       "difficulty": "medium",
       "statement": "A single line contains an integer n. A ladder has n rungs, and with each move you climb up 1, 2 or 3 rungs. Print the number of different sequences of moves that take you from the ground to exactly the top rung. A ladder with 0 rungs has exactly one way: make no moves. Use recursion and remember the answers you have already worked out, so each n is computed only once.",
@@ -422,7 +422,7 @@
       ]
     },
     {
-      "id": "aita-rec-power-mod-halving",
+      "id": "pet-rec-power-mod-halving",
       "title": "Fast Power Modulo",
       "difficulty": "medium",
       "statement": "A single line contains two integers b and e. Print b raised to the power e, modulo 1000000007; b to the power 0 is 1. Multiplying e times is far too slow for large e, so use divide and conquer: b^e is (b^(e/2))^2 when e is even, and that times one more b when e is odd, with e/2 rounded down.",
@@ -522,7 +522,7 @@
       ]
     },
     {
-      "id": "aita-rec-hanoi-kth-move",
+      "id": "pet-rec-hanoi-kth-move",
       "title": "Tower of Hanoi K-th Move",
       "difficulty": "hard",
       "statement": "A single line contains two integers n and k. In the Tower of Hanoi puzzle, n disks numbered 1 (smallest) to n (largest) start stacked on peg 1, and all of them must be moved to peg 3, one disk at a time, never placing a larger disk on a smaller one; peg 2 is the spare. The shortest solution takes 2^n - 1 moves: move disks 1 to n-1 from peg 1 to peg 2, then move disk n from peg 1 to peg 3, then move disks 1 to n-1 from peg 2 to peg 3, solving each smaller tower the same way. Print the k-th move of this shortest solution as three integers: the disk number, the peg it leaves and the peg it lands on. Listing all the moves is far too slow; work out which third of the solution move k falls in and recurse into just that part.",

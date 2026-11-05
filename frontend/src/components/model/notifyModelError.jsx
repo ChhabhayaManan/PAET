@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast'
 
-export const OPEN_MODEL_EVENT = 'paet:open-model'
+export const OPEN_MODEL_EVENT = 'pet:open-model'
 
 export function openModelWindow() {
   window.dispatchEvent(new CustomEvent(OPEN_MODEL_EVENT))

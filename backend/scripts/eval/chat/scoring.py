@@ -11,7 +11,7 @@ LANGUAGES = ("c", "cpp", "python")
 TOOLS = ("search_books", "query_learning_data", "evaluate_code", "get_hint")
 NO_TOOL = "none"
 LABELS = ("flag", "allow")
-MODES = ("aita", "plain")
+MODES = ("pet", "plain")
 RAG_METRICS = ("faithfulness", "answer_relevancy", "context_precision", "context_recall")
 
 RAG_FIELDS = {"id": str, "question": str, "language": str, "reference_answer": str,
