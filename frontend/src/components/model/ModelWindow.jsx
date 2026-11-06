@@ -6,7 +6,6 @@ import Button from '../ui/Button'
 import { ChoiceChips, SelectField, TextField } from '../ui/Field'
 
 const MODES = [
-  { value: 'default', label: 'PET default' },
   { value: 'own', label: 'My key' },
   { value: 'local', label: 'Local model' },
 ]
@@ -20,7 +19,7 @@ function startingProvider(settings, mode) {
 }
 
 export default function ModelWindow({ settings, onClose, onChange }) {
-  const firstMode = settings.source === 'none' ? 'own' : settings.source
+  const firstMode = settings.source === 'local' ? 'local' : 'own'
   const [mode, setMode] = useState(firstMode)
   const [provider, setProvider] = useState(() => startingProvider(settings, firstMode))
   const [apiKey, setApiKey] = useState('')
@@ -34,7 +33,6 @@ export default function ModelWindow({ settings, onClose, onChange }) {
 
   const info = settings.providers.find(p => p.id === provider)
   const savedKey = settings.source !== 'default' && settings.provider === provider && settings.key_hint
-  const modes = MODES.filter(m => m.value !== 'default' || settings.has_default)
 
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
@@ -100,10 +98,10 @@ export default function ModelWindow({ settings, onClose, onChange }) {
     onClose()
   })
 
-  const useDefault = () => run('remove', async () => {
+  const remove = () => run('remove', async () => {
     const { data } = await modelAPI.remove()
     onChange(data)
-    toast.success(data.source === 'default' ? 'Back to PET default' : 'Model removed')
+    toast.success('Model removed')
     onClose()
   })
 
@@ -124,21 +122,13 @@ export default function ModelWindow({ settings, onClose, onChange }) {
         </div>
 
         <div className="mt-5">
-          <ChoiceChips label="Model source" options={modes} value={mode} onChange={switchMode} />
+          <ChoiceChips label="Model source" options={MODES} value={mode} onChange={switchMode} />
           <p className="mt-2 text-xs text-ink-subtle">
             Local models (Ollama, LM Studio) run on this computer, next to PET.
           </p>
         </div>
 
-        {mode === 'default' ? (
-          <div className="mt-5 flex flex-col gap-4">
-            <p className="text-sm leading-relaxed text-ink-muted">PET&apos;s own model answers chat, hints, grading and feedback.</p>
-            {settings.source !== 'default' && (
-              <Button busy={busy === 'remove'} onClick={useDefault} className="self-start">Use PET default</Button>
-            )}
-          </div>
-        ) : (
-          <form className="mt-5 flex flex-col gap-4" onSubmit={e => { e.preventDefault(); save() }}>
+        <form className="mt-5 flex flex-col gap-4" onSubmit={e => { e.preventDefault(); save() }}>
             <SelectField label="Provider" value={provider} onChange={e => switchProvider(e.target.value)}>
               {providersFor(settings, mode).map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
             </SelectField>
@@ -204,11 +194,10 @@ export default function ModelWindow({ settings, onClose, onChange }) {
               <Button variant="secondary" icon={PlugZap} busy={busy === 'test'} disabled={Boolean(busy)} onClick={test}>{model.trim() ? 'Test model' : 'Test connection'}</Button>
               <Button type="submit" busy={busy === 'save'} disabled={Boolean(busy) || !model.trim()}>Save</Button>
               {settings.source === mode && (
-                <Button variant="ghost" busy={busy === 'remove'} disabled={Boolean(busy)} onClick={useDefault} className="sm:ml-auto">Remove key</Button>
+                <Button variant="ghost" busy={busy === 'remove'} disabled={Boolean(busy)} onClick={remove} className="sm:ml-auto">Remove key</Button>
               )}
             </div>
           </form>
-        )}
       </div>
     </div>
   )
