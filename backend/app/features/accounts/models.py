@@ -118,7 +118,7 @@ class LearningProfile(Base):
 
 
 class UserSession(Base):
-    """Tracks individual login/study sessions for behavioral analysis."""
+    """Tracks individual study sessions for behavioral analysis."""
     __tablename__ = "user_sessions"
 
     id = Column(Integer, primary_key=True, index=True)
