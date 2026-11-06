@@ -52,7 +52,8 @@ services:
              python -m scripts.seed.ingest_problems &&
              python -m scripts.seed.seed_practice &&
              python -m scripts.seed.seed_theory &&
-             python -m scripts.seed.seed_diagnostic"
+             python -m scripts.seed.seed_diagnostic &&
+             python -m scripts.tools.review_diagnostic --approve-all-verified"
     depends_on:
       db:
         condition: service_healthy
